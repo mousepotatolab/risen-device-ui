@@ -1,117 +1,560 @@
-import React from "react";
+import React, {useState} from "react";
 import Link from "next/link";
+import validator from 'validator'
+import isEmail from 'validator/lib/isEmail'
+import isDate from 'validator/lib/isDate'
+import OtpInput from "react-otp-input";
+import { createPopper } from "@popperjs/core";
 
 // layout for page
 
 import Auth from "layouts/Auth.js";
 
 export default function Login() {
+
+  //Handle OTP
+  let [OTPstate, setOTP] = useState("")
+
+  const handleChangeOTP = (event) => {
+
+    if (event.length === 6) {
+      isOtpValid(true)
+    }
+    console.log(event.length)
+    console.log(event)
+    setOTP(event)
+  }
+
+
+  let [phone, setPhone] = useState("")
+  let [createProfile, setCreateProfile] = useState("")
+  let [profileValid, isProfileValid] = useState("")
+  let [signedOut, setSignOut] = useState(true)
+  let [signIn, setSignIn] = useState(false)
+  let [signUp, setSignUp] = useState(true)
+  let [signInBtn, setSignInBtn] = useState(false)
+  let [signUpBtn, setSignUpBtn] = useState(true)
+  let [otpIn, setOTPIn] = useState("")
+  let [otpUp, setOTPUp] = useState("")
+
+  let [valid, isValid] = useState("")
+  let [otpValid, isOtpValid] = useState("")
+
+  let [firstName, setFirstName] = useState("")
+  let [lastName, setLastName] = useState("")
+
+  let [dob, setDOB] = useState("")
+  let [dobValid, isDOBValid] = useState("")
+
+
+  let [gender, setGender] = useState("")
+
+
+  let [email, setEmail] = useState("")
+  let [emailValid, isEmailValid] = useState("")
+
+
+  const handlePhoneChange = (event) => {
+    console.log(phone)
+    setPhone(event.target.value)
+    isValid(validatePhoneNumber(event.target.value))
+  }
+  const handleCreateProfile = (event) => {
+    setCreateProfile(true)
+    setSignUp(false)
+    setOTPUp(false)
+    setSignInBtn(false)
+    setSignUpBtn(false)
+  }
+  const handleSignIn = (event) => {
+    setSignIn(true)
+    setSignInBtn(true)
+    setSignUp(false)
+    setSignUpBtn(false)
+  }
+  const handleSignUp = (event) => {
+    setSignIn(false)
+    setSignInBtn(false)
+    setSignUp(true)
+    setSignUpBtn(true)
+  }
+
+  const handleOTP = (event) => {
+    setCreateProfile(true)
+    setSignUpBtn(false)
+    setSignUp(false)
+  }
+  const handleOTPIn = (event) => {
+    validatePhoneNumber()
+    setSignUp(false)
+    setOTPIn(true)
+    setOTPUp(false)
+    console.log(signedOut)
+  }
+  const handleOTPUp = (event) => {
+    validatePhoneNumber()
+    setSignUp(false)
+    setOTPUp(true)
+    setOTPIn(false)
+    console.log(signedOut)
+  }
+
+  const handleFirstValid = (event) => {
+    setFirstName(event.target.value)
+  }
+  const handleLastValid = (event) => {
+    setLastName(event.target.value)
+  }
+  const handleDOBValid = (event) => {
+    if(isDate(event.target.value,{format: "MM/DD/YYYY",})) {
+      isDOBValid(true)
+      console.log("dob valid")
+    }
+    setDOB(event.target.value)
+  }
+  const handleGender = (event) => {
+    setGender(event.target.value)
+  }
+  const handleEmail= (event) => {
+    if(isEmail(event.target.value)) {
+      isEmailValid(true)
+    }
+    setEmail(event.target.value)
+  }
+
+
+  let validatePhoneNumber = (event) => {
+    console.log(phone)
+    const isValidPhoneNumber = validator.isMobilePhone(phone)
+    console.log(isValidPhoneNumber)
+    return (isValidPhoneNumber)
+  }
+
+
   return (
     <>
+    
       <div className="container mx-auto px-4 h-full">
-        <div className="flex content-center items-center justify-center h-full">
-          <div className="w-full lg:w-4/12 px-4">
-            <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-200 border-0">
-              <div className="rounded-t mb-0 px-6 py-6">
-                <div className="text-center mb-3">
-                  <h6 className="text-blueGray-500 text-sm font-bold">
-                    Sign in with
-                  </h6>
-                </div>
-                <div className="btn-wrapper text-center">
-                  <button
-                    className="bg-white active:bg-blueGray-50 text-blueGray-700 font-normal px-4 py-2 rounded outline-none focus:outline-none mr-2 mb-1 uppercase shadow hover:shadow-md inline-flex items-center font-bold text-xs ease-linear transition-all duration-150"
-                    type="button"
-                  >
-                    <img alt="..." className="w-5 mr-1" src="/img/github.svg" />
-                    Github
-                  </button>
-                  <button
-                    className="bg-white active:bg-blueGray-50 text-blueGray-700 font-normal px-4 py-2 rounded outline-none focus:outline-none mr-1 mb-1 uppercase shadow hover:shadow-md inline-flex items-center font-bold text-xs ease-linear transition-all duration-150"
-                    type="button"
-                  >
-                    <img alt="..." className="w-5 mr-1" src="/img/google.svg" />
-                    Google
-                  </button>
-                </div>
-                <hr className="mt-6 border-b-1 border-blueGray-300" />
-              </div>
-              <div className="flex-auto px-4 lg:px-10 py-10 pt-0">
-                <div className="text-blueGray-400 text-center mb-3 font-bold">
-                  <small>Or sign in with credentials</small>
-                </div>
+        {signUpBtn && 
+        <div className="sign-in-wrapper absolute w-full flex mt-4 justify-center items-center">
+          
+        <h6 className="text-xs font-medium mr-3">Already have an account?</h6>
+        <button 
+        className="bg-primary font-medium text-white text-xs px-3 py-2 rounded"
+        onClick={handleSignIn}
+        >
+        Sign In</button>
+        </div>
+        }
+        {signInBtn && 
+        <div className="sign-in-wrapper absolute w-full flex mt-4 justify-center items-center">
+          
+        <h6 className="text-xs font-medium mr-3">Don't have an account?</h6>
+        <button 
+        className="bg-primary font-medium text-white text-xs px-3 py-2 rounded"
+        onClick={handleSignUp}
+        >
+        Sign Up</button>
+        </div>
+        }
+        
+        <div  style={{top: '193px'}} className="flex relative content-center items-center justify-center">
+          <div className="w-full  px-4">
+            <div className="relative flex flex-col min-w-0 break-words w-full mb-6 rounded-l border-0">
+
+              {signUp && 
+              <div className="flex-auto px-4 lg:px-10 py-10 pt-0" style={{maxWidth: '423px'}}>
+                <h5 className="text-2xl font-bold mb-1">Sign Up</h5>
+                <h3 className="text-4xl font-bold mb-12">Let's Get Started!</h3>
                 <form>
-                  <div className="relative w-full mb-3">
+                  <div className="relative flex flex-wrap items-stretch w-full mb-3">
                     <label
-                      className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                      className="block text-blueGray-600 text-xs font-bold mb-2"
                       htmlFor="grid-password"
                     >
-                      Email
+                      Enter phone number
                     </label>
+                    <span style={{top: '32px', left: '9px'}} className="z-10 h-full leading-snug font-normal absolute text-center text-blueGray-300 bg-transparent rounded text-base items-center justify-center w-8 pl-2 py-1">
+                      <i className="icon-phone-lg text-green-primary disabled:text-green-secondary" disabled={!valid}></i>
+                    </span>
                     <input
-                      type="email"
-                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                      placeholder="Email"
+                      type="tel"
+                      className="w-full input-primary pl-8 focus:outline-none"
+                      onChange={handlePhoneChange}
+                      value={phone}
+                      placeholder="123 456 7890"
                     />
+                    {valid &&
+                    <span style={{top: '32px', right: '9px'}} className="z-10 h-full leading-snug font-normal absolute text-center text-blueGray-300 bg-transparent rounded text-base items-center justify-center w-8 pl-2 py-1">
+                      <i className="icon-check text-green-active disabled:display-none"></i>
+                    </span>
+                    }
                   </div>
 
-                  <div className="relative w-full mb-3">
-                    <label
-                      className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                      htmlFor="grid-password"
-                    >
-                      Password
-                    </label>
-                    <input
-                      type="password"
-                      className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                      placeholder="Password"
-                    />
-                  </div>
-                  <div>
-                    <label className="inline-flex items-center cursor-pointer">
-                      <input
-                        id="customCheckLogin"
-                        type="checkbox"
-                        className="form-checkbox border-0 rounded text-blueGray-700 ml-1 w-5 h-5 ease-linear transition-all duration-150"
-                      />
-                      <span className="ml-2 text-sm font-semibold text-blueGray-600">
-                        Remember me
-                      </span>
-                    </label>
-                  </div>
 
                   <div className="text-center mt-6">
                     <button
-                      className="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
+                      className="bg-primary text-white active:bg-tertiary disabled:bg-secondary text-sm font-bold px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
                       type="button"
+                      disabled={!valid}
+                      onClick={handleOTPUp}
                     >
-                      Sign In
+                      Send One-Time Password
                     </button>
                   </div>
                 </form>
               </div>
-            </div>
-            <div className="flex flex-wrap mt-6 relative">
-              <div className="w-1/2">
-                <a
-                  href="#pablo"
-                  onClick={(e) => e.preventDefault()}
-                  className="text-blueGray-200"
+              }
+              {signIn && 
+              <div className="flex-auto px-4 lg:px-10 py-10 pt-0" style={{maxWidth: '423px'}}>
+                <h5 className="text-2xl font-bold mb-1">Sign In</h5>
+                <h3 className="text-4xl font-bold mb-12">Welcome Back</h3>
+                <form>
+                  <div className="relative flex flex-wrap items-stretch w-full mb-3">
+                    <label
+                      className="block text-blueGray-600 text-xs font-bold mb-2"
+                      htmlFor="grid-password"
+                    >
+                      Enter phone number
+                    </label>
+                    <span style={{top: '32px', left: '9px'}} className="z-10 h-full leading-snug font-normal absolute text-center text-blueGray-300 bg-transparent rounded text-base items-center justify-center w-8 pl-2 py-1">
+                      <i className="icon-phone-lg text-green-primary disabled:text-green-secondary" disabled={!valid}></i>
+                    </span>
+                    <input
+                      type="tel"
+                      className="w-full input-primary pl-8 focus:outline-none"
+                      onChange={handlePhoneChange}
+                      value={phone}
+                      placeholder="123 456 7890"
+                    />
+                    {valid &&
+                    <span style={{top: '32px', right: '9px'}} className="z-10 h-full leading-snug font-normal absolute text-center text-blueGray-300 bg-transparent rounded text-base items-center justify-center w-8 pl-2 py-1">
+                      <i className="icon-check text-green-active disabled:display-none"></i>
+                    </span>
+                    }
+                  </div>
+
+
+                  <div className="text-center mt-6">
+                    <button
+                      className="bg-primary text-white active:bg-tertiary disabled:bg-secondary text-sm font-bold px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
+                      type="button"
+                      disabled={!valid}
+                      onClick={handleOTPIn}
+                    >
+                      Send One-Time Password
+                    </button>
+                  </div>
+                </form>
+              </div>
+              }
+              {otpIn && 
+              <div className="flex-auto px-4 lg:px-10 py-10 pt-0" style={{maxWidth: '423px'}}>
+              <h5 className="text-2xl font-bold mb-1">Sign In</h5>
+              <h3 className="text-4xl font-bold mb-12">Welcome Back!</h3>
+              <label
+                      className="block text-blueGray-600 text-xs font-bold mb-2"
+                      htmlFor="grid-password"
+                    >
+                      Enter One-time Password
+                    </label>
+              <OtpInput
+                className="otp-input"
+                value={OTPstate}
+                onChange={handleChangeOTP}
+                numInputs={6}
+                isInputNum={true}
+                inputStyle={"otp-single"}
+                // separator={<span>-</span>}
+              />
+              <div className="text-center mt-6">
+                <button
+                  className="bg-primary text-white active:bg-tertiary disabled:bg-secondary text-sm font-bold px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
+                  type="button"
+                  disabled={!otpValid}
+                  onClick={handleOTP}
                 >
-                  <small>Forgot password?</small>
-                </a>
+                  Login
+                </button>
               </div>
-              <div className="w-1/2 text-right">
-                <Link href="/auth/register">
-                  <a href="#pablo" className="text-blueGray-200">
-                    <small>Create new account</small>
-                  </a>
-                </Link>
+            </div>
+              }
+              {otpUp && 
+              <div className="flex-auto px-4 lg:px-10 py-10 pt-0" style={{maxWidth: '423px'}}>
+              <h5 className="text-2xl font-bold mb-1">Sign Up</h5>
+              <h3 className="text-4xl font-bold mb-12">Let's Get Started</h3>
+              <label
+                      className="block text-blueGray-600 text-xs font-bold mb-2"
+                      htmlFor="grid-password"
+                    >
+                      Enter One-time Password
+                    </label>
+              <OtpInput
+                className="otp-input"
+                value={OTPstate}
+                onChange={handleChangeOTP}
+                numInputs={6}
+                isInputNum={true}
+                inputStyle={"otp-single"}
+                // separator={<span>-</span>}
+              />
+              <div className="text-center mt-6">
+                <button
+                  className="bg-primary text-white active:bg-tertiary disabled:bg-secondary text-sm font-bold px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
+                  type="button"
+                  disabled={!otpValid}
+                  onClick={handleCreateProfile}
+                >
+                  Login
+                </button>
               </div>
+                <p className="sub-text">A 6 digit one-time password has been sent to your entered number</p>
+            </div>
+              }
+              {/* {createProfile && 
+              <div className="flex-auto px-4 lg:px-10 py-10 pt-0" style={{maxWidth: '423px'}}>
+              <h5 className="text-2xl font-bold mb-1">Create Your Profile</h5>
+              <form>
+                  <div className="relative flex flex-wrap items-stretch w-full mb-3">
+                    <label
+                      className="block text-blueGray-600 text-xs font-bold mb-2"
+                    >
+                      First Name
+                    </label>
+                    <input
+                      type="text"
+                      className="w-full input-primary pl-8 focus:outline-none"
+                      onChange={handleFirstValid}
+                      value={firstName}
+                      placeholder="e.g. Dwight"
+                    />
+                    {firstName &&
+                    <span style={{top: '32px', right: '9px'}} className="z-10 h-full leading-snug font-normal absolute text-center text-blueGray-300 bg-transparent rounded text-base items-center justify-center w-8 pl-2 py-1">
+                      <i className="icon-check text-green-active disabled:display-none"></i>
+                    </span>
+                    }
+                    <label
+                      className="block text-blueGray-600 text-xs font-bold mb-2"
+                    >
+                      Last Name
+                    </label>
+                    <input
+                      type="text"
+                      className="w-full input-primary pl-8 focus:outline-none"
+                      onChange={handleFirstValid}
+                      value={lastName}
+                      placeholder="e.g. Schrute"
+                    />
+                    {lastName &&
+                    <span style={{top: '32px', right: '9px'}} className="z-10 h-full leading-snug font-normal absolute text-center text-blueGray-300 bg-transparent rounded text-base items-center justify-center w-8 pl-2 py-1">
+                      <i className="icon-check text-green-active disabled:display-none"></i>
+                    </span>
+                    }
+                    <label
+                      className="block text-blueGray-600 text-xs font-bold mb-2"
+                    >
+                      Date Of Birth
+                    </label>
+                    <input
+                      type="text"
+                      className="w-full input-primary pl-8 focus:outline-none"
+                      onChange={handleDOBValid}
+                      value={dob}
+                      placeholder="e.g. 11/11/1990"
+                    />
+                    {dob &&
+                    <span style={{top: '32px', right: '9px'}} className="z-10 h-full leading-snug font-normal absolute text-center text-blueGray-300 bg-transparent rounded text-base items-center justify-center w-8 pl-2 py-1">
+                      <i className="icon-check text-green-active disabled:display-none"></i>
+                    </span>
+                    }
+                    <label
+                      className="block text-blueGray-600 text-xs font-bold mb-2"
+                    >
+                      Gender
+                    </label>
+                    <span style={{top: '32px', left: '9px'}} className="z-10 h-full leading-snug font-normal absolute text-center text-blueGray-300 bg-transparent rounded text-base items-center justify-center w-8 pl-2 py-1">
+                      <i className="icon-phone-lg text-green-primary disabled:text-green-secondary" disabled={!valid}></i>
+                    </span>
+                    <input
+                      type="text"
+                      className="w-full input-primary pl-8 focus:outline-none"
+                      onChange={handleFirstValid}
+                      value={firstName}
+                      placeholder="e.g. Dwight"
+                    />
+                    {gender &&
+                    <span style={{top: '32px', right: '9px'}} className="z-10 h-full leading-snug font-normal absolute text-center text-blueGray-300 bg-transparent rounded text-base items-center justify-center w-8 pl-2 py-1">
+                      <i className="icon-check text-green-active disabled:display-none"></i>
+                    </span>
+                    }
+                    <label
+                      className="block text-blueGray-600 text-xs font-bold mb-2"
+                    >
+                      Email
+                    </label>
+                    <span style={{top: '32px', left: '9px'}} className="z-10 h-full leading-snug font-normal absolute text-center text-blueGray-300 bg-transparent rounded text-base items-center justify-center w-8 pl-2 py-1">
+                      <i className="icon-phone-lg text-green-primary disabled:text-green-secondary" disabled={!valid}></i>
+                    </span>
+                    <input
+                      type="text"
+                      className="w-full input-primary pl-8 focus:outline-none"
+                      onChange={handleFirstValid}
+                      value={firstName}
+                      placeholder="e.g. Dwight"
+                    />
+                    {email &&
+                    <span style={{top: '32px', right: '9px'}} className="z-10 h-full leading-snug font-normal absolute text-center text-blueGray-300 bg-transparent rounded text-base items-center justify-center w-8 pl-2 py-1">
+                      <i className="icon-check text-green-active disabled:display-none"></i>
+                    </span>
+                    }
+                    </div>
+
+
+                  <div className="text-center mt-6">
+                    <button
+                      className="bg-primary text-white active:bg-tertiary disabled:bg-secondary text-sm font-bold px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
+                      type="button"
+                      disabled={!valid}
+                      onClick={handleOTPIn}
+                    >
+                      Send One-Time Password
+                    </button>
+                  </div>
+                </form>
+              <div className="text-center mt-6">
+                <button
+                  className="bg-primary text-white active:bg-tertiary disabled:bg-secondary text-sm font-bold px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
+                  type="button"
+                  disabled={!otpValid}
+                  onClick={handleOTP}
+                >
+                  Login
+                </button>
+              </div>
+                <p className="sub-text">A 6 digit one-time password has been sent to your entered number</p>
+            </div>
+              } */}
             </div>
           </div>
         </div>
+        {createProfile && 
+        
+        <div  style={{top: '40px'}} className="flex relative content-center items-center justify-center">
+          <div className="w-full  px-4">
+            <div className="relative flex flex-col min-w-0 break-words w-full mb-6 rounded-l border-0">
+
+            
+              <div className="flex-auto px-4 lg:px-10 py-10 pt-0" style={{maxWidth: '423px'}}>
+              <h5 className="text-2xl font-bold mb-1">Create Your Profile</h5>
+              <form>
+                  <div className="relative flex flex-wrap items-stretch w-full mb-3">
+                    <label
+                      className="block text-sm font-bold my-3"
+                    >
+                      First Name
+                    </label>
+                    <input
+                      type="text"
+                      className="w-full input-primary pl-2 focus:outline-none"
+                      onChange={handleFirstValid}
+                      value={firstName}
+                      placeholder="e.g. Dwight"
+                    />
+                    {firstName &&
+                    <span style={{top: '50px', right: '9px'}} className="z-10  leading-snug font-normal absolute text-center text-blueGray-300 bg-transparent rounded text-base items-center justify-center w-8 pl-2 py-1">
+                      <i className="icon-check text-green-active disabled:display-none"></i>
+                    </span>
+                    }
+                    <label
+                      className="block text-sm font-bold my-3"
+                    >
+                      Last Name
+                    </label>
+                    <input
+                      type="text"
+                      className="w-full input-primary pl-2 focus:outline-none"
+                      onChange={handleLastValid}
+                      value={lastName}
+                      placeholder="e.g. Schrute"
+                    />
+                    {lastName &&
+                    <span style={{top: '137px', right: '9px'}} className="z-10 leading-snug font-normal absolute text-center text-blueGray-300 bg-transparent rounded text-base items-center justify-center w-8 pl-2 py-1">
+                      <i className="icon-check text-green-active disabled:display-none"></i>
+                    </span>
+                    }
+                    <label
+                      className="block text-sm font-bold my-3"
+                    >
+                      Date Of Birth
+                    </label>
+                    <input
+                      type="text"
+                      className="w-full input-primary pl-2 focus:outline-none"
+                      onChange={handleDOBValid}
+                      value={dob}
+                      placeholder="e.g. 11/11/1990"
+                    />
+                    {dobValid &&
+                    <span style={{top: '225px', right: '9px'}} className="z-10  leading-snug font-normal absolute text-center text-blueGray-300 bg-transparent rounded text-base items-center justify-center w-8 pl-2 py-1">
+                      <i className="icon-check text-green-active disabled:display-none"></i>
+                    </span>
+                    }
+                    <label
+                      className="block text-sm font-bold my-3"
+                    >
+                      Gender
+                    </label>
+                   
+                    <input
+                      type="text"
+                      className="w-full input-primary pl-2 focus:outline-none"
+                      onChange={handleGender}
+                      value={gender}
+                      placeholder="e.g. Dwight"
+                    />
+                    {gender &&
+                    <span style={{top: '308px', right: '9px'}} className="z-10 leading-snug font-normal absolute text-center text-blueGray-300 bg-transparent rounded text-base items-center justify-center w-8 pl-2 py-1">
+                      <i className="icon-check text-green-active disabled:display-none"></i>
+                    </span>
+                    }
+                    <label
+                      className="block text-sm font-bold my-3"
+                    >
+                      Email
+                    </label>
+                    <input
+                      type="text"
+                      className="w-full input-primary pl-2 focus:outline-none mb-6"
+                      onChange={handleEmail}
+                      value={email}
+                      placeholder="e.g. dwight@dundermifflin.com"
+                    />
+                    {emailValid &&
+                    <span style={{top: '394px', right: '9px'}} className="z-10 leading-snug font-normal absolute text-center text-blueGray-300 bg-transparent rounded text-base items-center justify-center w-8 pl-2 py-1">
+                      <i className="icon-check text-green-active disabled:display-none"></i>
+                    </span>
+                    }
+                    </div>
+
+
+                </form>
+              <div className="text-center mt-6">
+                <button
+                  className="bg-primary text-white active:bg-tertiary disabled:bg-secondary text-sm font-bold px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
+                  type="button"
+                  disabled={!profileValid}
+                  onClick={handleCreateProfile}
+                >
+                  Create Profile
+                </button>
+              </div>
+            </div>
+              
+            </div>
+          </div>
+        </div>
+        }
+        
       </div>
     </>
   );
