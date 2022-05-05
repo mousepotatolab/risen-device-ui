@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>icon/medical-condition</title>
+    <g id="Landing" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Landing-Page---Start-State" transform="translate(-271.000000, -138.000000)">
+            <g id="cards/risen-devices/medical-condition-section" transform="translate(255.000000, 114.000000)">
+                <g id="icon/medical-condition" transform="translate(16.000000, 24.000000)">
+                    <circle id="Oval" fill="#0C8C87" cx="12" cy="12" r="12"></circle>
+                    <g id="Icons/Universal-Icon-Set/Medicine/Solid/Medical-Chart" transform="translate(6.000000, 6.000000)">
+                        <rect id="Rectangle" x="0" y="0" width="12" height="12"></rect>
+                        <path d="M4.020565,1.748955 C3.997815,1.61277 3.88807,1.5 3.75,1.5 L3.5,1.5 C2.671575,1.5 2,2.171575 2,3 L2,9.5 C2,10.32845 2.671575,11 3.5,11 L8.5,11 C9.32845,11 10,10.32845 10,9.5 L10,3 C10,2.171575 9.32845,1.5 8.5,1.5 L8.25,1.5 C8.11195,1.5 8.0022,1.61277 7.97945,1.748955 C7.86085,2.458895 7.2436,3 6.5,3 L5.5,3 C4.756385,3 4.13915,2.458895 4.020565,1.748955 Z M4.5,7.5 C4.22386,7.5 4,7.72385 4,8 C4,8.27615 4.22386,8.5 4.5,8.5 L6.5,8.5 C6.77615,8.5 7,8.27615 7,8 C7,7.72385 6.77615,7.5 6.5,7.5 L4.5,7.5 Z M4,6 C4,5.72385 4.22386,5.5 4.5,5.5 L7.5,5.5 C7.77615,5.5 8,5.72385 8,6 C8,6.27615 7.77615,6.5 7.5,6.5 L4.5,6.5 C4.22386,6.5 4,6.27615 4,6 Z" id="Shape" fill="#FFFFFF"></path>
+                        <path d="M5.5,1 C5.22385,1 5,1.22386 5,1.5 C5,1.77614 5.22385,2 5.5,2 L6.5,2 C6.77615,2 7,1.77614 7,1.5 C7,1.22386 6.77615,1 6.5,1 L5.5,1 Z" id="Path" fill="#FFFFFF"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

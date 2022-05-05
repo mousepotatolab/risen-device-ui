@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="25px" viewBox="0 0 24 25" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>icon/medication</title>
+    <g id="Landing" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Landing-Page---Start-State" transform="translate(-831.000000, -137.000000)">
+            <g id="cards/risen-devices/medical-condition-section" transform="translate(815.000000, 114.000000)">
+                <g id="icon/medication" transform="translate(16.000000, 23.763158)">
+                    <ellipse id="Oval" fill="#0C8C87" cx="12" cy="11.8815789" rx="12" ry="11.8815789"></ellipse>
+                    <g id="Icons/Universal-Icon-Set/Medicine/Solid/Medical-Chart" transform="translate(6.000000, 5.940789)">
+                        <rect id="bounding-box" x="0" y="0" width="12" height="11.8815789"></rect>
+                        <path d="M3.7492306,4.87963784 C3.85772609,4.77219236 4.03363813,4.77219236 4.14213361,4.87963784 L4.14213361,4.87963784 L7.07184506,7.78039059 C7.1803072,7.88778105 7.1803072,8.06196045 7.07184506,8.16940593 L7.07184506,8.16940593 L5.01073092,10.2100997 C4.09324786,11.1185174 2.60572177,11.1185724 1.68819981,10.2102098 C0.770627846,9.3017371 0.770594507,7.82880432 1.68813313,6.92033165 L1.68813313,6.92033165 Z M6.98927603,1.67146339 C7.90675909,0.763045733 9.39427962,0.763018225 10.3118182,1.67139737 C11.2293569,2.57983153 11.2294124,4.05275881 10.3118738,4.96122598 L10.3118738,4.96122598 L8.25064854,7.00208484 C8.14213083,7.10953031 7.96621324,7.10953031 7.85775109,7.00208484 L7.85775109,7.00208484 L4.92805076,4.10134859 C4.81953305,3.99392512 4.81953305,3.81975672 4.92805076,3.71233325 L4.92805076,3.71233325 Z" id="Pills" fill="#FFFFFF"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

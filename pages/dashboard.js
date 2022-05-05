@@ -14,7 +14,7 @@ export default function DashboardLanding() {
         <section className="profile-section min-w-239-px">
             <div className="container">
                 <div className="flex flex-col">
-                    <img src="/img/logo.svg" alt="" className="logo mb-4" />
+                    <img src="/img/primary.svg" alt="" className="logo mb-4" />
                     <div className="flex">
                         <div className="profile-photo mr-1">
                             <img src="/img/dwight.jpeg" alt="" className="profile" />
@@ -28,7 +28,10 @@ export default function DashboardLanding() {
             </div>
         </section>
         <section className="information-section w-full h-full">
-        <div className="tab-wrapper bg-dashboard mb-4">
+        <div className="flex justify-between">
+
+       
+        <div className="tab-wrapper w-full bg-dashboard mb-4">
         <ul
             className="flex mb-0 list-none flex-wrap p-1 flex-row"
             role="tablist"
@@ -92,7 +95,8 @@ export default function DashboardLanding() {
             </li>
         </ul>
           </div>
-
+          <button className="connect-device-button text-red-primary flex items-center font-normal">Connect a device<i className="icon-Plus2x icon-md relative text-red-primary ml-2"></i></button>
+          </div>      
           <div className="relative flex flex-col min-w-0 break-word w-full mb-6">
             <div className="flex-auto">
               <div className="tab-content tab-space">
@@ -101,8 +105,11 @@ export default function DashboardLanding() {
                   <div className="w-full pr-4 md:w-4/12 lg:4/12">
                       <div className="card-wrapper">
                           <div className="title-wrapper flex justify-between items-center">
-                              <h3 className="h3 font-medium"><i className="icon-check text-green-active"></i>Medical Condition</h3>
-                              <i className="icon-check text-green-active"></i>
+                          <div className="flex">
+                                <img src="/img/medical-condition.svg" alt="" />
+                                <h3 className="h3 font-medium ml-2">Medical Condition</h3>
+                              </div>
+                              <i className="icon-Plus2x icon-md text-green-primary"></i>
                           </div>
                           <div className="card card-medical mt-2">
                           <label
@@ -131,8 +138,11 @@ export default function DashboardLanding() {
                   <div className="w-full pr-4 md:w-4/12 lg:4/12">
                       <div className="card-wrapper">
                       <div className="title-wrapper flex justify-between items-center">
-                              <h3 className="h3 font-medium"><i className="icon-check text-green-active"></i>Allergies</h3>
-                              <i className="icon-check text-green-active"></i>
+                      <div className="flex">
+                                <img src="/img/allergies.svg" alt="" />
+                                <h3 className="h3 font-medium ml-2">Allergies</h3>
+                              </div>
+                              <i className="icon-Plus2x icon-md text-green-primary"></i>
                           </div>
                           <div className="card card-medical mt-2">
                           <label
@@ -161,8 +171,11 @@ export default function DashboardLanding() {
                   <div className="w-full pr-4 md:w-4/12 lg:4/12">
                       <div className="card-wrapper">
                       <div className="title-wrapper flex justify-between items-center">
-                              <h3 className="h3 font-medium"><i className="icon-check text-green-active"></i>Medication</h3>
-                              <i className="icon-check text-green-active"></i>
+                        <div className="flex">
+                            <img src="/img/medication.svg" alt="" />
+                            <h3 className="h3 font-medium ml-2">Medication</h3>
+                          </div>
+                          <i className="icon-Plus2x icon-md text-green-primary"></i>
                           </div>
                           <div className="card card-medical mt-2">
                           <label
@@ -199,6 +212,7 @@ export default function DashboardLanding() {
                                 <span className={`react-switch-button`} />
                             </label>
                             </div>
+                            <button className="add-medication text-green-primary text-xs mt-4">Add More Details<i className="icon-Plus2x relative top-1 ml-1 icon-xs text-green-primary"></i></button>
                             
                           </div>
                       </div>
@@ -206,8 +220,11 @@ export default function DashboardLanding() {
                   <div className="w-full  md:w-4/12 lg:4/12">
                   <div className="card-wrapper">
                       <div className="title-wrapper flex justify-between items-center">
-                              <h3 className="h3 font-medium"><i className="icon-check text-green-active"></i>Emergency Contact</h3>
-                              <i className="icon-check text-green-active"></i>
+                              <div className="flex">
+                                <img src="/img/contact.svg" alt="" />
+                                <h3 className="h3 font-medium ml-2">Emergency Contact</h3>
+                              </div>
+                              <i className="icon-Plus2x icon-md text-green-primary"></i>
                           </div>
                           <div className="card card-medical mt-2">
                           <label
@@ -245,8 +262,11 @@ export default function DashboardLanding() {
                       </div>
                       <div className="card-wrapper">
                       <div className="title-wrapper flex justify-between items-center">
-                              <h3 className="h3 font-medium"><i className="icon-check text-green-active"></i>Insurance</h3>
-                              <i className="icon-check text-green-active"></i>
+                        <div className="flex">
+                          <img src="/img/insurance.svg" alt="" />
+                          <h3 className="h3 font-medium ml-2">Insurance</h3>
+                        </div>
+                              <i className="icon-Plus2x icon-md text-green-primary"></i>
                           </div>
                           <div className="card card-medical mt-2">
                           <label
@@ -304,8 +324,11 @@ export default function DashboardLanding() {
                       </div>
                       <div className="card-wrapper">
                       <div className="title-wrapper flex justify-between items-center">
-                              <h3 className="h3 font-medium"><i className="icon-check text-green-active"></i>Preferred Hospital</h3>
-                              <i className="icon-check text-green-active"></i>
+                          <div className="flex">
+                            <img src="/img/hospital.svg" alt="" />
+                            <h3 className="h3 font-medium ml-2">Preferred Hospital</h3>
+                          </div>
+                              <i className="icon-Plus2x icon-md text-green-primary"></i>
                           </div>
                           <div className="card card-medical mt-2">
                           <label
@@ -343,8 +366,11 @@ export default function DashboardLanding() {
                       </div>
                       <div className="card-wrapper">
                       <div className="title-wrapper flex justify-between items-center">
-                              <h3 className="h3 font-medium"><i className="icon-check text-green-active"></i>Primary Caregiver</h3>
-                              <i className="icon-check text-green-active"></i>
+                        <div className="flex">
+                            <img src="/img/care-giver.svg" alt="" />
+                            <h3 className="h3 font-medium ml-2">Primary Caregiver</h3>
+                          </div>
+                              <i className="icon-Plus2x icon-md text-green-primary"></i>
                           </div>
                           <div className="card card-medical mt-2">
                           <label

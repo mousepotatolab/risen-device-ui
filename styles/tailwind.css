@@ -2861,6 +2861,12 @@ select {
 .top-0 {
   top: 0px;
 }
+.top-1 {
+  top: 1px;
+}
+.top-3 {
+  top: 3px;
+}
 
 .right-0 {
   right: 0px;
@@ -3040,6 +3046,10 @@ select {
 .text-green-primary {
   --tw-text-opacity: 1;
   color: rgba(12, 140, 135, var(--tw-text-opacity));
+}
+.text-red-primary {
+  --tw-text-opacity: 1;
+  color: rgba(255, 59, 48, var(--tw-text-opacity));
 }
 .text-green-secondary {
   --tw-text-opacity: 1;
@@ -4096,6 +4106,11 @@ CUSTOM CLASSES DASHBOARD
   border-radius: 8px;
 }
 
+.logo {
+  width: 40px;
+  height: 40px;
+}
+
 .text-dash-tabs {
   color: rgb(12, 140, 135);
 }
@@ -4118,6 +4133,15 @@ CUSTOM CLASSES DASHBOARD
   background-color: #fff;
   padding: 12px 16px 16px;
   box-shadow: 0 15px 30px -15px rgba(21, 22, 51, 0.2);
+  border-radius: 8px;
+}
+
+.connect-device-button {
+  background-color: rgba(255, 59, 48, 0.1);
+  border-radius: 8px;
+  padding: 16px;
+  height: 48px;
+  border: 1px solid rgb(255, 59, 48);
 }
 
 .ph-text-sm::placeholder {
@@ -4171,9 +4195,14 @@ CUSTOM CLASSES DASHBOARD
   box-shadow: 0 3px 2px 0 rgba(0,0,0, 0.05);
 }
 
+
+
 .react-switch-checkbox:checked + .react-switch-label .react-switch-button {
   left: calc(100% - 0px);
   transform: translateX(-100%);
+}
+.react-switch-checkbox:checked + .react-switch-label {
+  background-color: #38c85c;
 }
 
 .react-switch-label:active .react-switch-button {
@@ -4188,14 +4217,18 @@ Fonts CSS
 
 @font-face {
   font-family: 'icomoon';
-  src:  url('../public/fonts/icomoon.eot?u95xqn');
-  src:  url('../public/fonts/icomoon.eot?u95xqn#iefix') format('embedded-opentype'),
-    url('../public/fonts/icomoon.ttf?u95xqn') format('truetype'),
-    url('../public/fonts/icomoon.woff?u95xqn') format('woff'),
-    url('../public/fonts/icomoon.svg?u95xqn#icomoon') format('svg');
+  src:  url('../public/fonts/icomoon.eot?m3b2h7');
+  src:  url('../public/fonts/icomoon.eot?m3b2h7#iefix') format('embedded-opentype'),
+    url('../public/fonts/icomoon.ttf?m3b2h7') format('truetype'),
+    url('../public/fonts/icomoon.woff?m3b2h7') format('woff'),
+    url('../public/fonts/icomoon.svg?m3b2h7#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
+}
+
+.icon-md {
+  font-size: 20px;
 }
 
 [class^="icon-"], [class*=" icon-"] {
@@ -4213,6 +4246,77 @@ Fonts CSS
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-Plus2x:before {
+  content: "\e915";
+}
+.icon-allergies .path1:before {
+  content: "\e906";
+  color: rgb(12, 140, 135);
+}
+.icon-allergies .path2:before {
+  content: "\e907";
+  margin-left: -1em;
+  color: rgb(255, 255, 255);
+}
+.icon-care-giver .path1:before {
+  content: "\e908";
+  color: rgb(12, 140, 135);
+}
+.icon-care-giver .path2:before {
+  content: "\e909";
+  margin-left: -1em;
+  color: rgb(255, 255, 255);
+}
+.icon-contact .path1:before {
+  content: "\e90a";
+  color: rgb(12, 140, 135);
+}
+.icon-contact .path2:before {
+  content: "\e90b";
+  margin-left: -1em;
+  color: rgb(255, 255, 255);
+}
+.icon-hospital .path1:before {
+  content: "\e90c";
+  color: rgb(12, 140, 135);
+}
+.icon-hospital .path2:before {
+  content: "\e90d";
+  margin-left: -1em;
+  color: rgb(255, 255, 255);
+}
+.icon-insurance .path1:before {
+  content: "\e90e";
+  color: rgb(12, 140, 135);
+}
+.icon-insurance .path2:before {
+  content: "\e90f";
+  margin-left: -1em;
+  color: rgb(255, 255, 255);
+}
+.icon-medical-condition .path1:before {
+  content: "\e910";
+  color: rgb(12, 140, 135);
+}
+.icon-medical-condition .path2:before {
+  content: "\e911";
+  margin-left: -1em;
+  color: rgb(255, 255, 255);
+}
+.icon-medical-condition .path3:before {
+  content: "\e912";
+  margin-left: -1em;
+  color: rgb(255, 255, 255);
+}
+.icon-medication .path1:before {
+  content: "\e913";
+  color: rgb(12, 140, 135);
+}
+.icon-medication .path2:before {
+  content: "\e914";
+  margin-left: -1em;
+  color: rgb(255, 255, 255);
+}
 .icon-check:before {
   content: "\e904";
 }
@@ -4231,4 +4335,5 @@ Fonts CSS
 .icon-phone-lg:before {
   content: "\e903";
 }
+
 
