@@ -2755,6 +2755,12 @@ select {
 .pl-3 {
   padding-left: 0.75rem;
 }
+.pl-3 {
+  padding-left: 1rem;
+}
+.pr-2 {
+  padding-right: 1rem;
+}
 
 .pr-4 {
   padding-right: 1rem;

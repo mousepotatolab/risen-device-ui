@@ -281,7 +281,66 @@ export default function DashboardLanding() {
                             <button style={{ display: !isShowing ? "block" : "none" }} className="add-medication text-green-primary text-xs mt-4" onClick={toggle}>Add More Details<i className="icon-Plus2x relative top-1 ml-1 icon-xs text-green-primary"></i></button>
                             <button style={{ display: isShowing ? "block" : "none" }} className="add-medication text-green-primary text-xs mt-4" onClick={toggle}>Show Less<i className="icon-Plus2x relative top-1 ml-1 icon-xs text-green-primary"></i></button>
                           <div style={{ display: isShowing ? "block" : "none" }}>
-                          text
+                          <div className="container">
+                          <div className="flex flex-wrap">
+                            <div className="w-1/2 pr-2">
+                            <label
+                          className="block text-gray-primary text-xs font-normal my-3"
+                          >
+                          Dosage
+                          </label>
+                          <input
+                          type="text"
+                          className="w-full input-primary pl-2 focus:outline-none ph-text-sm"
+                          placeholder="Unit"
+                          />
+                            </div>
+                          
+                          
+                          <div className="w-1/2 pl-2">
+                          <label
+                          className="block text-gray-primary text-xs font-normal my-3"
+                          >
+                          Ammount
+                          </label>
+                          <input
+                          type="text"
+                          className="w-full input-primary pl-2 focus:outline-none ph-text-sm"
+                          placeholder="e.g. mg"
+                          />
+                          </div>
+                           </div>
+                          </div>
+                          <div className="container">
+                            <div className="flex flex-wrap">
+                            <div className="w-1/2 pr-2">
+                            <label
+                          className="block text-gray-primary text-xs font-normal my-3"
+                          >
+                          Frequency
+                          </label>
+                          <input
+                          type="text"
+                          className="w-full input-primary pl-2 focus:outline-none ph-text-sm"
+                          placeholder="e.g. Twice"
+                          />
+                            </div>
+                          
+                          
+                          <div className="w-1/2 pl-2">
+                          <label
+                          className="block text-gray-primary text-xs font-normal my-3"
+                          >
+                          Times
+                          </label>
+                          <input
+                          type="text"
+                          className="w-full input-primary pl-2 focus:outline-none ph-text-sm"
+                          placeholder="e.g. Daily"
+                          />
+                          </div>
+                            </div>
+                          </div>
                           </div>
                         </div>
                     </div>
@@ -610,7 +669,66 @@ export default function DashboardLanding() {
                             onClick={toggle}
                             >Show Less<i className="icon-Plus2x relative top-1 ml-1 icon-xs text-green-primary"></i></button>
                           <div style={{ display: isShowing ? "block" : "none" }}>
-                          text
+                          <div className="container">
+                          <div className="flex flex-wrap">
+                            <div className="w-1/2 pr-2">
+                            <label
+                          className="block text-gray-primary text-xs font-normal my-3"
+                          >
+                          Dosage
+                          </label>
+                          <input
+                          type="text"
+                          className="w-full input-primary pl-2 focus:outline-none ph-text-sm"
+                          placeholder="Unit"
+                          />
+                            </div>
+                          
+                          
+                          <div className="w-1/2 pl-2">
+                          <label
+                          className="block text-gray-primary text-xs font-normal my-3"
+                          >
+                          Ammount
+                          </label>
+                          <input
+                          type="text"
+                          className="w-full input-primary pl-2 focus:outline-none ph-text-sm"
+                          placeholder="e.g. mg"
+                          />
+                          </div>
+                           </div>
+                          </div>
+                          <div className="container">
+                            <div className="flex flex-wrap">
+                            <div className="w-1/2 pr-2">
+                            <label
+                          className="block text-gray-primary text-xs font-normal my-3"
+                          >
+                          Frequency
+                          </label>
+                          <input
+                          type="text"
+                          className="w-full input-primary pl-2 focus:outline-none ph-text-sm"
+                          placeholder="e.g. Twice"
+                          />
+                            </div>
+                          
+                          
+                          <div className="w-1/2 pl-2">
+                          <label
+                          className="block text-gray-primary text-xs font-normal my-3"
+                          >
+                          Times
+                          </label>
+                          <input
+                          type="text"
+                          className="w-full input-primary pl-2 focus:outline-none ph-text-sm"
+                          placeholder="e.g. Daily"
+                          />
+                          </div>
+                            </div>
+                          </div>
                           </div>
                         </div>
                     </div>
