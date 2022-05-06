@@ -71,6 +71,9 @@ module.exports = {
         full: "100%",
       },
     },
+    fontFamily: {
+      sans: ['Roboto']
+    }
   },
   variants: [
     "responsive",

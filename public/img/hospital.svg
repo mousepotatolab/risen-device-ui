@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>icon/hospital</title>
+    <g id="Landing" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Landing-Page---Start-State" transform="translate(-1111.000000, -976.000000)">
+            <g id="cards/risen-devices/medical-condition-section" transform="translate(1095.000000, 952.000000)">
+                <g id="icon/hospital" transform="translate(16.000000, 24.000000)">
+                    <circle id="Oval" fill="#0C8C87" cx="12" cy="12" r="12"></circle>
+                    <g id="Icons/Universal-Icon-Set/Medicine/Solid/Heart-Rate" transform="translate(6.000000, 6.000000)">
+                        <rect id="Rectangle" x="0" y="0" width="12" height="12"></rect>
+                        <g id="Hospital-Building" transform="translate(1.000000, 2.000000)" fill="#FFFFFF">
+                            <path d="M1.5,0 C0.671575,0 0,0.671575 0,1.5 L0,7 C0,7.5523 0.447715,8 1,8 L2,8 C2.27614,8 2.5,7.77615 2.5,7.5 L2.5,6.5 C2.5,6.22385 2.72386,6 3,6 L4,6 C4.27615,6 4.5,6.22385 4.5,6.5 L4.5,7.5 C4.5,7.77615 4.72385,8 5,8 L6,8 C6.5523,8 7,7.5523 7,7 L7,1.5 C7,0.671575 6.32845,0 5.5,0 L1.5,0 Z M3.5,2 C3.22386,2 3,2.22386 3,2.5 L3,3 L2.5,3 C2.22386,3 2,3.22385 2,3.5 C2,3.77615 2.22386,4 2.5,4 L3,4 L3,4.5 C3,4.77615 3.22386,5 3.5,5 C3.77614,5 4,4.77615 4,4.5 L4,4 L4.5,4 C4.77615,4 5,3.77615 5,3.5 C5,3.22385 4.77615,3 4.5,3 L4,3 L4,2.5 C4,2.22386 3.77614,2 3.5,2 Z M8,3 C8,2.723855 8.22385,2.5 8.5,2.5 L8.5,2.5 C9.32845,2.5 10,3.17155 10,4 L10,7 C10,7.5523 9.5523,8 9,8 L8.5,8 C8.22385,8 8,7.77615 8,7.5 L8,3 Z" id="Shape"></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
