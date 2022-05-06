@@ -2012,6 +2012,9 @@ select {
 .font-light {
   font-weight: 300;
 }
+.font-dark {
+  color: #12131a;
+}
 
 .font-normal {
   font-weight: 400;
@@ -2463,6 +2466,9 @@ select {
 .min-w-239-px {
   min-width: 239px;
 }
+.max-w-340-px {
+  max-width: 340px;
+}
 
 .object-contain {
   object-fit: contain;
@@ -2729,6 +2735,9 @@ select {
 
 .pb-0 {
   padding-bottom: 0px;
+}
+.pb-38-vh {
+  padding-bottom: 38vh;
 }
 
 .pt-1 {
@@ -3058,6 +3067,11 @@ select {
   --tw-text-opacity: 1;
   color: rgba(129, 185, 183, var(--tw-text-opacity));
 }
+.text-green-tertiary {
+  --tw-text-opacity: 1;
+  color: rgba(12, 140, 135, var(--tw-text-opacity));
+}
+
 .text-green-active {
   --tw-text-opacity: 1;
   color: rgba(52, 199, 89, var(--tw-text-opacity));
@@ -4138,6 +4152,9 @@ CUSTOM CLASSES DASHBOARD
   box-shadow: 0 15px 30px -15px rgba(21, 22, 51, 0.2);
   border-radius: 8px;
 }
+.card .input-primary::placeholder{
+  font-size: 14px;
+}
 
 .connect-device-button {
   background-color: rgba(255, 59, 48, 0.1);
@@ -4212,6 +4229,39 @@ CUSTOM CLASSES DASHBOARD
   width: 23px;
 }
 
+.button-dark-green {
+  background-color: rgb(12, 140, 135);
+  border-radius: 4px;
+  padding: 16px 121px;
+  color: #fff;
+}
+
+.Toastify__toast-theme--colored.Toastify__toast--success {
+  background-color: rgb(12, 140, 135);
+  color: #fff;
+}
+
+.Toastify__toast {
+  background-color: rgb(12, 140, 135);
+  color: #fff;
+  border-radius: 20px !important;
+  height: 50px !important;
+}
+
+.Toastify__toast-theme--light {
+  background-color: rgb(12, 140, 135) !important;
+  color: #fff;
+}
+.Toastify__toast--rtl {
+  background-color: rgb(12, 140, 135);
+  color: #fff;
+}
+
+
+.Toastify__toast-body {
+  background-color: rgb(12, 140, 135);
+  color: #fff;
+}
 
 
 /*
@@ -4340,3 +4390,43 @@ Fonts CSS
 }
 
 
+
+
+
+
+
+
+/*
+Responsive CSS
+*/
+
+@media (max-width: 1300px) {
+  .h3 {
+    font-size: 0.75rem;
+  }
+
+  .card .input-primary::placeholder{
+    font-size: 12px;
+  }
+}
+
+
+/*
+Animations 
+*/
+
+.fade-in-dashboard {
+  animation: fade-in-dashboard 0.5s ease-in-out forwards;
+  opacity: 0;
+}
+@keyframes fade-in-dashboard {
+
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+  
+}
