@@ -56,7 +56,7 @@ export default function DashboardLanding() {
         />
             <div className="container">
                 <div className="flex flex-col">
-                    <img src="/img/primary.svg" alt="" className="logo mb-4" />
+                    <img src="/img/primaryFull.svg" alt="" className="logo mb-4" />
                     <div className="flex">
                         <div className="profile-photo mr-1">
                             <img src="/img/dwight.jpeg" alt="" className="profile" />
