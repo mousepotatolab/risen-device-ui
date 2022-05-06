@@ -56,9 +56,9 @@ export default function DashboardLanding() {
         />
             <div className="container">
                 <div className="flex flex-col">
-                    <img src="/img/primaryFull.svg" alt="" className="logo mb-4" />
+                    <img src="/img/primaryFull.svg" alt="" className="logo mb-8" />
                     <div className="flex">
-                        <div className="profile-photo mr-1">
+                        <div className="profile-photo mr-2">
                             <img src="/img/dwight.jpeg" alt="" className="profile" />
                         </div>
                         <div className="profile-info">
@@ -73,10 +73,10 @@ export default function DashboardLanding() {
         
         {emptyState && 
           <div className="flex flex-col justify-center max-w-340-px items-center mx-auto mt-10 h-full pb-38-vh">
-            <img src="/img/girl.png" alt="" />
-            <h2 className="h2 text-lg font-medium font-dark">Let's create your medical profile</h2>
+            <img src="/img/girl.svg" alt="" />
+            <h2 className="h2 text-2xl font-medium font-dark">Let's create your medical profile</h2>
             <button 
-            className="button-dark-green text-md mt-6"
+            className="button-dark-green text-md font-bold mt-6"
             onClick={startMedicalProfile}
             >Create Profle</button>
           </div>
@@ -301,32 +301,32 @@ export default function DashboardLanding() {
                         <label
                           className="block text-gray-primary text-xs font-normal my-3"
                           >
-                          Medication Name
+                          Name
                           </label>
                           <input
                           type="text"
                           className="w-full input-primary pl-2 focus:outline-none ph-text-sm"
-                          placeholder="e.g. Captopril"
+                          placeholder="Michael Scott"
                           />
                         <label
                           className="block text-gray-primary text-xs font-normal my-3"
                           >
-                          Special Note
+                          Email Address
                           </label>
                           <input
                           type="text"
                           className="w-full input-primary pl-2 focus:outline-none ph-text-sm"
-                          placeholder="e.g. Taking for high blood pressure"
+                          placeholder="e.g. michael@dunder.com"
                           />
                           <label
                           className="block text-gray-primary text-xs font-normal my-3"
                           >
-                          Special Note
+                          Phone
                           </label>
                           <input
                           type="text"
                           className="w-full input-primary pl-2 focus:outline-none ph-text-sm"
-                          placeholder="e.g. Taking for high blood pressure"
+                          placeholder="e.g. (123) 456-7890"
                           />
                           
                         </div>
@@ -345,52 +345,52 @@ export default function DashboardLanding() {
                         <label
                           className="block text-gray-primary text-xs font-normal my-3"
                           >
-                          Medication Name
+                          Carrier Name
                           </label>
                           <input
                           type="text"
                           className="w-full input-primary pl-2 focus:outline-none ph-text-sm"
-                          placeholder="e.g. Captopril"
+                          placeholder="e.g. Kaiser Permanente"
                           />
                         <label
                           className="block text-gray-primary text-xs font-normal my-3"
                           >
-                          Special Note
+                          Insurance Company Name
                           </label>
                           <input
                           type="text"
                           className="w-full input-primary pl-2 focus:outline-none ph-text-sm"
-                          placeholder="e.g. Taking for high blood pressure"
+                          placeholder="e.g. Kaiser Permanente"
                           />
                          <label
                           className="block text-gray-primary text-xs font-normal my-3"
                           >
-                          Special Note
+                          Plan No.
                           </label>
                           <input
                           type="text"
                           className="w-full input-primary pl-2 focus:outline-none ph-text-sm"
-                          placeholder="e.g. Taking for high blood pressure"
+                          placeholder="e.g. 26346346"
                           />
                           <label
                           className="block text-gray-primary text-xs font-normal my-3"
                           >
-                          Special Note
+                          Policy No.
                           </label>
                           <input
                           type="text"
                           className="w-full input-primary pl-2 focus:outline-none ph-text-sm"
-                          placeholder="e.g. Taking for high blood pressure"
+                          placeholder="e.g. 23452345"
                           />
                           <label
                           className="block text-gray-primary text-xs font-normal my-3"
                           >
-                          Special Note
+                          Group No.
                           </label>
                           <input
                           type="text"
                           className="w-full input-primary pl-2 focus:outline-none ph-text-sm"
-                          placeholder="e.g. Taking for high blood pressure"
+                          placeholder="e.g. 2345346"
                           />
                           
                         </div>
@@ -409,32 +409,32 @@ export default function DashboardLanding() {
                         <label
                           className="block text-gray-primary text-xs font-normal my-3"
                           >
-                          Medication Name
+                          Hosipital Name
                           </label>
                           <input
                           type="text"
                           className="w-full input-primary pl-2 focus:outline-none ph-text-sm"
-                          placeholder="e.g. Captopril"
+                          placeholder="e.g. Scranton Hospital"
                           />
                         <label
                           className="block text-gray-primary text-xs font-normal my-3"
                           >
-                          Special Note
+                          Address
                           </label>
                           <input
                           type="text"
                           className="w-full input-primary pl-2 focus:outline-none ph-text-sm"
-                          placeholder="e.g. Taking for high blood pressure"
+                          placeholder="e.g. 123 Main St. Scranton, PA"
                           />
                         <label
                           className="block text-gray-primary text-xs font-normal my-3"
                           >
-                          Special Note
+                          Phone
                           </label>
                           <input
                           type="text"
                           className="w-full input-primary pl-2 focus:outline-none ph-text-sm"
-                          placeholder="e.g. Taking for high blood pressure"
+                          placeholder="e.g. (916) 835-8765"
                           />
                           
                         </div>
@@ -453,32 +453,32 @@ export default function DashboardLanding() {
                         <label
                           className="block text-gray-primary text-xs font-normal my-3"
                           >
-                          Medication Name
+                          Name
                           </label>
                           <input
                           type="text"
                           className="w-full input-primary pl-2 focus:outline-none ph-text-sm"
-                          placeholder="e.g. Captopril"
+                          placeholder="e.g. Jim Halpert"
                           />
                         <label
                           className="block text-gray-primary text-xs font-normal my-3"
                           >
-                          Special Note
+                          Email Address
                           </label>
                           <input
                           type="text"
                           className="w-full input-primary pl-2 focus:outline-none ph-text-sm"
-                          placeholder="e.g. Taking for high blood pressure"
+                          placeholder="e.g. jim@dunder.com"
                           />
                         <label
                           className="block text-gray-primary text-xs font-normal my-3"
                           >
-                          Special Note
+                          Phone
                           </label>
                           <input
                           type="text"
                           className="w-full input-primary pl-2 focus:outline-none ph-text-sm"
-                          placeholder="e.g. Taking for high blood pressure"
+                          placeholder="e.g.(916) 835-8551"
                           />
                           
                           
