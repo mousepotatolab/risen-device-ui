@@ -62,12 +62,12 @@ export default function Sidebar() {
             </div>
             <ul className="md:flex-col md:min-w-full flex flex-col list-none">
               <li className="items-center">
-                <Link href="/suppliers/dashboard">
+                <Link href="/supplier/dashboard">
                   <a
                     href="#pablo"
                     className={
                       "text-xs uppercase py-3 font-bold block " +
-                      (router.pathname.indexOf("/suppliers/dashboard") !== -1
+                      (router.pathname.indexOf("/supplier/dashboard") !== -1
                         ? "text-lightBlue-500 hover:text-lightBlue-600"
                         : "text-blueGray-700 hover:text-blueGray-500")
                     }
@@ -75,7 +75,7 @@ export default function Sidebar() {
                     <i
                       className={
                         "fas fa-tv mr-2 text-sm " +
-                        (router.pathname.indexOf("/suppliers/dashboard") !== -1
+                        (router.pathname.indexOf("/supplier/dashboard") !== -1
                           ? "opacity-75"
                           : "text-blueGray-300")
                       }
@@ -85,12 +85,12 @@ export default function Sidebar() {
                 </Link>
               </li>
               <li className="items-center">
-                <Link href="/suppliers/generatecode">
+                <Link href="/supplier/generatecode">
                   <a
                     href="#pablo"
                     className={
                       "text-xs uppercase py-3 font-bold block " +
-                      (router.pathname.indexOf("/suppliers/generatecode") !== -1
+                      (router.pathname.indexOf("/supplier/generatecode") !== -1
                         ? "text-lightBlue-500 hover:text-lightBlue-600"
                         : "text-blueGray-700 hover:text-blueGray-500")
                     }
@@ -98,7 +98,7 @@ export default function Sidebar() {
                     <i
                       className={
                         "fas fa-tv mr-2 text-sm " +
-                        (router.pathname.indexOf("/suppliers/generatecode") !== -1
+                        (router.pathname.indexOf("/supplier/generatecode") !== -1
                           ? "opacity-75"
                           : "text-blueGray-300")
                       }
