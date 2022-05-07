@@ -497,14 +497,18 @@ export default function Login() {
 
                 </form>
               <div className="text-center mt-6">
+                <Link href="/dashboard">
+
+                
                 <button
                   className="bg-primary text-white active:bg-tertiary disabled:bg-secondary text-sm font-bold px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
                   type="button"
-                  disabled={!profileValid}
+                  disabled={!emailValid}
                   onClick={handleCreateProfile}
                 >
                   Create Profile
                 </button>
+                </Link>
               </div>
             </div>
               
