@@ -1408,6 +1408,12 @@ select {
   color: RGB(129, 185, 183);
   box-shadow: none;
 }
+.disabled\:bg-secondary:disabled:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgba(199, 238, 230, var(--tw-bg-opacity));
+  color: RGB(129, 185, 183);
+  box-shadow: none;
+}
 .disabled\:text-green-secondary:disabled {
   --tw-text-opacity: 1;
   color: rgba(129, 185, 183, var(--tw-text-opacity));
