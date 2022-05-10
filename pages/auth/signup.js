@@ -1,10 +1,11 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import Link from "next/link";
 import validator from 'validator'
 import isEmail from 'validator/lib/isEmail'
 import isDate from 'validator/lib/isDate'
 import OtpInput from "react-otp-input";
 import { createPopper } from "@popperjs/core";
+
 
 // layout for page
 
@@ -48,6 +49,15 @@ export default function Login() {
   let [emailValid, isEmailValid] = useState("")
   let [profileValid, isProfileValid] = useState("")
 
+  useEffect(() => {
+    console.log(phone);
+  }, [phone]);
+
+
+  const setPhoneNum = (event) => {
+    setPhone(event.target.value)
+    isValid(validatePhoneNumber(event.target.value))
+  }
 
   const handlePhoneChange = (event) => {
     console.log(phone)
@@ -91,10 +101,9 @@ export default function Login() {
   }
 
 
-  let validatePhoneNumber = (event) => {
-    console.log(phone)
-    const isValidPhoneNumber = validator.isMobilePhone(phone)
-    console.log(isValidPhoneNumber)
+  let validatePhoneNumber = (value) => {
+    let isValidPhoneNumber = validator.isMobilePhone(value, "en-US")
+    // console.log(isValidPhoneNumber, phone)
     return (isValidPhoneNumber)
   }
 
@@ -103,7 +112,7 @@ export default function Login() {
     <>
     
       <div className="container mx-auto px-4 h-full">
-        <div className="sign-in-wrapper absolute w-full flex mt-4 justify-center items-center">
+        <div className="sign-in-wrapper absolute w-full flex mt-8 justify-end items-center" style={{maxWidth: '423px', left: '0'}}>
           
         <h6 className="text-xs font-medium mr-3">Already have an account?</h6>
         <Link href="login">
@@ -138,8 +147,7 @@ export default function Login() {
                     <input
                       type="tel"
                       className="w-full input-primary pl-8 focus:outline-none"
-                      onChange={handlePhoneChange}
-                      value={phone}
+                      onKeyUp={setPhoneNum}
                       placeholder="123 456 7890"
                     />
                     {valid &&

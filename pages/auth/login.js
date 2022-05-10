@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import Link from "next/link";
 import validator from 'validator'
 import OtpInput from "react-otp-input";
@@ -31,9 +31,12 @@ export default function Login() {
   let [otpValid, isOtpValid] = useState("")
 
 
+  useEffect(() => {
+    console.log(phone);
+  }, [phone]);
 
-  const handlePhoneChange = (event) => {
-    console.log(phone)
+
+  const setPhoneNum = (event) => {
     setPhone(event.target.value)
     isValid(validatePhoneNumber(event.target.value))
   }
@@ -48,10 +51,9 @@ export default function Login() {
   }
 
 
-  let validatePhoneNumber = (event) => {
-    console.log(phone)
-    const isValidPhoneNumber = validator.isMobilePhone(phone)
-    console.log(isValidPhoneNumber)
+  let validatePhoneNumber = (value) => {
+    let isValidPhoneNumber = validator.isMobilePhone(value, "en-US")
+    // console.log(isValidPhoneNumber, phone)
     return (isValidPhoneNumber)
   }
 
@@ -61,7 +63,7 @@ export default function Login() {
     
       <div className="container mx-auto px-4 h-full">
 
-        <div className="sign-in-wrapper absolute w-full flex mt-4 justify-center items-center">
+        <div className="sign-in-wrapper absolute w-full flex mt-8 justify-end items-center" style={{maxWidth: '423px', left: '0'}}>
           
         <h6 className="text-xs font-medium mr-3">Don't have an account?</h6>
         <Link href="signup">
@@ -89,14 +91,16 @@ export default function Login() {
                     >
                       Enter phone number
                     </label>
-                    <span style={{top: '32px', left: '9px'}} className="z-10 h-full leading-snug font-normal absolute text-center text-blueGray-300 bg-transparent rounded text-base items-center justify-center w-8 pl-2 py-1">
+                    <span style={{top: '34px', left: '9px'}} className="z-10 h-full leading-snug font-normal absolute text-center text-blueGray-300 bg-transparent rounded text-base items-center justify-center w-8 pl-2 py-1">
                       <i className="icon-phone-lg text-green-primary disabled:text-green-secondary" disabled={!valid}></i>
                     </span>
                     <input
                       type="tel"
                       className="w-full input-primary pl-8 focus:outline-none"
-                      onChange={handlePhoneChange}
-                      value={phone}
+                      // onChange={setPhoneNum}
+                      onKeyUp={setPhoneNum}
+                      // onChange={() => {}}
+                      // value={phone}
                       placeholder="123 456 7890"
                     />
                     {valid &&
