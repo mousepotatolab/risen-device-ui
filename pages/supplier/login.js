@@ -5,7 +5,7 @@ import Router, { withRouter, useRouter } from 'next/router'
 
 import Auth from "layouts/Auth.js";
 
-export default function Index() {
+export default function Login() {
   const [loginValue, setLoginValue] = useState({username: "", password: ""})
   const [errorMessage, setErrorMessage] = useState("")
   const handleLoginValue = (key) => (e) => {
@@ -100,4 +100,4 @@ export default function Index() {
   );
 }
 
-Index.layout = Auth;
+Login.layout = Auth;
