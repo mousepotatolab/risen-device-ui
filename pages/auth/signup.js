@@ -114,10 +114,10 @@ export default function Login() {
       <div className="container mx-auto px-4 h-full">
         <div className="sign-in-wrapper absolute w-full flex mt-8 justify-end items-center" style={{maxWidth: '423px', left: '0'}}>
           
-        <h6 className="text-xs font-medium mr-3">Already have an account?</h6>
+        <h6 className="text-md font-medium mr-3">Already have an account?</h6>
         <Link href="login">
         <button 
-        className="bg-primary font-medium text-white text-xs px-3 py-2 rounded"
+        className="bg-primary font-medium text-white text-md px-4 py-2 rounded"
         >
         Sign In</button>
         </Link>
@@ -141,7 +141,7 @@ export default function Login() {
                     >
                       Enter phone number
                     </label>
-                    <span style={{top: '32px', left: '9px'}} className="z-10 h-full leading-snug font-normal absolute text-center text-blueGray-300 bg-transparent rounded text-base items-center justify-center w-8 pl-2 py-1">
+                    <span style={{top: '34px', left: '9px'}} className="z-10 h-full leading-snug font-normal absolute text-center text-blueGray-300 bg-transparent rounded text-base items-center justify-center w-8 pl-2 py-1">
                       <i className="icon-phone-lg text-green-primary disabled:text-green-secondary" disabled={!valid}></i>
                     </span>
                     <input

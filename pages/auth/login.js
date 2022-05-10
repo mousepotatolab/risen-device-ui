@@ -65,10 +65,10 @@ export default function Login() {
 
         <div className="sign-in-wrapper absolute w-full flex mt-8 justify-end items-center" style={{maxWidth: '423px', left: '0'}}>
           
-        <h6 className="text-xs font-medium mr-3">Don't have an account?</h6>
+        <h6 className="text-md font-medium mr-3">Don't have an account?</h6>
         <Link href="signup">
         <button 
-        className="bg-primary font-medium text-white text-xs px-3 py-2 rounded"
+        className="bg-primary font-medium text-white text-md px-4 py-2 rounded"
         >
         Sign Up</button>
         </Link>
