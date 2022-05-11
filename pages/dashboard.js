@@ -3,6 +3,9 @@ import React, {useState} from "react";
 
 import { ToastContainer, toast } from 'react-toastify';
   import 'react-toastify/dist/ReactToastify.css';
+  import validator from 'validator'
+  import isEmail from 'validator/lib/isEmail'
+  import isDate from 'validator/lib/isDate'
 
 // layout for page
 
@@ -27,6 +30,32 @@ export default function DashboardLanding() {
 
     const [isShowing, setIsShowing] = useState(false);
 
+
+    //Settings 
+    let [activeButton, isActiveButton] = useState(true)
+
+    const toggleActiveButton = () => {
+      if (activeButton) {
+        isActiveButton(false)
+      }
+      if (!activeButton) {
+        isActiveButton(true)
+      }
+    }
+
+    let [firstName, setFirstName] = useState("Dwight")
+  let [lastName, setLastName] = useState("Schrute")
+
+  let [dob, setDOB] = useState("11/11/1990")
+  let [dobValid, isDOBValid] = useState("")
+
+
+  let [gender, setGender] = useState("Male")
+
+
+  let [email, setEmail] = useState("dwight@dundermifflin.com")
+  let [emailValid, isEmailValid] = useState("")
+
     const toggle = () => {
       setIsShowing(!isShowing);
     };
@@ -36,6 +65,29 @@ export default function DashboardLanding() {
     }
     const toggleUIState = () => {
       setUIState(false)
+    }
+
+    const handleFirstValid = (event) => {
+      setFirstName(event.target.value)
+    }
+    const handleLastValid = (event) => {
+      setLastName(event.target.value)
+    }
+    const handleDOBValid = (event) => {
+      if(isDate(event.target.value,{format: "MM/DD/YYYY",})) {
+        isDOBValid(true)
+        console.log("dob valid")
+      }
+      setDOB(event.target.value)
+    }
+    const handleGender = (event) => {
+      setGender(event.target.value)
+    }
+    const handleEmail= (event) => {
+      if(isEmail(event.target.value)) {
+        isEmailValid(true)
+      }
+      setEmail(event.target.value)
     }
 
   return (
@@ -85,7 +137,7 @@ export default function DashboardLanding() {
         {!emptyState &&
         <div className="fade-in-dashboard">
         
-        <div className="flex justify-between">
+        <div className="flex container justify-between">
 
        
         <div className="tab-wrapper w-full bg-dashboard mb-4">
@@ -552,9 +604,168 @@ export default function DashboardLanding() {
                 </p>
               </div>
               <div className={openTab === 3 ? "block" : "hidden"} id="link3">
-                <p>
-                  Placeholder for Settings
-                </p>
+                <div className="container flex">
+                  <div className="card-wrapper fb-423 mh-632">
+                    <div className="card">
+                    <div className="relative flex flex-wrap items-stretch w-full mb-3">
+                    <label
+                      className="block text-sm font-bold my-3"
+                    >
+                      First Name
+                    </label>
+                    <input
+                      type="text"
+                      className="w-full input-primary pl-2 py-13 focus:outline-none"
+                      onChange={handleFirstValid}
+                      value={firstName}
+                      placeholder="e.g. Dwight"
+                    />
+                    <label
+                      className="block text-sm font-bold my-3"
+                    >
+                      Last Name
+                    </label>
+                    <input
+                      type="text"
+                      className="w-full input-primary pl-2 py-13 focus:outline-none"
+                      onChange={handleLastValid}
+                      value={lastName}
+                      placeholder="e.g. Schrute"
+                    />
+                    <label
+                      className="block text-sm font-bold my-3"
+                    >
+                      Date Of Birth
+                    </label>
+                    <input
+                      type="text"
+                      className="w-full input-primary pl-2 py-13 focus:outline-none"
+                      onChange={handleDOBValid}
+                      value={dob}
+                      placeholder="e.g. 11/11/1990"
+                    />
+                    <label
+                      className="block text-sm font-bold my-3"
+                    >
+                      Gender
+                    </label>
+                   
+                    {/* <input
+                      type="text"
+                      className="w-full input-primary pl-2 py-13 focus:outline-none"
+                      onChange={handleGender}
+                      onKeyDown={isFormValid}
+                      value={gender}
+                      placeholder="e.g."
+                    /> */}
+                    <select
+                      type="text"
+                      className="w-full input-primary pl-2 py-16-px focus:outline-none"
+                      onChange={handleGender}
+                      value={gender}
+                      placeholder="e.g."
+
+                    >
+                      <option>Female</option>
+                      <option>Male</option>
+                      <option>Non-binary</option>
+                      <option>N/A</option>
+                    </select>
+                    
+                    <label
+                      className="block text-sm font-bold my-3"
+                    >
+                      Email
+                    </label>
+                    <input
+                      type="text"
+                      className="w-full input-primary pl-2 py-13 focus:outline-none mb-6"
+                      onChange={handleEmail}
+                      value={email}
+                      placeholder="e.g. dwight@dundermifflin.com"
+                    />
+                   
+                    </div>
+                    </div>
+                  </div>
+                  <div className="fb-576">
+                  <div className="card-wrapper w-full ml-4">
+                    <div className="card">
+                    <div className="relative flex flex-wrap items-stretch w-full mb-6">
+                    <div className="flex w-full justify-between items-center mb-4">
+                    <div className="wrapper flex">
+                    <h2 className="h2 text-2xl font-regular">Deactivate Profile</h2>
+                    {activeButton &&
+                      <button className="active-button ml-4">Active</button>
+                    }
+                    {!activeButton &&
+                      <button className="inactive-button ml-4">Deactivated</button>
+                    }
+                    </div>
+                    <input
+                              className="react-switch-checkbox"
+                              id={`react-switch-new-settings`}
+                              type="checkbox"
+                              onClick={toggleActiveButton}
+                          />
+                          <label
+                              className="react-switch-label"
+                              htmlFor={`react-switch-new-settings`}
+                          >
+                              <span className={`react-switch-button`} />
+                          </label>
+                    </div>
+                    <p className="p text-md font-regular mb-6">If you deactivate your account, your profile details will be disabled. If the QR on your devices is scanned, no information will be visable to the medical service provider.</p>
+                    <p className="p text-md font-regular mb-6">It will not impact your dependent accounts</p>
+                    <p className="p text-md font-medium mb-6 text-red-primary">Please note you will be still charged if you have premium subscription. You can cancel premium subscription below.</p>
+
+                    <h2 className="h2 text-2xl font-regular mb-4">Delete Profile</h2>
+                    <p className="p text-md font-regular mb-6 text-red-primary">All your and dependent profile information will be deleted. If the QR on your devices is scanned, no information will be visible to the medical service provider</p>
+                    <input
+                          type="text"
+                          className="w-full input-primary pl-2 py-13 mw-343 focus:outline-none ph-text-sm"
+                          placeholder="Type full name to delete this account"
+                          />
+                      
+                    </div>
+                    <button className="settings-button font-semibold">Delete Profile</button>
+                    </div>
+                  </div>
+                  <div className="card-wrapper w-full ml-4">
+                    <div className="card">
+                    <div className="relative flex flex-wrap items-stretch w-full mb-3">
+                    <div className="flex w-full justify-between items-center mb-4">
+                    <div className="wrapper flex">
+                    <h2 className="h2 text-2xl font-regular">Premium Subscription</h2>
+                   
+                    </div>
+                    </div>
+                    <div className="flex justify-between w-full mb-6">
+                      <div className="wrapper">
+                        <p className="p font-normal text-sm mb-2">Next Billing Date</p>
+                        <p className="p font-bold text-md">April 01, 2022</p>
+                      </div>
+                      <div className="wrapper">
+                      <p className="p font-normal text-right text-sm mb-2">You'll Pay</p>
+                        <p className="p font-bold text-md">$5/Month</p>
+                      </div>
+                    </div>
+                    <div className="flex justify-between w-full items-end mb-6">
+                      <div className="wrapper">
+                        <p className="p font-normal text-sm mb-2">Payment Method</p>
+                        <p className="p font-bold text-md">**** **** **** 1234</p>
+                      </div>
+                      <div className="wrapper">
+                      <button className="change-button text-green-primary font-bold">Change</button>
+                      </div>
+                    </div>
+                    <button className="settings-button font-semibold">Cancel</button>
+                    </div>
+                    </div>
+                  </div>
+                  </div>
+                  
+                </div>
               </div>
             </div>
             }
@@ -888,9 +1099,168 @@ export default function DashboardLanding() {
                 </p>
               </div>
               <div className={openTab === 3 ? "block" : "hidden"} id="link3">
-                <p>
-                  Placeholder for Settings
-                </p>
+              <div className="container flex">
+                  <div className="card-wrapper fb-423 mh-632">
+                    <div className="card">
+                    <div className="relative flex flex-wrap items-stretch w-full mb-3">
+                    <label
+                      className="block text-sm font-bold my-3"
+                    >
+                      First Name
+                    </label>
+                    <input
+                      type="text"
+                      className="w-full input-primary pl-2 py-13 focus:outline-none"
+                      onChange={handleFirstValid}
+                      value={firstName}
+                      placeholder="e.g. Dwight"
+                    />
+                    <label
+                      className="block text-sm font-bold my-3"
+                    >
+                      Last Name
+                    </label>
+                    <input
+                      type="text"
+                      className="w-full input-primary pl-2 py-13 focus:outline-none"
+                      onChange={handleLastValid}
+                      value={lastName}
+                      placeholder="e.g. Schrute"
+                    />
+                    <label
+                      className="block text-sm font-bold my-3"
+                    >
+                      Date Of Birth
+                    </label>
+                    <input
+                      type="text"
+                      className="w-full input-primary pl-2 py-13 focus:outline-none"
+                      onChange={handleDOBValid}
+                      value={dob}
+                      placeholder="e.g. 11/11/1990"
+                    />
+                    <label
+                      className="block text-sm font-bold my-3"
+                    >
+                      Gender
+                    </label>
+                   
+                    {/* <input
+                      type="text"
+                      className="w-full input-primary pl-2 py-13 focus:outline-none"
+                      onChange={handleGender}
+                      onKeyDown={isFormValid}
+                      value={gender}
+                      placeholder="e.g."
+                    /> */}
+                    <select
+                      type="text"
+                      className="w-full input-primary pl-2 py-16-px focus:outline-none"
+                      onChange={handleGender}
+                      value={gender}
+                      placeholder="e.g."
+
+                    >
+                      <option>Female</option>
+                      <option>Male</option>
+                      <option>Non-binary</option>
+                      <option>N/A</option>
+                    </select>
+                    
+                    <label
+                      className="block text-sm font-bold my-3"
+                    >
+                      Email
+                    </label>
+                    <input
+                      type="text"
+                      className="w-full input-primary pl-2 py-13 focus:outline-none mb-6"
+                      onChange={handleEmail}
+                      value={email}
+                      placeholder="e.g. dwight@dundermifflin.com"
+                    />
+                   
+                    </div>
+                    </div>
+                  </div>
+                  <div className="fb-576">
+                  <div className="card-wrapper w-full ml-4">
+                    <div className="card">
+                    <div className="relative flex flex-wrap items-stretch w-full mb-6">
+                    <div className="flex w-full justify-between items-center mb-4">
+                    <div className="wrapper flex">
+                    <h2 className="h2 text-2xl font-regular">Deactivate Profile</h2>
+                    {activeButton &&
+                      <button className="active-button ml-4">Active</button>
+                    }
+                    {!activeButton &&
+                      <button className="inactive-button ml-4">Deactivated</button>
+                    }
+                    </div>
+                    <input
+                              className="react-switch-checkbox"
+                              id={`react-switch-new-settings`}
+                              type="checkbox"
+                              onClick={toggleActiveButton}
+                          />
+                          <label
+                              className="react-switch-label"
+                              htmlFor={`react-switch-new-settings`}
+                          >
+                              <span className={`react-switch-button`} />
+                          </label>
+                    </div>
+                    <p className="p text-md font-regular mb-6">If you deactivate your account, your profile details will be disabled. If the QR on your devices is scanned, no information will be visable to the medical service provider.</p>
+                    <p className="p text-md font-regular mb-6">It will not impact your dependent accounts</p>
+                    <p className="p text-md font-medium mb-6 text-red-primary">Please note you will be still charged if you have premium subscription. You can cancel premium subscription below.</p>
+
+                    <h2 className="h2 text-2xl font-regular mb-4">Delete Profile</h2>
+                    <p className="p text-md font-regular mb-6 text-red-primary">All your and dependent profile information will be deleted. If the QR on your devices is scanned, no information will be visible to the medical service provider</p>
+                    <input
+                          type="text"
+                          className="w-full input-primary pl-2 py-13 mw-343 focus:outline-none ph-text-sm"
+                          placeholder="Type full name to delete this account"
+                          />
+                      
+                    </div>
+                    <button className="settings-button font-semibold">Delete Profile</button>
+                    </div>
+                  </div>
+                  <div className="card-wrapper w-full ml-4">
+                    <div className="card">
+                    <div className="relative flex flex-wrap items-stretch w-full mb-3">
+                    <div className="flex w-full justify-between items-center mb-4">
+                    <div className="wrapper flex">
+                    <h2 className="h2 text-2xl font-regular">Premium Subscription</h2>
+                   
+                    </div>
+                    </div>
+                    <div className="flex justify-between w-full mb-6">
+                      <div className="wrapper">
+                        <p className="p font-normal text-sm mb-2">Next Billing Date</p>
+                        <p className="p font-bold text-md">April 01, 2022</p>
+                      </div>
+                      <div className="wrapper">
+                      <p className="p font-normal text-right text-sm mb-2">You'll Pay</p>
+                        <p className="p font-bold text-md">$5/Month</p>
+                      </div>
+                    </div>
+                    <div className="flex justify-between w-full items-end mb-6">
+                      <div className="wrapper">
+                        <p className="p font-normal text-sm mb-2">Payment Method</p>
+                        <p className="p font-bold text-md">**** **** **** 1234</p>
+                      </div>
+                      <div className="wrapper">
+                      <button className="change-button text-green-primary font-bold">Change</button>
+                      </div>
+                    </div>
+                    <button className="settings-button font-semibold">Cancel</button>
+                    </div>
+                    </div>
+                  </div>
+                  </div>
+                  
+                </div>
               </div>
             </div>
             }  

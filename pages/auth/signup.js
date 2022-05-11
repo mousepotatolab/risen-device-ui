@@ -48,6 +48,7 @@ export default function Login() {
   let [email, setEmail] = useState("")
   let [emailValid, isEmailValid] = useState("")
   let [profileValid, isProfileValid] = useState("")
+  let [formValid, setFormValid] = useState("")
 
   useEffect(() => {
     console.log(phone);
@@ -72,7 +73,7 @@ export default function Login() {
 
 
   const handleOTPUp = (event) => {
-    validatePhoneNumber()
+    validatePhoneNumber(phone)
     setSignUp(false)
     setOTPUp(true)
   }
@@ -98,6 +99,12 @@ export default function Login() {
       isEmailValid(true)
     }
     setEmail(event.target.value)
+  }
+
+  const isFormValid = (event) => {
+    if(isEmailValid && setGender && isDOBValid && firstName && lastName) {
+      setFormValid(true)
+    }
   }
 
 
@@ -146,7 +153,7 @@ export default function Login() {
                     </span>
                     <input
                       type="tel"
-                      className="w-full input-primary pl-8 focus:outline-none"
+                      className="w-full input-primary pl-8 px-8 py-13 focus:outline-none"
                       onKeyUp={setPhoneNum}
                       placeholder="123 456 7890"
                     />
@@ -405,7 +412,7 @@ export default function Login() {
         </div>
         {createProfile && 
         
-        <div  style={{top: '40px'}} className="flex relative content-center items-center justify-center">
+        <div  style={{top: '80px'}} className="flex relative content-center items-center justify-center">
           <div className="w-full  px-4">
             <div className="relative flex flex-col min-w-0 break-words w-full mb-6 rounded-l border-0">
 
@@ -421,13 +428,14 @@ export default function Login() {
                     </label>
                     <input
                       type="text"
-                      className="w-full input-primary pl-2 focus:outline-none"
+                      className="w-full input-primary pl-2 py-13 focus:outline-none"
                       onChange={handleFirstValid}
+                      onKeyDown={isFormValid}
                       value={firstName}
                       placeholder="e.g. Dwight"
                     />
                     {firstName &&
-                    <span style={{top: '50px', right: '9px'}} className="z-10  leading-snug font-normal absolute text-center text-blueGray-300 bg-transparent rounded text-base items-center justify-center w-8 pl-2 py-1">
+                    <span style={{top: '54px', right: '9px'}} className="z-10  leading-snug font-normal absolute text-center text-blueGray-300 bg-transparent rounded text-base items-center justify-center w-8 pl-2 py-1">
                       <i className="icon-check text-green-active disabled:display-none"></i>
                     </span>
                     }
@@ -438,13 +446,14 @@ export default function Login() {
                     </label>
                     <input
                       type="text"
-                      className="w-full input-primary pl-2 focus:outline-none"
+                      className="w-full input-primary pl-2 py-13 focus:outline-none"
                       onChange={handleLastValid}
+                      onKeyDown={isFormValid}
                       value={lastName}
                       placeholder="e.g. Schrute"
                     />
                     {lastName &&
-                    <span style={{top: '137px', right: '9px'}} className="z-10 leading-snug font-normal absolute text-center text-blueGray-300 bg-transparent rounded text-base items-center justify-center w-8 pl-2 py-1">
+                    <span style={{top: '145px', right: '9px'}} className="z-10 leading-snug font-normal absolute text-center text-blueGray-300 bg-transparent rounded text-base items-center justify-center w-8 pl-2 py-1">
                       <i className="icon-check text-green-active disabled:display-none"></i>
                     </span>
                     }
@@ -455,13 +464,14 @@ export default function Login() {
                     </label>
                     <input
                       type="text"
-                      className="w-full input-primary pl-2 focus:outline-none"
+                      className="w-full input-primary pl-2 py-13 focus:outline-none"
                       onChange={handleDOBValid}
+                      onKeyDown={isFormValid}
                       value={dob}
                       placeholder="e.g. 11/11/1990"
                     />
                     {dobValid &&
-                    <span style={{top: '225px', right: '9px'}} className="z-10  leading-snug font-normal absolute text-center text-blueGray-300 bg-transparent rounded text-base items-center justify-center w-8 pl-2 py-1">
+                    <span style={{top: '236px', right: '9px'}} className="z-10  leading-snug font-normal absolute text-center text-blueGray-300 bg-transparent rounded text-base items-center justify-center w-8 pl-2 py-1">
                       <i className="icon-check text-green-active disabled:display-none"></i>
                     </span>
                     }
@@ -471,15 +481,30 @@ export default function Login() {
                       Gender
                     </label>
                    
-                    <input
+                    {/* <input
                       type="text"
-                      className="w-full input-primary pl-2 focus:outline-none"
+                      className="w-full input-primary pl-2 py-13 focus:outline-none"
                       onChange={handleGender}
+                      onKeyDown={isFormValid}
                       value={gender}
-                      placeholder="e.g. Dwight"
-                    />
+                      placeholder="e.g."
+                    /> */}
+                    <select
+                      type="text"
+                      className="w-full input-primary pl-2 py-16-px focus:outline-none"
+                      onChange={handleGender}
+                      onKeyDown={isFormValid}
+                      value={gender}
+                      placeholder="e.g."
+
+                    >
+                      <option>Female</option>
+                      <option>Male</option>
+                      <option>Non-binary</option>
+                      <option>N/A</option>
+                    </select>
                     {gender &&
-                    <span style={{top: '308px', right: '9px'}} className="z-10 leading-snug font-normal absolute text-center text-blueGray-300 bg-transparent rounded text-base items-center justify-center w-8 pl-2 py-1">
+                    <span style={{top: '327px', right: '20px'}} className="z-10 leading-snug font-normal absolute text-center text-blueGray-300 bg-transparent rounded text-base items-center justify-center w-8 pl-2 py-1">
                       <i className="icon-check text-green-active disabled:display-none"></i>
                     </span>
                     }
@@ -490,13 +515,14 @@ export default function Login() {
                     </label>
                     <input
                       type="text"
-                      className="w-full input-primary pl-2 focus:outline-none mb-6"
+                      className="w-full input-primary pl-2 py-13 focus:outline-none mb-6"
                       onChange={handleEmail}
+                      onKeyDown={isFormValid}
                       value={email}
                       placeholder="e.g. dwight@dundermifflin.com"
                     />
                     {emailValid &&
-                    <span style={{top: '394px', right: '9px'}} className="z-10 leading-snug font-normal absolute text-center text-blueGray-300 bg-transparent rounded text-base items-center justify-center w-8 pl-2 py-1">
+                    <span style={{top: '418px', right: '9px'}} className="z-10 leading-snug font-normal absolute text-center text-blueGray-300 bg-transparent rounded text-base items-center justify-center w-8 pl-2 py-1">
                       <i className="icon-check text-green-active disabled:display-none"></i>
                     </span>
                     }
@@ -511,7 +537,7 @@ export default function Login() {
                 <button
                   className="bg-primary text-white active:bg-tertiary disabled:bg-secondary text-sm font-bold px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
                   type="button"
-                  disabled={!emailValid}
+                  disabled={!formValid}
                   onClick={handleCreateProfile}
                 >
                   Create Profile

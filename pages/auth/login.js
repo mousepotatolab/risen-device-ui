@@ -45,7 +45,7 @@ export default function Login() {
   const handleOTP = (event) => {
   }
   const handleOTPIn = (event) => {
-    validatePhoneNumber()
+    validatePhoneNumber(phone)
     setSignIn(false)
     setOTPIn(true)
   }
@@ -96,7 +96,7 @@ export default function Login() {
                     </span>
                     <input
                       type="tel"
-                      className="w-full input-primary pl-8 focus:outline-none"
+                      className="w-full input-primary pl-8 px-8 py-13 focus:outline-none"
                       // onChange={setPhoneNum}
                       onKeyUp={setPhoneNum}
                       // onChange={() => {}}

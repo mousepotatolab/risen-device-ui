@@ -2337,6 +2337,9 @@ select {
 .mr-4 {
   margin-right: 1rem;
 }
+.ml-4 {
+  margin-left: 1rem;
+}
 
 .mb-4 {
   margin-bottom: 1rem;
@@ -2447,6 +2450,12 @@ select {
 
 .max-w-full {
   max-width: 100%;
+}
+.mw-343 {
+  max-width: 343px;
+}
+.mh-632 {
+  max-height: 632px;
 }
 
 .max-w-120-px {
@@ -2674,10 +2683,22 @@ select {
   padding-left: 0.5rem;
   padding-right: 0.5rem;
 }
+.px-8 {
+  padding-left: 2.5rem;
+  padding-right: 2.5rem;
+}
 
 .py-3 {
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
+}
+.py-13 {
+  padding-top: 13px;
+  padding-bottom: 13px;
+}
+.py-16-px {
+  padding-top: 16px;
+  padding-bottom: 16px;
 }
 
 .px-3 {
@@ -4068,7 +4089,6 @@ CUSTOM CLASSES AUTH
   background-color: #effaf8;
   border: 1px solid #effaf8;
   line-height: 0.75rem;
-  padding: 13px 2.5rem 13px;
 }
 
 .input-primary:focus {
@@ -4151,6 +4171,13 @@ CUSTOM CLASSES DASHBOARD
   flex-basis: 239px;
 }
 
+.fb-423 {
+  flex-basis: 423px;
+}
+.fb-576 {
+  flex-basis: 576px;
+}
+
 .information-section {
   background-color: #fff;
   padding: 24px 57px 0 16px;
@@ -4216,6 +4243,29 @@ CUSTOM CLASSES DASHBOARD
 .profile {
   width: 100%;
   border-radius: 50%;
+}
+
+
+.settings-button {
+  background-color: rgb(12, 140, 135);
+  border-radius: 4px;
+  width: 163px;
+  padding: 14px 0px;
+  color: #fff;
+}
+.active-button {
+  background-color: rgb(52, 199, 89);
+  height: 32px;
+  border-radius: 16px;
+  padding: 0px 15px;
+  color: #fff;
+}
+.inactive-button {
+  background-color: rgb(255, 59, 48);
+  height: 32px;
+  border-radius: 16px;
+  padding: 0px 15px;
+  color: #fff;
 }
 
 
