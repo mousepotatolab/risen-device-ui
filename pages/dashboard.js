@@ -33,6 +33,7 @@ export default function DashboardLanding() {
 
     //Settings 
     let [activeButton, isActiveButton] = useState(true)
+    let [deleteValid, setDelete] = useState("")
 
     const toggleActiveButton = () => {
       if (activeButton) {
@@ -43,6 +44,15 @@ export default function DashboardLanding() {
       }
     }
 
+    
+    const handleDelete = (event) => {
+      if (event.target.value === firstName + ' ' + lastName) {
+        setDelete(true)
+      }
+
+      console.log(firstName + lastName)
+    }
+
     let [firstName, setFirstName] = useState("Dwight")
   let [lastName, setLastName] = useState("Schrute")
 
@@ -51,6 +61,7 @@ export default function DashboardLanding() {
 
 
   let [gender, setGender] = useState("Male")
+  let [phone, setPhone] = useState("(880) 567-9292")
 
 
   let [email, setEmail] = useState("dwight@dundermifflin.com")
@@ -90,11 +101,17 @@ export default function DashboardLanding() {
       setEmail(event.target.value)
     }
 
+    const handlePhoneUpdate = (event) => {
+      setPhone(event.target.value)
+      console.log(firstName + lastName)
+    }
+    
+
   return (
     <>
     
       <div className="flex h-full">
-        <section className="profile-section min-w-239-px">
+        <section className="profile-section min-w-239-px pr-4">
         <ToastContainer
         position="top-center"
         autoClose={5000}
@@ -109,7 +126,7 @@ export default function DashboardLanding() {
             <div className="container">
                 <div className="flex flex-col">
                     <img src="/img/primaryFull.svg" alt="" className="logo mb-8" />
-                    <div className="flex">
+                    <div className="flex mb-6">
                         <div className="profile-photo mr-2">
                             <img src="/img/dwight.jpeg" alt="" className="profile" />
                         </div>
@@ -118,6 +135,26 @@ export default function DashboardLanding() {
                             <h5 className="h5 text-xs text-gray-primary">Primary Account</h5>
                         </div>
                     </div>
+                    <div className="flex justify-between mb-6">
+                      <p className="p text-xs font-normal">Medical Profiles</p>
+                      <i className="icon-Plus2x icon-sm text-green-primary"></i>
+                    </div>
+                    <div className="wrapper">
+                      <button className="flex w-full active-profile mb-2">
+                        <img src="/img/dwight.jpeg" alt="proflie" className="profile-sm mr-2" />
+                        <h5 className="h5 profile-name text-sm">Dwight Schrute</h5>
+                      </button>
+                    </div>
+                    <div className="wrapper">
+                      <button className="flex w-full inactive-profile">
+                        <img src="/img/angela.jpeg" alt="proflie" className="profile-sm mr-2" />
+                        <h5 className="h5 profile-name text-sm">Angela Martin</h5>
+                      </button>
+                    </div>
+                </div>
+                <div className="wrapper fixed-bottom">
+                  <div className="flex mb-4"><img src="/img/settings.svg" alt="settings-icon"></img><h5 className="h5 font-medium ml-2">Settings</h5> </div>
+                  <div className="flex"><img src="/img/logout.svg" alt="logout-icon"></img> <h5 className="h5 font-medium ml-2">Sign Out</h5> </div>
                 </div>
             </div>
         </section>
@@ -605,11 +642,11 @@ export default function DashboardLanding() {
               </div>
               <div className={openTab === 3 ? "block" : "hidden"} id="link3">
                 <div className="container flex">
-                  <div className="card-wrapper fb-423 mh-632">
+                  <div className="card-wrapper fb-423 h-full">
                     <div className="card">
                     <div className="relative flex flex-wrap items-stretch w-full mb-3">
                     <label
-                      className="block text-sm font-bold my-3"
+                      className="block text-sm font-regular font-grey my-settings"
                     >
                       First Name
                     </label>
@@ -621,7 +658,7 @@ export default function DashboardLanding() {
                       placeholder="e.g. Dwight"
                     />
                     <label
-                      className="block text-sm font-bold my-3"
+                      className="block text-xs font-regular font-grey my-settings"
                     >
                       Last Name
                     </label>
@@ -633,7 +670,7 @@ export default function DashboardLanding() {
                       placeholder="e.g. Schrute"
                     />
                     <label
-                      className="block text-sm font-bold my-3"
+                      className="block text-xs font-regular font-grey my-settings"
                     >
                       Date Of Birth
                     </label>
@@ -645,7 +682,7 @@ export default function DashboardLanding() {
                       placeholder="e.g. 11/11/1990"
                     />
                     <label
-                      className="block text-sm font-bold my-3"
+                      className="block text-xs font-regular font-grey my-settings"
                     >
                       Gender
                     </label>
@@ -673,16 +710,28 @@ export default function DashboardLanding() {
                     </select>
                     
                     <label
-                      className="block text-sm font-bold my-3"
+                      className="block text-xs font-regular font-grey my-settings"
                     >
                       Email
                     </label>
                     <input
                       type="text"
-                      className="w-full input-primary pl-2 py-13 focus:outline-none mb-6"
+                      className="w-full input-primary pl-2 py-13 focus:outline-none"
                       onChange={handleEmail}
                       value={email}
                       placeholder="e.g. dwight@dundermifflin.com"
+                    />
+                    <label
+                      className="block text-xs font-regular font-grey my-settings"
+                    >
+                      Login Phone Number
+                    </label>
+                    <input
+                      type="text"
+                      className="w-full input-primary pl-2 py-13 focus:outline-none"
+                      onChange={handlePhoneUpdate}
+                      value={phone}
+                      placeholder="e.g. (916) 867-5309"
                     />
                    
                     </div>
@@ -719,19 +768,10 @@ export default function DashboardLanding() {
                     <p className="p text-md font-regular mb-6">It will not impact your dependent accounts</p>
                     <p className="p text-md font-medium mb-6 text-red-primary">Please note you will be still charged if you have premium subscription. You can cancel premium subscription below.</p>
 
-                    <h2 className="h2 text-2xl font-regular mb-4">Delete Profile</h2>
-                    <p className="p text-md font-regular mb-6 text-red-primary">All your and dependent profile information will be deleted. If the QR on your devices is scanned, no information will be visible to the medical service provider</p>
-                    <input
-                          type="text"
-                          className="w-full input-primary pl-2 py-13 mw-343 focus:outline-none ph-text-sm"
-                          placeholder="Type full name to delete this account"
-                          />
-                      
+                    
                     </div>
-                    <button className="settings-button font-semibold">Delete Profile</button>
                     </div>
-                  </div>
-                  <div className="card-wrapper w-full ml-4">
+                  <div className="wrapper w-full mt-4">
                     <div className="card">
                     <div className="relative flex flex-wrap items-stretch w-full mb-3">
                     <div className="flex w-full justify-between items-center mb-4">
@@ -759,9 +799,30 @@ export default function DashboardLanding() {
                       <button className="change-button text-green-primary font-bold">Change</button>
                       </div>
                     </div>
-                    <button className="settings-button font-semibold">Cancel</button>
+                    <button className="settings-button-cancel font-semibold">Cancel Subscription</button>
                     </div>
                     </div>
+                  </div>
+                  <div className="wrapper w-full mt-4">
+                    <div className="card">
+                    <div className="relative flex flex-wrap items-stretch w-full mb-3">
+                    <h2 className="h2 text-2xl font-regular mb-4">Delete Profile</h2>
+                    <p className="p text-md font-regular mb-6 text-red-primary">All your and dependent profile information will be deleted. If the QR on your devices is scanned, no information will be visible to the medical service provider</p>
+                    <input
+                          type="text"
+                          className="w-full input-primary pl-2 py-13 mw-343 focus:outline-none ph-text-sm"
+                          placeholder="Type full name to delete this account"
+                          onChange={handleDelete}
+                          />
+                      
+                    </div>
+                    <button className="settings-button active:bg-primary disabled:bg-inactive font-semibold"
+                    disabled={!deleteValid}
+                    // onClick={handleDelete}
+                    >Permanently Delete Account</button>
+                    </div>
+                    </div>
+                  
                   </div>
                   </div>
                   
@@ -1100,11 +1161,11 @@ export default function DashboardLanding() {
               </div>
               <div className={openTab === 3 ? "block" : "hidden"} id="link3">
               <div className="container flex">
-                  <div className="card-wrapper fb-423 mh-632">
+                  <div className="card-wrapper fb-423 h-full">
                     <div className="card">
                     <div className="relative flex flex-wrap items-stretch w-full mb-3">
                     <label
-                      className="block text-sm font-bold my-3"
+                      className="block text-xs font-regular font-grey my-settings"
                     >
                       First Name
                     </label>
@@ -1116,7 +1177,7 @@ export default function DashboardLanding() {
                       placeholder="e.g. Dwight"
                     />
                     <label
-                      className="block text-sm font-bold my-3"
+                      className="block text-xs font-regular font-grey my-settings"
                     >
                       Last Name
                     </label>
@@ -1128,7 +1189,7 @@ export default function DashboardLanding() {
                       placeholder="e.g. Schrute"
                     />
                     <label
-                      className="block text-sm font-bold my-3"
+                      className="block text-xs font-regular font-grey my-settings"
                     >
                       Date Of Birth
                     </label>
@@ -1140,7 +1201,7 @@ export default function DashboardLanding() {
                       placeholder="e.g. 11/11/1990"
                     />
                     <label
-                      className="block text-sm font-bold my-3"
+                      className="block text-xs font-regular font-grey my-settings"
                     >
                       Gender
                     </label>
@@ -1168,16 +1229,28 @@ export default function DashboardLanding() {
                     </select>
                     
                     <label
-                      className="block text-sm font-bold my-3"
+                      className="block text-xs font-regular font-grey my-settings"
                     >
                       Email
                     </label>
                     <input
                       type="text"
-                      className="w-full input-primary pl-2 py-13 focus:outline-none mb-6"
+                      className="w-full input-primary pl-2 py-13 focus:outline-none"
                       onChange={handleEmail}
                       value={email}
                       placeholder="e.g. dwight@dundermifflin.com"
+                    />
+                    <label
+                      className="block text-xs font-regular font-grey my-settings"
+                    >
+                     Login Phone Number
+                    </label>
+                    <input
+                      type="text"
+                      className="w-full input-primary pl-2 py-13 focus:outline-none"
+                      onChange={handlePhoneUpdate}
+                      value={phone}
+                      placeholder="e.g. (916) 867-5309"
                     />
                    
                     </div>
@@ -1214,19 +1287,10 @@ export default function DashboardLanding() {
                     <p className="p text-md font-regular mb-6">It will not impact your dependent accounts</p>
                     <p className="p text-md font-medium mb-6 text-red-primary">Please note you will be still charged if you have premium subscription. You can cancel premium subscription below.</p>
 
-                    <h2 className="h2 text-2xl font-regular mb-4">Delete Profile</h2>
-                    <p className="p text-md font-regular mb-6 text-red-primary">All your and dependent profile information will be deleted. If the QR on your devices is scanned, no information will be visible to the medical service provider</p>
-                    <input
-                          type="text"
-                          className="w-full input-primary pl-2 py-13 mw-343 focus:outline-none ph-text-sm"
-                          placeholder="Type full name to delete this account"
-                          />
-                      
+                    
                     </div>
-                    <button className="settings-button font-semibold">Delete Profile</button>
                     </div>
-                  </div>
-                  <div className="card-wrapper w-full ml-4">
+                  <div className="wrapper w-full mt-4">
                     <div className="card">
                     <div className="relative flex flex-wrap items-stretch w-full mb-3">
                     <div className="flex w-full justify-between items-center mb-4">
@@ -1254,9 +1318,30 @@ export default function DashboardLanding() {
                       <button className="change-button text-green-primary font-bold">Change</button>
                       </div>
                     </div>
-                    <button className="settings-button font-semibold">Cancel</button>
+                    <button className="settings-button-cancel font-semibold">Cancel Subscription</button>
                     </div>
                     </div>
+                  </div>
+                  <div className="wrapper w-full mt-4">
+                    <div className="card">
+                    <div className="relative flex flex-wrap items-stretch w-full mb-3">
+                    <h2 className="h2 text-2xl font-regular mb-4">Delete Profile</h2>
+                    <p className="p text-md font-regular mb-6 text-red-primary">All your and dependent profile information will be deleted. If the QR on your devices is scanned, no information will be visible to the medical service provider</p>
+                    <input
+                          type="text"
+                          className="w-full input-primary pl-2 py-13 mw-343 focus:outline-none ph-text-sm"
+                          placeholder="Type full name to delete this account"
+                          onChange={handleDelete}
+                          />
+                      
+                    </div>
+                    <button className="settings-button active:bg-primary disabled:bg-inactive font-semibold"
+                    disabled={!deleteValid}
+                    // onClick={handleDelete}
+                    >Permanently Delete Account</button>
+                    </div>
+                    </div>
+                  
                   </div>
                   </div>
                   

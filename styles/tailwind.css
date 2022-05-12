@@ -1215,6 +1215,15 @@ select {
   --tw-bg-opacity: 1;
   background-color: rgba(12, 140, 135, var(--tw-bg-opacity));
 }
+
+.bg-inactive {
+  --tw-bg-opacity: 1;
+  background-color: rgba(199, 238, 230, var(--tw-bg-opacity));
+}
+.bg-inactive {
+  --tw-bg-opacity: 1;
+  background-color: rgba(199, 238, 230, var(--tw-bg-opacity));
+}
 .bg-secondary {
   --tw-bg-opacity: 1;
   background-color: rgba(239, 250, 248, var(--tw-bg-opacity));
@@ -1403,6 +1412,12 @@ select {
   background-color: rgba(129, 185, 183, var(--tw-bg-opacity));
 }
 .disabled\:bg-secondary:disabled {
+  --tw-bg-opacity: 1;
+  background-color: rgba(199, 238, 230, var(--tw-bg-opacity));
+  color: RGB(129, 185, 183);
+  box-shadow: none;
+}
+.disabled\:bg-inactive:disabled {
   --tw-bg-opacity: 1;
   background-color: rgba(199, 238, 230, var(--tw-bg-opacity));
   color: RGB(129, 185, 183);
@@ -2239,6 +2254,10 @@ select {
 .my-3 {
   margin-top: 0.75rem;
   margin-bottom: 0.75rem;
+}
+.my-settings {
+  margin-top: 1rem;
+  margin-bottom: 0.25rem;
 }
 
 .my-4 {
@@ -3106,6 +3125,9 @@ select {
   text-align: justify;
 }
 
+.font-grey {
+  color: rgb(155, 155, 155);
+}
 .text-black {
   --tw-text-opacity: 1;
   color: rgba(0, 0, 0, var(--tw-text-opacity));
@@ -4089,6 +4111,7 @@ CUSTOM CLASSES AUTH
   background-color: #effaf8;
   border: 1px solid #effaf8;
   line-height: 0.75rem;
+  color: rgb(39, 39, 39);
 }
 
 .input-primary:focus {
@@ -4239,18 +4262,42 @@ CUSTOM CLASSES DASHBOARD
   height: 40px;
   border-radius: 50%;
 }
+.profile-sm {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+}
 
 .profile {
   width: 100%;
   border-radius: 50%;
 }
 
+.active-profile {
+  background-color: rgb(222, 245, 243);
+  padding: 10px 0 10px 16px;
+}
+.inactive-profile {
+  padding: 10px 0 10px 16px;
+}
+
+.active-profile .profile-name {
+  color: rgb(12, 140, 135);
+  font-weight: 500;
+}
 
 .settings-button {
   background-color: rgb(12, 140, 135);
   border-radius: 4px;
-  width: 163px;
-  padding: 14px 0px;
+  width: 236px;
+  padding: 10px 0px;
+  color: #fff;
+}
+.settings-button-cancel {
+  background-color: rgb(255, 59, 48);
+  border-radius: 4px;
+  width: 176px;
+  padding: 10px 0px;
   color: #fff;
 }
 .active-button {
@@ -4350,6 +4397,11 @@ CUSTOM CLASSES DASHBOARD
 .Toastify__toast-body {
   background-color: rgb(12, 140, 135);
   color: #fff;
+}
+
+.fixed-bottom {
+  position: fixed;
+  bottom: 24px;
 }
 
 
