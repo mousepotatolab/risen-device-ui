@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 // import Repeat from 'react-repeat-component';
 
 import { ToastContainer, toast } from 'react-toastify';
@@ -53,6 +53,14 @@ export default function DashboardLanding() {
       console.log(firstName + lastName)
     }
 
+    let [connectButton, setConnect] = useState(true)
+    let [disabledPhone, setDisabledPhone] = useState(true)
+
+    const enablePhone = () => {
+      setDisabledPhone(false)
+      setPhone("916 867-5309")
+    }
+
     let [firstName, setFirstName] = useState("Dwight")
   let [lastName, setLastName] = useState("Schrute")
 
@@ -61,7 +69,7 @@ export default function DashboardLanding() {
 
 
   let [gender, setGender] = useState("Male")
-  let [phone, setPhone] = useState("(880) 567-9292")
+  let [phone, setPhone] = useState("")
 
 
   let [email, setEmail] = useState("dwight@dundermifflin.com")
@@ -193,6 +201,7 @@ export default function DashboardLanding() {
                 onClick={e => {
                   e.preventDefault();
                   setOpenTab(1);
+                  setConnect(true)
                 }}
                 data-toggle="tab"
                 href="#link1"
@@ -231,6 +240,7 @@ export default function DashboardLanding() {
                 onClick={e => {
                   e.preventDefault();
                   setOpenTab(3);
+                  setConnect(false)
                 }}
                 data-toggle="tab"
                 href="#link3"
@@ -241,7 +251,9 @@ export default function DashboardLanding() {
             </li>
         </ul>
           </div>
+          {connectButton &&
           <button className="connect-device-button text-red-primary flex items-center font-medium">Connect a device<i className="icon-Plus2x icon-md relative text-red-primary ml-2"></i></button>
+          }
           </div>      
           <div className="relative flex flex-col min-w-0 break-word w-full mb-6">
             <div className="flex-auto">
@@ -643,7 +655,7 @@ export default function DashboardLanding() {
               <div className={openTab === 3 ? "block" : "hidden"} id="link3">
                 <div className="container flex">
                   <div className="card-wrapper fb-423 h-full">
-                    <div className="card">
+                    <div className="card p-24">
                     <div className="relative flex flex-wrap items-stretch w-full mb-3">
                     <label
                       className="block text-sm font-regular font-grey my-settings"
@@ -721,17 +733,24 @@ export default function DashboardLanding() {
                       value={email}
                       placeholder="e.g. dwight@dundermifflin.com"
                     />
+                    <div className="wrapper w-full flex items-end justify-between">
+
                     <label
                       className="block text-xs font-regular font-grey my-settings"
-                    >
+                      >
                       Login Phone Number
                     </label>
+                      <button className="change-button"
+                      onClick={enablePhone}
+                      >Update Login Phone</button>
+                      </div>
                     <input
                       type="text"
                       className="w-full input-primary pl-2 py-13 focus:outline-none"
                       onChange={handlePhoneUpdate}
                       value={phone}
-                      placeholder="e.g. (916) 867-5309"
+                      disabled={disabledPhone}
+                      placeholder="(916) 867-5309"
                     />
                    
                     </div>
@@ -739,7 +758,7 @@ export default function DashboardLanding() {
                   </div>
                   <div className="fb-576">
                   <div className="card-wrapper w-full ml-4">
-                    <div className="card">
+                    <div className="card p-24">
                     <div className="relative flex flex-wrap items-stretch w-full mb-6">
                     <div className="flex w-full justify-between items-center mb-4">
                     <div className="wrapper flex">
@@ -772,7 +791,7 @@ export default function DashboardLanding() {
                     </div>
                     </div>
                   <div className="wrapper w-full mt-4">
-                    <div className="card">
+                    <div className="card p-24">
                     <div className="relative flex flex-wrap items-stretch w-full mb-3">
                     <div className="flex w-full justify-between items-center mb-4">
                     <div className="wrapper flex">
@@ -796,7 +815,7 @@ export default function DashboardLanding() {
                         <p className="p font-bold text-md">**** **** **** 1234</p>
                       </div>
                       <div className="wrapper">
-                      <button className="change-button text-green-primary font-bold">Change</button>
+                      <button className=" text-green-primary font-bold">Update Payment Method</button>
                       </div>
                     </div>
                     <button className="settings-button-cancel font-semibold">Cancel Subscription</button>
@@ -804,8 +823,8 @@ export default function DashboardLanding() {
                     </div>
                   </div>
                   <div className="wrapper w-full mt-4">
-                    <div className="card">
-                    <div className="relative flex flex-wrap items-stretch w-full mb-3">
+                    <div className="card p-24">
+                    <div className="relative flex flex-wrap items-stretch w-full mb-6">
                     <h2 className="h2 text-2xl font-regular mb-4">Delete Profile</h2>
                     <p className="p text-md font-regular mb-6 text-red-primary">All your and dependent profile information will be deleted. If the QR on your devices is scanned, no information will be visible to the medical service provider</p>
                     <input
@@ -1162,7 +1181,7 @@ export default function DashboardLanding() {
               <div className={openTab === 3 ? "block" : "hidden"} id="link3">
               <div className="container flex">
                   <div className="card-wrapper fb-423 h-full">
-                    <div className="card">
+                    <div className="card p-24">
                     <div className="relative flex flex-wrap items-stretch w-full mb-3">
                     <label
                       className="block text-xs font-regular font-grey my-settings"
@@ -1240,17 +1259,24 @@ export default function DashboardLanding() {
                       value={email}
                       placeholder="e.g. dwight@dundermifflin.com"
                     />
-                    <label
-                      className="block text-xs font-regular font-grey my-settings"
-                    >
-                     Login Phone Number
-                    </label>
+                    <div className="wrapper flex w-full items-end justify-between">
+
+                      <label
+                        className="block text-xs font-regular font-grey my-settings"
+                        >
+                        Login Phone Number
+                      </label>
+                        <button className="change-button"
+                        onClick={enablePhone}
+                        >Update Login Phone</button>
+                    </div>
                     <input
                       type="text"
                       className="w-full input-primary pl-2 py-13 focus:outline-none"
                       onChange={handlePhoneUpdate}
                       value={phone}
-                      placeholder="e.g. (916) 867-5309"
+                      disabled={disabledPhone}
+                      placeholder="(916) 867-5309"
                     />
                    
                     </div>
@@ -1258,7 +1284,7 @@ export default function DashboardLanding() {
                   </div>
                   <div className="fb-576">
                   <div className="card-wrapper w-full ml-4">
-                    <div className="card">
+                    <div className="card p-24">
                     <div className="relative flex flex-wrap items-stretch w-full mb-6">
                     <div className="flex w-full justify-between items-center mb-4">
                     <div className="wrapper flex">
@@ -1315,7 +1341,7 @@ export default function DashboardLanding() {
                         <p className="p font-bold text-md">**** **** **** 1234</p>
                       </div>
                       <div className="wrapper">
-                      <button className="change-button text-green-primary font-bold">Change</button>
+                      <button className="text-green-primary font-bold">Update Payment Method</button>
                       </div>
                     </div>
                     <button className="settings-button-cancel font-semibold">Cancel Subscription</button>
@@ -1323,8 +1349,8 @@ export default function DashboardLanding() {
                     </div>
                   </div>
                   <div className="wrapper w-full mt-4">
-                    <div className="card">
-                    <div className="relative flex flex-wrap items-stretch w-full mb-3">
+                    <div className="card p-24">
+                    <div className="relative flex flex-wrap items-stretch w-full mb-6">
                     <h2 className="h2 text-2xl font-regular mb-4">Delete Profile</h2>
                     <p className="p text-md font-regular mb-6 text-red-primary">All your and dependent profile information will be deleted. If the QR on your devices is scanned, no information will be visible to the medical service provider</p>
                     <input
