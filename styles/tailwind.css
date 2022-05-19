@@ -1214,6 +1214,7 @@ select {
 .bg-primary {
   --tw-bg-opacity: 1;
   background-color: rgba(12, 140, 135, var(--tw-bg-opacity));
+  color: #fff;
 }
 
 .bg-inactive {
@@ -1391,6 +1392,12 @@ select {
 .active\:bg-indigo-600:active {
   --tw-bg-opacity: 1;
   background-color: rgba(79, 70, 229, var(--tw-bg-opacity));
+}
+
+.active\:bg-primary:active {
+  --tw-bg-opacity: 1;
+  background-color: rgba(12, 140, 135, var(--tw-bg-opacity));
+  color: #fff;
 }
 
 .active\:bg-blueGray-50:active {
@@ -2269,6 +2276,10 @@ select {
   margin-left: 1rem;
   margin-right: 1rem;
 }
+.mx-12 {
+  margin-left: 3rem;
+  margin-right: 3rem;
+}
 .mx-80 {
   margin-left: 80px;
   margin-right: 80px;
@@ -2358,6 +2369,9 @@ select {
 }
 .ml-4 {
   margin-left: 1rem;
+}
+.ml-12 {
+  margin-left: 4.5rem;
 }
 
 .mb-4 {
@@ -2475,6 +2489,10 @@ select {
 }
 .mw-343 {
   max-width: 343px;
+}
+.mw-423 {
+  max-width: 423px;
+  flex-basis: 423px;
 }
 .mh-632 {
   max-height: 632px;
@@ -4204,10 +4222,16 @@ CUSTOM CLASSES DASHBOARD
 .fb-423 {
   flex-basis: 423px;
 }
+.fb-407 {
+  flex-basis: 407px;
+}
 .fb-576 {
   flex-basis: 576px;
 }
 
+.mt-72 {
+  margin-top: 72px;
+}
 .information-section {
   background-color: #fff;
   padding: 24px 57px 0 16px;
@@ -4232,6 +4256,13 @@ CUSTOM CLASSES DASHBOARD
 
 .shadow-tab {
   box-shadow: 0px 15px 30px -15px rgba(21, 22, 51, 0.2);
+}
+.shadow-button {
+  box-shadow: 0px 15px 30px -12px rgba(26, 26, 68, 0.35);
+}
+
+.border-r-4 {
+  border-radius: 4px;
 }
 
 .card-wrapper {
@@ -4417,6 +4448,36 @@ CUSTOM CLASSES DASHBOARD
 .fixed-bottom {
   position: fixed;
   bottom: 24px;
+}
+
+.Overlay {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.Modal {
+  top: 50%;
+  left: 50%;
+  right: auto;
+  bottom: auto;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+}
+
+.w-200 {
+  width: 200px;
+}
+
+.p-connect {
+  padding: 40px 32px;
+}
+
+.close-modal-button {
+  top: -12px;
+  right: -12px;
+}
+
+.connect-modal {
+  padding: 32px;
 }
 
 

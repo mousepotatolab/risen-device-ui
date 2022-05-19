@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="26px" height="26px" viewBox="0 0 26 26" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>icon/medical-condition@2x</title>
+    <g id="Landing---Medical-Profile" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Landing-Page---Connect-Device" transform="translate(-1149.000000, -52.000000)">
+            <g id="icon/medical-condition" transform="translate(1149.000000, 52.000000)">
+                <circle id="Oval" fill="#F7F7F7" cx="13" cy="13" r="13"></circle>
+                <g id="Icons/Universal-Icon-Set/Medicine/Solid/Medical-Chart" transform="translate(1.000000, 1.000000)">
+                    <rect id="bounding-box" x="0" y="0" width="24" height="24"></rect>
+                    <g id="Remove" transform="translate(2.000000, 2.000000)" fill="#0C8C87">
+                        <path d="M0,10 C0,4.47715 4.47715,0 10,0 C15.5228,0 20,4.47715 20,10 C20,15.5228 15.5228,20 10,20 C4.47715,20 0,15.5228 0,10 Z M7.70711,6.29289 C7.31658,5.90237 6.68342,5.90237 6.29289,6.29289 C5.90237,6.68342 5.90237,7.31658 6.29289,7.70711 L8.5858,10 L6.29289,12.2929 C5.90237,12.6834 5.90237,13.3166 6.29289,13.7071 C6.68342,14.0976 7.31658,14.0976 7.70711,13.7071 L10,11.4142 L12.2929,13.7071 C12.6834,14.0976 13.3166,14.0976 13.7071,13.7071 C14.0976,13.3166 14.0976,12.6834 13.7071,12.2929 L11.4142,10 L13.7071,7.70711 C14.0976,7.31658 14.0976,6.68342 13.7071,6.29289 C13.3166,5.90237 12.6834,5.90237 12.2929,6.29289 L10,8.5858 L7.70711,6.29289 Z" id="Shape"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
