@@ -8,6 +8,7 @@ import { ToastContainer, toast } from 'react-toastify';
   import isEmail from 'validator/lib/isEmail'
   import isDate from 'validator/lib/isDate'
 import ConnectDeviceModal from "../components/modal/ConnectDevice";
+import Sidebar from "../components/Sidebar/Sidebar";
 // layout for page
 
 import Dashboard from "layouts/Dashboard.js";
@@ -44,6 +45,9 @@ export default function DashboardLanding() {
 
     function closeModal() {
       setIsOpen(false);
+    }
+    function openSettings() {
+      setOpenTab(3);
     }
 
     const [deviceConnected, isConnectFormValid] = React.useState(false)
@@ -220,40 +224,11 @@ export default function DashboardLanding() {
         draggable
         pauseOnHover
         />
-            <div className="container">
-                <div className="flex flex-col">
-                    <img src="/img/primaryFull.svg" alt="" className="logo mb-8" />
-                    <div className="flex mb-6">
-                        <div className="profile-photo mr-2">
-                            <img src="/img/dwight.jpeg" alt="" className="profile" />
-                        </div>
-                        <div className="profile-info">
-                            <h3 className="h3 font-medium">Dwight Schrute</h3>
-                            <h5 className="h5 text-xs text-gray-primary">Primary Account</h5>
-                        </div>
-                    </div>
-                    <div className="flex justify-between mb-6">
-                      <p className="p text-xs font-normal">Medical Profiles</p>
-                      <i className="icon-Plus2x icon-sm text-green-primary"></i>
-                    </div>
-                    <div className="wrapper">
-                      <button className="flex w-full active-profile mb-2">
-                        <img src="/img/dwight.jpeg" alt="proflie" className="profile-sm mr-2" />
-                        <h5 className="h5 profile-name text-sm">Dwight Schrute</h5>
-                      </button>
-                    </div>
-                    <div className="wrapper">
-                      <button className="flex w-full inactive-profile">
-                        <img src="/img/angela.jpeg" alt="proflie" className="profile-sm mr-2" />
-                        <h5 className="h5 profile-name text-sm">Angela Martin</h5>
-                      </button>
-                    </div>
-                </div>
-                <div className="wrapper fixed-bottom">
-                  <div className="flex mb-4"><img src="/img/settings.svg" alt="settings-icon"></img><h5 className="h5 font-medium ml-2">Settings</h5> </div>
-                  <div className="flex"><img src="/img/logout.svg" alt="logout-icon"></img> <h5 className="h5 font-medium ml-2">Sign Out</h5> </div>
-                </div>
-            </div>
+        <Sidebar
+        openSettings={openSettings}
+        // signOut={signOut}
+        >
+        </Sidebar>
         </section>
         <section className="information-section w-full h-full">
         
@@ -749,6 +724,11 @@ export default function DashboardLanding() {
                   <div className="card-wrapper fb-423 h-full">
                     <div className="card p-24">
                     <div className="relative flex flex-wrap items-stretch w-full mb-3">
+                    <div className="profile-wrapper flex items-center">
+                        <img className="profile-settings mr-4" src="/img/dwight.jpeg" alt="" />
+                        <button className="image-button active:bg-primary mh-40 mr-3">Upload new image</button>
+                        <button className="delete-image-button mh-40">Delete</button>
+                      </div>
                     <label
                       className="block text-sm font-regular font-grey my-settings"
                     >
@@ -851,7 +831,7 @@ export default function DashboardLanding() {
                   <div className="fb-576">
                   <div className="card-wrapper w-full ml-4">
                     <div className="card p-24">
-                    <div className="relative flex flex-wrap items-stretch w-full mb-6">
+                    <div className="relative flex flex-wrap items-stretch w-full">
                     <div className="flex w-full justify-between items-center mb-4">
                     <div className="wrapper flex">
                     <h2 className="h2 text-2xl font-regular">Deactivate Profile</h2>
@@ -877,7 +857,7 @@ export default function DashboardLanding() {
                     </div>
                     <p className="p text-md font-regular mb-6">If you deactivate your account, your profile details will be disabled. If the QR on your devices is scanned, no information will be visable to the medical service provider.</p>
                     <p className="p text-md font-regular mb-6">It will not impact your dependent accounts</p>
-                    <p className="p text-md font-medium mb-6 text-red-primary">Please note you will be still charged if you have premium subscription. You can cancel premium subscription below.</p>
+                    <p className="p text-md font-medium text-red-primary">Please note you will be still charged if you have premium subscription. You can cancel premium subscription below.</p>
 
                     
                     </div>
@@ -1275,6 +1255,11 @@ export default function DashboardLanding() {
                   <div className="card-wrapper fb-423 h-full">
                     <div className="card p-24">
                     <div className="relative flex flex-wrap items-stretch w-full mb-3">
+                      <div className="profile-wrapper flex items-center">
+                        <img className="profile-settings mr-4" src="/img/dwight.jpeg" alt="" />
+                        <button className="image-button active:bg-primary mh-40 mr-3">Upload new image</button>
+                        <button className="delete-image-button mh-40">Delete</button>
+                      </div>
                     <label
                       className="block text-xs font-regular font-grey my-settings"
                     >
@@ -1377,7 +1362,7 @@ export default function DashboardLanding() {
                   <div className="fb-576">
                   <div className="card-wrapper w-full ml-4">
                     <div className="card p-24">
-                    <div className="relative flex flex-wrap items-stretch w-full mb-6">
+                    <div className="relative flex flex-wrap items-stretch w-full">
                     <div className="flex w-full justify-between items-center mb-4">
                     <div className="wrapper flex">
                     <h2 className="h2 text-2xl font-regular">Deactivate Profile</h2>
@@ -1403,7 +1388,7 @@ export default function DashboardLanding() {
                     </div>
                     <p className="p text-md font-regular mb-6">If you deactivate your account, your profile details will be disabled. If the QR on your devices is scanned, no information will be visable to the medical service provider.</p>
                     <p className="p text-md font-regular mb-6">It will not impact your dependent accounts</p>
-                    <p className="p text-md font-medium mb-6 text-red-primary">Please note you will be still charged if you have premium subscription. You can cancel premium subscription below.</p>
+                    <p className="p text-md font-medium text-red-primary">Please note you will be still charged if you have premium subscription. You can cancel premium subscription below.</p>
 
                     
                     </div>

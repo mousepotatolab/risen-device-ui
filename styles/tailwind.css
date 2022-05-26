@@ -2494,6 +2494,9 @@ select {
   max-width: 423px;
   flex-basis: 423px;
 }
+.mh-40 {
+  max-height: 40px;
+}
 .mh-632 {
   max-height: 632px;
 }
@@ -4308,6 +4311,11 @@ CUSTOM CLASSES DASHBOARD
   height: 40px;
   border-radius: 50%;
 }
+.profile-settings {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+}
 .profile-sm {
   width: 24px;
   height: 24px;
@@ -4336,6 +4344,20 @@ CUSTOM CLASSES DASHBOARD
   background-color: rgb(12, 140, 135);
   border-radius: 4px;
   width: 236px;
+  padding: 10px 0px;
+  color: #fff;
+}
+.image-button {
+  background-color: rgb(12, 140, 135);
+  border-radius: 4px;
+  width: 164px;
+  padding: 10px 0px;
+  color: #fff;
+}
+.delete-image-button {
+  background-color: rgb(255, 59, 48);
+  border-radius: 4px;
+  width: 78px;
   padding: 10px 0px;
   color: #fff;
 }
