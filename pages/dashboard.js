@@ -9,6 +9,7 @@ import { ToastContainer, toast } from 'react-toastify';
   import isDate from 'validator/lib/isDate'
 import ConnectDeviceModal from "../components/modal/ConnectDevice";
 import Sidebar from "../components/Sidebar/Sidebar";
+import DashboardTabs from "../components/Navbars/DasboardTabs";
 // layout for page
 
 import Dashboard from "layouts/Dashboard.js";
@@ -49,6 +50,12 @@ export default function DashboardLanding() {
     function openSettings() {
       setOpenTab(3);
     }
+    function openUpload() {
+      setOpenTab(2);
+    }
+    function openProfile() {
+      setOpenTab(1);
+    }
 
     const [deviceConnected, isConnectFormValid] = React.useState(false)
     const [connectSuccess, isConnected] = React.useState(false)
@@ -83,6 +90,13 @@ export default function DashboardLanding() {
       isConnected(true)
       isDeviceConnected(false)
       setConnect(false)
+    }
+
+    const setConnectFalse = () => {
+      setConnect(false)
+    }
+    const setConnectTrue = () => {
+      setConnect(true)
     }
 
     // Toast
@@ -250,70 +264,15 @@ export default function DashboardLanding() {
 
        
         <div className="tab-wrapper w-full bg-dashboard mb-4">
-        <ul
-            className="flex mb-0 list-none flex-wrap p-1 flex-row"
-            role="tablist"
+          <DashboardTabs
+            openSettings={openSettings}
+            openUpload={openUpload}
+            openProfile={openProfile}
+            setConnectFalse={setConnectFalse}
+            setConnectTrue={setConnectTrue}
+            openTab={openTab}
           >
-            <li className="-mb-px mr-2 last:mr-0 flex-auto text-center">
-              <a
-                className={
-                  "text-xs font-bold px-5 py-3 rounded block leading-normal " +
-                  (openTab === 1
-                    ? "text-dash-tabs bg-white shadow-tab"
-                    : "text-dash-tabs-inactive bg-dashboard")
-                }
-                onClick={e => {
-                  e.preventDefault();
-                  setOpenTab(1);
-                  setConnect(true)
-                }}
-                data-toggle="tab"
-                href="#link1"
-                role="tablist"
-              >
-                Medical Profile
-              </a>
-            </li>
-            <li className="-mb-px mr-2 last:mr-0 flex-auto text-center">
-              <a
-                className={
-                  "text-xs font-bold px-5 py-3  rounded block leading-normal " +
-                  (openTab === 2
-                    ? "text-dash-tabs bg-white shadow-tab"
-                    : "text-dash-tabs-inactive bg-dashboard")
-                }
-                onClick={e => {
-                  e.preventDefault();
-                  setOpenTab(2);
-                }}
-                data-toggle="tab"
-                href="#link2"
-                role="tablist"
-              >
-                Documents
-              </a>
-            </li>
-            <li className="-mb-px last:mr-0 flex-auto text-center">
-              <a
-                className={
-                  "text-xs font-bold px-5 py-3  rounded block leading-normal " +
-                  (openTab === 3
-                    ? "text-dash-tabs bg-white shadow-tab"
-                    : "text-dash-tabs-inactive bg-dashboard")
-                }
-                onClick={e => {
-                  e.preventDefault();
-                  setOpenTab(3);
-                  setConnect(false)
-                }}
-                data-toggle="tab"
-                href="#link3"
-                role="tablist"
-              >
-                Settings
-              </a>
-            </li>
-        </ul>
+          </DashboardTabs>
           </div>
           {connectButton &&
           <button 
