@@ -12,7 +12,7 @@ function DashboardTabs({openSettings, openUpload, openProfile, openTab, setConne
             <li className="-mb-px mr-2 last:mr-0 flex-auto text-center">
               <a
                 className={
-                  "text-xs font-bold px-5 py-3 rounded block leading-normal " +
+                  "text-sm font-bold px-5 py-3 rounded block leading-normal " +
                   (openTab === 1
                     ? "text-dash-tabs bg-white shadow-tab"
                     : "text-dash-tabs-inactive bg-dashboard")
@@ -32,7 +32,7 @@ function DashboardTabs({openSettings, openUpload, openProfile, openTab, setConne
             <li className="-mb-px mr-2 last:mr-0 flex-auto text-center">
               <a
                 className={
-                  "text-xs font-bold px-5 py-3  rounded block leading-normal " +
+                  "text-sm font-bold px-5 py-3  rounded block leading-normal " +
                   (openTab === 2
                     ? "text-dash-tabs bg-white shadow-tab"
                     : "text-dash-tabs-inactive bg-dashboard")
@@ -52,7 +52,7 @@ function DashboardTabs({openSettings, openUpload, openProfile, openTab, setConne
             <li className="-mb-px last:mr-0 flex-auto text-center">
               <a
                 className={
-                  "text-xs font-bold px-5 py-3  rounded block leading-normal " +
+                  "text-sm font-bold px-5 py-3  rounded block leading-normal " +
                   (openTab === 3
                     ? "text-dash-tabs bg-white shadow-tab"
                     : "text-dash-tabs-inactive bg-dashboard")

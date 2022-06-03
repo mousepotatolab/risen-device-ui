@@ -22,16 +22,21 @@ function Sidebar({openSettings}) {
                       <p className="p text-xs font-normal">Medical Profiles</p>
                       <i className="icon-Plus2x icon-sm text-green-primary"></i>
                     </div>
-                    <div className="wrapper">
+                    <div className="wrapper profile-tab">
                       <button className="flex w-full active-profile mb-2">
                         <img src="/img/dwight.jpeg" alt="proflie" className="profile-sm mr-2" />
                         <h5 className="h5 profile-name text-sm">Dwight Schrute</h5>
                       </button>
                     </div>
-                    <div className="wrapper">
+                    <div className="wrapper profile-tab-last">
                       <button className="flex w-full inactive-profile">
                         <img src="/img/angela.jpeg" alt="proflie" className="profile-sm mr-2" />
                         <h5 className="h5 profile-name text-sm">Angela Martin</h5>
+                      </button>
+                    </div>
+                    <div className="wrapper">
+                      <button className="add-profile-button w-full font-medium flex items-center">
+                        Add New Profile <i className=" ml-3 icon-Plus2x text-green-primary"></i>
                       </button>
                     </div>
                 </div>

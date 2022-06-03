@@ -2140,6 +2140,10 @@ select {
   height: 600px;
 }
 
+.text-xxs {
+  font-size: 0.5rem;
+  line-height: 1rem;
+}
 .text-xs {
   font-size: 0.75rem;
   line-height: 1rem;
@@ -2147,6 +2151,9 @@ select {
 
 .text-sm {
   font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+.font-medium {
   line-height: 1.25rem;
 }
 
@@ -3167,6 +3174,10 @@ select {
 .text-red-primary {
   --tw-text-opacity: 1;
   color: rgba(255, 59, 48, var(--tw-text-opacity));
+}
+.text-red-secondary {
+  --tw-text-opacity: 1;
+  color: rgba(247, 138, 118, var(--tw-text-opacity));
 }
 .text-green-secondary {
   --tw-text-opacity: 1;
@@ -4350,6 +4361,8 @@ CUSTOM CLASSES DASHBOARD
 .image-button {
   background-color: rgb(12, 140, 135);
   border-radius: 4px;
+  font-weight: 500;
+  font-size: 16px;
   width: 164px;
   padding: 10px 0px;
   color: #fff;
@@ -4357,6 +4370,8 @@ CUSTOM CLASSES DASHBOARD
 .delete-image-button {
   background-color: rgb(255, 59, 48);
   border-radius: 4px;
+  font-weight: 500;
+  font-size: 16px;
   width: 78px;
   padding: 10px 0px;
   color: #fff;
@@ -4440,6 +4455,13 @@ CUSTOM CLASSES DASHBOARD
   color: #fff;
 }
 
+.add-profile-button {
+  background-color: #fff;
+  box-shadow: 0 15px 30px -15px rgba(21, 22, 51, 0.2);
+  padding: 12px 32px;
+  border-radius: 8px;
+}
+
 .Toastify__toast-theme--colored.Toastify__toast--success {
   background-color: rgb(12, 140, 135);
   color: #fff;
@@ -4450,6 +4472,7 @@ CUSTOM CLASSES DASHBOARD
   color: #fff;
   border-radius: 20px !important;
   height: 50px !important;
+  min-height: 50px !important;
 }
 
 .Toastify__toast-theme--light {
@@ -4502,6 +4525,9 @@ CUSTOM CLASSES DASHBOARD
   padding: 32px;
 }
 
+.profile-tab-last {
+  margin-bottom: 16px;
+}
 
 /*
 Fonts CSS
@@ -4520,7 +4546,7 @@ Fonts CSS
 }
 
 .icon-md {
-  font-size: 20px;
+  font-size: 1.5rem;
 }
 
 [class^="icon-"], [class*=" icon-"] {
@@ -4538,6 +4564,12 @@ Fonts CSS
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-edit:before {
+  content: "\e916";
+}
+.icon-delete:before {
+  content: "\e917";
+}
 .icon-Plus2x:before {
   content: "\e915";
 }
@@ -4606,7 +4638,7 @@ Fonts CSS
 }
 .icon-medication .path2:before {
   content: "\e914";
-  margin-left: -1em;
+  margin-left: -0.9599609375em;
   color: rgb(255, 255, 255);
 }
 .icon-check:before {
@@ -4645,6 +4677,13 @@ Responsive CSS
   }
 
   .card .input-primary::placeholder{
+    font-size: 12px;
+  }
+
+  .image-button {
+    font-size: 12px;
+  }
+  .delete-image-button {
     font-size: 12px;
   }
 }
