@@ -4219,6 +4219,10 @@ CUSTOM CLASSES AUTH
   height: 50px !important;
 }
 
+.otp-error {
+  border: 1px solid #FF3B30;
+}
+
 .otp-input:not(:last-of-type) {
   padding-right: 8px;
 }

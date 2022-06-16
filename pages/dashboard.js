@@ -4,7 +4,6 @@ import ReactDOM from "react-dom";
 import Modal from "react-modal";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import validator from "validator";
 import isEmail from "validator/lib/isEmail";
 import isDate from "validator/lib/isDate";
 import ConnectDeviceModal from "../components/modal/ConnectDevice";

@@ -7,7 +7,9 @@ import OtpInput from "react-otp-input";
 import { createPopper } from "@popperjs/core";
 import { useSelector, useDispatch } from 'react-redux';
 import { incrementCounter, decrementCounter } from '../store/counter/action';
+const phoneUtil = require('google-libphonenumber').PhoneNumberUtil.getInstance();
 
+import { userSignup, verifyUserOtp, storeUserToken } from "../services/UserService";
 // layout for page
 
 import Auth from "layouts/Auth.js";
@@ -15,6 +17,9 @@ import Auth from "layouts/Auth.js";
 export default function Login() {
   //Handle OTP
   let [OTPstate, setOTP] = useState("")
+  let [otpError, setOtpError] = useState(false)
+  let [phoneError, setPhoneError] = useState(false)
+  let [loading, setLoading] = useState(false)
 
   const handleChangeOTP = (event) => {
 
@@ -32,7 +37,7 @@ export default function Login() {
   let [signUp, setSignUp] = useState(true)
   let [otpUp, setOTPUp] = useState("")
 
-  let [valid, isValid] = useState("")
+  let [valid, isValid] = useState(true)
   let [otpValid, isOtpValid] = useState("")
 
   let [firstName, setFirstName] = useState("")
@@ -42,7 +47,7 @@ export default function Login() {
   let [dobValid, isDOBValid] = useState("")
 
 
-  let [gender, setGender] = useState("")
+  let [gender, setGender] = useState("Female")
 
 
   let [email, setEmail] = useState("")
@@ -65,56 +70,111 @@ export default function Login() {
     setPhone(event.target.value)
     isValid(validatePhoneNumber(event.target.value))
   }
-  const handleCreateProfile = (event) => {
-    setCreateProfile(true)
-    setSignUp(false)
-    setOTPUp(false)
+  const handleVerifyOtp = (event) => {
+    if (!OTPstate) {
+      return false;
+    }
+    setLoading(true)
+    verifyUserOtp({otp: OTPstate, phone}).then(
+      (result) => {
+        if (result.success) {
+          setCreateProfile(true)
+          setSignUp(false)
+          setOTPUp(false)
+          setLoading(false)
+          storeUserToken(result.token);
+        } else {
+          setOtpError(true);
+          setLoading(false)
+        }
+      },
+      (err) => {
+        setOtpError(true);
+        setLoading(false)
+      }
+    )
+    
   }
 
 
   const handleOTPUp = (event) => {
-    validatePhoneNumber(phone)
-    setSignUp(false)
-    setOTPUp(true)
+    if(!validatePhoneNumber(phone)) {
+      return false;
+    }
+    setLoading(true)
+    userSignup({phone}).then(
+      (result) => {
+        if (result.success) {
+          setOTPUp(true)
+          setSignUp(false)
+          setLoading(false)
+        } else {
+          setLoading(false)
+          setPhoneError(result.message);
+        }
+        
+      },
+      (err) => {
+        setLoading(false)
+      }
+    )
   }
 
   const handleFirstValid = (event) => {
-    setFirstName(event.target.value)
+    setFirstName(event.target.value);
+    isFormValid();
   }
   const handleLastValid = (event) => {
     setLastName(event.target.value)
+    isFormValid();
   }
   const handleDOBValid = (event) => {
-    if(isDate(event.target.value,{format: "MM/DD/YYYY",})) {
+    isDOBValid(false)
+    setDOB(event.target.value)
+    if(isDate(event.target.value, {format: "MM/DD/YYYY"})) {
       isDOBValid(true)
       console.log("dob valid")
     }
-    setDOB(event.target.value)
+    isFormValid();
   }
   const handleGender = (event) => {
     setGender(event.target.value)
+    isFormValid();
   }
   const handleEmail= (event) => {
+    isEmailValid(false)
     if(isEmail(event.target.value)) {
       isEmailValid(true)
     }
     setEmail(event.target.value)
+    isFormValid();
   }
 
-  const isFormValid = (event) => {
-    if(isEmailValid && setGender && isDOBValid && firstName && lastName) {
+  const isFormValid = () => {
+    if(emailValid && dobValid && gender && dob && firstName && lastName) {
       setFormValid(true)
     }
   }
 
-
   let validatePhoneNumber = (value) => {
-    let isValidPhoneNumber = validator.isMobilePhone(value, "en-US")
-    // console.log(isValidPhoneNumber, phone)
-    return (isValidPhoneNumber)
+    if (!value) {
+      return false;
+    }
+    try {
+      let isValidPhoneNumber = phoneUtil.isValidNumberForRegion(phoneUtil.parse(String(value), 'US'), 'US');
+      return isValidPhoneNumber
+    } catch (error) {
+      return false;
+    }
   }
 
+  const handleCreateProfile = () => {
+    console.log(firstName, lastName, gender, dob, email)
+    if (firstName && lastName && gender && dob && email) {
 
+    }
+  }
+  
   return (
     <>
       <div className="container mx-auto px-4 h-full">
@@ -155,6 +215,8 @@ export default function Login() {
                       onKeyUp={setPhoneNum}
                       placeholder="123 456 7890"
                     />
+                    {!valid && (<span style={{fontSize: '14px', color: '#FF3B30'}}>Please enter a valid phone number</span>)}
+                    {phoneError && (<span style={{fontSize: '14px', color: '#FF3B30'}}>The phone number is already exist</span>)}
                     {valid &&
                     <span style={{top: '32px', right: '9px'}} className="z-10 h-full leading-snug font-normal absolute text-center text-blueGray-300 bg-transparent rounded text-base items-center justify-center w-8 pl-2 py-1">
                       <i className="icon-check text-green-active disabled:display-none"></i>
@@ -170,7 +232,8 @@ export default function Login() {
                       disabled={!valid}
                       onClick={handleOTPUp}
                     >
-                      Send One-Time Password
+                      {!loading && (<>Send One-Time Password</>)}
+                      {loading && (<>Processing</>)}
                     </button>
                   </div>
                 </form>
@@ -266,17 +329,21 @@ export default function Login() {
                 onChange={handleChangeOTP}
                 numInputs={6}
                 isInputNum={true}
+                hasErrored={otpError}
                 inputStyle={"otp-single"}
+                errorStyle={"otp-error"}
                 // separator={<span>-</span>}
               />
+              {otpError && (<span style={{fontSize: '13px', color: '#FF3B30'}}>The one-time password you have entered is not correct</span>)}
               <div className="text-center mt-6">
                 <button
                   className="bg-primary text-white active:bg-tertiary disabled:bg-secondary text-sm font-bold px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
                   type="button"
                   disabled={!otpValid}
-                  onClick={handleCreateProfile}
+                  onClick={handleVerifyOtp}
                 >
-                  Login
+                  {!loading && (<>Login</>)}
+                  {loading && (<>Processing</>)}
                 </button>
               </div>
                 <p className="sub-text">A 6 digit one-time password has been sent to your entered number</p>
@@ -428,7 +495,7 @@ export default function Login() {
                       type="text"
                       className="w-full input-primary pl-2 py-13 focus:outline-none"
                       onChange={handleFirstValid}
-                      onKeyDown={isFormValid}
+                      onKeyDown={handleFirstValid}
                       value={firstName}
                       placeholder="e.g. Dwight"
                     />
@@ -446,7 +513,7 @@ export default function Login() {
                       type="text"
                       className="w-full input-primary pl-2 py-13 focus:outline-none"
                       onChange={handleLastValid}
-                      onKeyDown={isFormValid}
+                      onKeyDown={handleLastValid}
                       value={lastName}
                       placeholder="e.g. Schrute"
                     />
@@ -464,9 +531,9 @@ export default function Login() {
                       type="text"
                       className="w-full input-primary pl-2 py-13 focus:outline-none"
                       onChange={handleDOBValid}
-                      onKeyDown={isFormValid}
+                      onKeyDown={handleDOBValid}
                       value={dob}
-                      placeholder="e.g. 11/11/1990"
+                      placeholder="e.g. 11/30/1990"
                     />
                     {dobValid &&
                     <span style={{top: '236px', right: '9px'}} className="z-10  leading-snug font-normal absolute text-center text-blueGray-300 bg-transparent rounded text-base items-center justify-center w-8 pl-2 py-1">
@@ -491,15 +558,15 @@ export default function Login() {
                       type="text"
                       className="w-full input-primary pl-2 py-16-px focus:outline-none"
                       onChange={handleGender}
-                      onKeyDown={isFormValid}
+                      onKeyDown={handleGender}
                       value={gender}
                       placeholder="e.g."
 
                     >
-                      <option>Female</option>
-                      <option>Male</option>
-                      <option>Non-binary</option>
-                      <option>N/A</option>
+                      <option value="Female">Female</option>
+                      <option value="Male">Male</option>
+                      <option value="Non-binary">Non-binary</option>
+                      <option value="N/A">N/A</option>
                     </select>
                     {gender &&
                     <span style={{top: '327px', right: '20px'}} className="z-10 leading-snug font-normal absolute text-center text-blueGray-300 bg-transparent rounded text-base items-center justify-center w-8 pl-2 py-1">
@@ -515,7 +582,7 @@ export default function Login() {
                       type="text"
                       className="w-full input-primary pl-2 py-13 focus:outline-none mb-6"
                       onChange={handleEmail}
-                      onKeyDown={isFormValid}
+                      onKeyDown={handleEmail}
                       value={email}
                       placeholder="e.g. dwight@dundermifflin.com"
                     />
@@ -529,9 +596,6 @@ export default function Login() {
 
                 </form>
               <div className="text-center mt-6">
-                <Link href="/dashboard">
-
-                
                 <button
                   className="bg-primary text-white active:bg-tertiary disabled:bg-secondary text-sm font-bold px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
                   type="button"
@@ -540,7 +604,6 @@ export default function Login() {
                 >
                   Create Profile
                 </button>
-                </Link>
               </div>
             </div>
               

@@ -8,7 +8,7 @@ import CardTable from "components/Cards/CardTable.js";
 
 import Admin from "layouts/Admin.js";
 
-import { loadAllQrBatch, generateNewQRBatch } from "../../services/ApiCallService";
+import { loadAllQrBatch, generateNewQRBatch } from "../../services/SupplierService";
 
 export default function Generatecode({color}) {
   const [qrbatch, setQrBatch] = useState([])
