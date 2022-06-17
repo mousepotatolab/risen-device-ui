@@ -1,9 +1,15 @@
 import React from "react";
 
 // components
-
+import { getToken } from "../services/UserService";
+import Router, { withRouter, useRouter } from 'next/router'
 
 export default function Auth({ children }) {
+
+  if (getToken()) {
+    Router.push({pathname: "/dashboard"})
+    return null;
+  }
   return (
     <>
       <main className="bg-secondary flex justify-center">

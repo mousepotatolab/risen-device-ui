@@ -1,14 +1,15 @@
 import React, {useState} from "react";
 import Router, { withRouter, useRouter } from 'next/router'
+import { getToken } from "../services/UserService";
 
 // layout for page
 
 import Auth from "layouts/Auth.js";
 
 export default function Index() {
-  if(localStorage.getItem("risenusertoken")) {
+  if(getToken()) {
     Router.push({
-      pathname: '/home'
+      pathname: '/dashboard'
     })
   } else {
     Router.push({

@@ -1,20 +1,19 @@
 import React, {useState, useEffect} from "react";
 import Link from "next/link";
-import validator from 'validator'
 import isEmail from 'validator/lib/isEmail'
 import isDate from 'validator/lib/isDate'
 import OtpInput from "react-otp-input";
-import { createPopper } from "@popperjs/core";
-import { useSelector, useDispatch } from 'react-redux';
-import { incrementCounter, decrementCounter } from '../store/counter/action';
 const phoneUtil = require('google-libphonenumber').PhoneNumberUtil.getInstance();
 
-import { userSignup, verifyUserOtp, storeUserToken } from "../services/UserService";
+import { userSignup, verifyUserOtp, storeUserToken, storeUserProfile } from "../services/UserService";
 // layout for page
 
 import Auth from "layouts/Auth.js";
+import Router, { withRouter, useRouter } from 'next/router'
 
-export default function Login() {
+export default function Signup() {
+  const router = useRouter();
+
   //Handle OTP
   let [OTPstate, setOTP] = useState("")
   let [otpError, setOtpError] = useState(false)
@@ -22,12 +21,9 @@ export default function Login() {
   let [loading, setLoading] = useState(false)
 
   const handleChangeOTP = (event) => {
-
     if (event.length === 6) {
       isOtpValid(true)
     }
-    console.log(event.length)
-    console.log(event)
     setOTP(event)
   }
 
@@ -55,21 +51,11 @@ export default function Login() {
   let [profileValid, isProfileValid] = useState("")
   let [formValid, setFormValid] = useState("")
 
-  useEffect(() => {
-    console.log(phone);
-  }, [phone]);
-
-
   const setPhoneNum = (event) => {
     setPhone(event.target.value)
     isValid(validatePhoneNumber(event.target.value))
   }
 
-  const handlePhoneChange = (event) => {
-    console.log(phone)
-    setPhone(event.target.value)
-    isValid(validatePhoneNumber(event.target.value))
-  }
   const handleVerifyOtp = (event) => {
     if (!OTPstate) {
       return false;
@@ -120,13 +106,27 @@ export default function Login() {
     )
   }
 
+  useEffect(() => {
+    isFormValid();
+  }, [firstName]);
+  useEffect(() => {
+    isFormValid();
+  }, [lastName]);
+  useEffect(() => {
+    isFormValid();
+  }, [dob]);
+  useEffect(() => {
+    isFormValid();
+  }, [gender]);
+  useEffect(() => {
+    isFormValid();
+  }, [email]);
+
   const handleFirstValid = (event) => {
     setFirstName(event.target.value);
-    isFormValid();
   }
   const handleLastValid = (event) => {
     setLastName(event.target.value)
-    isFormValid();
   }
   const handleDOBValid = (event) => {
     isDOBValid(false)
@@ -135,11 +135,9 @@ export default function Login() {
       isDOBValid(true)
       console.log("dob valid")
     }
-    isFormValid();
   }
   const handleGender = (event) => {
     setGender(event.target.value)
-    isFormValid();
   }
   const handleEmail= (event) => {
     isEmailValid(false)
@@ -147,10 +145,10 @@ export default function Login() {
       isEmailValid(true)
     }
     setEmail(event.target.value)
-    isFormValid();
   }
 
   const isFormValid = () => {
+    setFormValid(false)
     if(emailValid && dobValid && gender && dob && firstName && lastName) {
       setFormValid(true)
     }
@@ -170,9 +168,20 @@ export default function Login() {
 
   const handleCreateProfile = () => {
     console.log(firstName, lastName, gender, dob, email)
-    if (firstName && lastName && gender && dob && email) {
-
+    if (!(firstName && lastName && gender && dob && email)) {
+        return false;
     }
+
+    const obj = {firstName, lastName, gender, dob, email};
+    storeUserProfile(obj).then(
+      (result) => {
+        if (result.success) {
+          Router.push({
+            pathname: '/dashboard'
+          })
+        }
+      }
+    )
   }
   
   return (
@@ -239,80 +248,6 @@ export default function Login() {
                 </form>
               </div>
               }
-              {/* {signIn && 
-              <div className="flex-auto px-4 lg:px-10 py-10 pt-0" style={{maxWidth: '423px'}}>
-                <h5 className="text-2xl font-bold mb-1">Sign In</h5>
-                <h3 className="text-4xl font-bold mb-12">Welcome Back</h3>
-                <form>
-                  <div className="relative flex flex-wrap items-stretch w-full mb-3">
-                    <label
-                      className="block text-blueGray-600 text-xs font-bold mb-2"
-                      htmlFor="grid-password"
-                    >
-                      Enter phone number
-                    </label>
-                    <span style={{top: '32px', left: '9px'}} className="z-10 h-full leading-snug font-normal absolute text-center text-blueGray-300 bg-transparent rounded text-base items-center justify-center w-8 pl-2 py-1">
-                      <i className="icon-phone-lg text-green-primary disabled:text-green-secondary" disabled={!valid}></i>
-                    </span>
-                    <input
-                      type="tel"
-                      className="w-full input-primary pl-8 focus:outline-none"
-                      onChange={handlePhoneChange}
-                      value={phone}
-                      placeholder="123 456 7890"
-                    />
-                    {valid &&
-                    <span style={{top: '32px', right: '9px'}} className="z-10 h-full leading-snug font-normal absolute text-center text-blueGray-300 bg-transparent rounded text-base items-center justify-center w-8 pl-2 py-1">
-                      <i className="icon-check text-green-active disabled:display-none"></i>
-                    </span>
-                    }
-                  </div>
-
-
-                  <div className="text-center mt-6">
-                    <button
-                      className="bg-primary text-white active:bg-tertiary disabled:bg-secondary text-sm font-bold px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
-                      type="button"
-                      disabled={!valid}
-                      onClick={handleOTPIn}
-                    >
-                      Send One-Time Password
-                    </button>
-                  </div>
-                </form>
-              </div>
-              } */}
-              {/* {otpIn && 
-              <div className="flex-auto px-4 lg:px-10 py-10 pt-0" style={{maxWidth: '423px'}}>
-              <h5 className="text-2xl font-bold mb-1">Sign In</h5>
-              <h3 className="text-4xl font-bold mb-12">Welcome Back!</h3>
-              <label
-                      className="block text-blueGray-600 text-xs font-bold mb-2"
-                      htmlFor="grid-password"
-                    >
-                      Enter One-time Password
-                    </label>
-              <OtpInput
-                className="otp-input"
-                value={OTPstate}
-                onChange={handleChangeOTP}
-                numInputs={6}
-                isInputNum={true}
-                inputStyle={"otp-single"}
-                // separator={<span>-</span>}
-              />
-              <div className="text-center mt-6">
-                <button
-                  className="bg-primary text-white active:bg-tertiary disabled:bg-secondary text-sm font-bold px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
-                  type="button"
-                  disabled={!otpValid}
-                  onClick={handleOTP}
-                >
-                  Login
-                </button>
-              </div>
-            </div>
-              } */}
               {otpUp && 
               <div className="flex-auto px-4 lg:px-10 py-10 pt-0" style={{maxWidth: '423px'}}>
               <h5 className="text-2xl font-bold mb-1">Sign Up</h5>
@@ -349,129 +284,6 @@ export default function Login() {
                 <p className="sub-text">A 6 digit one-time password has been sent to your entered number</p>
             </div>
               }
-              {/* {createProfile && 
-              <div className="flex-auto px-4 lg:px-10 py-10 pt-0" style={{maxWidth: '423px'}}>
-              <h5 className="text-2xl font-bold mb-1">Create Your Profile</h5>
-              <form>
-                  <div className="relative flex flex-wrap items-stretch w-full mb-3">
-                    <label
-                      className="block text-blueGray-600 text-xs font-bold mb-2"
-                    >
-                      First Name
-                    </label>
-                    <input
-                      type="text"
-                      className="w-full input-primary pl-8 focus:outline-none"
-                      onChange={handleFirstValid}
-                      value={firstName}
-                      placeholder="e.g. Dwight"
-                    />
-                    {firstName &&
-                    <span style={{top: '32px', right: '9px'}} className="z-10 h-full leading-snug font-normal absolute text-center text-blueGray-300 bg-transparent rounded text-base items-center justify-center w-8 pl-2 py-1">
-                      <i className="icon-check text-green-active disabled:display-none"></i>
-                    </span>
-                    }
-                    <label
-                      className="block text-blueGray-600 text-xs font-bold mb-2"
-                    >
-                      Last Name
-                    </label>
-                    <input
-                      type="text"
-                      className="w-full input-primary pl-8 focus:outline-none"
-                      onChange={handleFirstValid}
-                      value={lastName}
-                      placeholder="e.g. Schrute"
-                    />
-                    {lastName &&
-                    <span style={{top: '32px', right: '9px'}} className="z-10 h-full leading-snug font-normal absolute text-center text-blueGray-300 bg-transparent rounded text-base items-center justify-center w-8 pl-2 py-1">
-                      <i className="icon-check text-green-active disabled:display-none"></i>
-                    </span>
-                    }
-                    <label
-                      className="block text-blueGray-600 text-xs font-bold mb-2"
-                    >
-                      Date Of Birth
-                    </label>
-                    <input
-                      type="text"
-                      className="w-full input-primary pl-8 focus:outline-none"
-                      onChange={handleDOBValid}
-                      value={dob}
-                      placeholder="e.g. 11/11/1990"
-                    />
-                    {dob &&
-                    <span style={{top: '32px', right: '9px'}} className="z-10 h-full leading-snug font-normal absolute text-center text-blueGray-300 bg-transparent rounded text-base items-center justify-center w-8 pl-2 py-1">
-                      <i className="icon-check text-green-active disabled:display-none"></i>
-                    </span>
-                    }
-                    <label
-                      className="block text-blueGray-600 text-xs font-bold mb-2"
-                    >
-                      Gender
-                    </label>
-                    <span style={{top: '32px', left: '9px'}} className="z-10 h-full leading-snug font-normal absolute text-center text-blueGray-300 bg-transparent rounded text-base items-center justify-center w-8 pl-2 py-1">
-                      <i className="icon-phone-lg text-green-primary disabled:text-green-secondary" disabled={!valid}></i>
-                    </span>
-                    <input
-                      type="text"
-                      className="w-full input-primary pl-8 focus:outline-none"
-                      onChange={handleFirstValid}
-                      value={firstName}
-                      placeholder="e.g. Dwight"
-                    />
-                    {gender &&
-                    <span style={{top: '32px', right: '9px'}} className="z-10 h-full leading-snug font-normal absolute text-center text-blueGray-300 bg-transparent rounded text-base items-center justify-center w-8 pl-2 py-1">
-                      <i className="icon-check text-green-active disabled:display-none"></i>
-                    </span>
-                    }
-                    <label
-                      className="block text-blueGray-600 text-xs font-bold mb-2"
-                    >
-                      Email
-                    </label>
-                    <span style={{top: '32px', left: '9px'}} className="z-10 h-full leading-snug font-normal absolute text-center text-blueGray-300 bg-transparent rounded text-base items-center justify-center w-8 pl-2 py-1">
-                      <i className="icon-phone-lg text-green-primary disabled:text-green-secondary" disabled={!valid}></i>
-                    </span>
-                    <input
-                      type="text"
-                      className="w-full input-primary pl-8 focus:outline-none"
-                      onChange={handleFirstValid}
-                      value={firstName}
-                      placeholder="e.g. Dwight"
-                    />
-                    {email &&
-                    <span style={{top: '32px', right: '9px'}} className="z-10 h-full leading-snug font-normal absolute text-center text-blueGray-300 bg-transparent rounded text-base items-center justify-center w-8 pl-2 py-1">
-                      <i className="icon-check text-green-active disabled:display-none"></i>
-                    </span>
-                    }
-                    </div>
-
-
-                  <div className="text-center mt-6">
-                    <button
-                      className="bg-primary text-white active:bg-tertiary disabled:bg-secondary text-sm font-bold px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
-                      type="button"
-                      disabled={!valid}
-                      onClick={handleOTPIn}
-                    >
-                      Send One-Time Password
-                    </button>
-                  </div>
-                </form>
-              <div className="text-center mt-6">
-                <button
-                  className="bg-primary text-white active:bg-tertiary disabled:bg-secondary text-sm font-bold px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
-                  type="button"
-                  disabled={!otpValid}
-                  onClick={handleOTP}
-                >
-                  Login
-                </button>
-              </div>
-                <p className="sub-text">A 6 digit one-time password has been sent to your entered number</p>
-            </div>
-              } */}
             </div>
           </div>
         </div>
@@ -617,4 +429,4 @@ export default function Login() {
   );
 }
 
-Login.layout = Auth;
+Signup.layout = Auth;
