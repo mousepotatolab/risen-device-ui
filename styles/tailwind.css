@@ -1216,6 +1216,11 @@ select {
   background-color: rgba(12, 140, 135, var(--tw-bg-opacity));
   color: #fff;
 }
+.bg-grey-primary {
+  --tw-bg-opacity: 1;
+  background-color: rgba(247, 247, 247, var(--tw-bg-opacity));
+  color: #fff;
+}
 
 .bg-inactive {
   --tw-bg-opacity: 1;
@@ -2377,6 +2382,9 @@ select {
 .ml-4 {
   margin-left: 1rem;
 }
+.ml-40 {
+  margin-left: 40px;
+}
 .ml-12 {
   margin-left: 4.5rem;
 }
@@ -2506,6 +2514,10 @@ select {
 }
 .mh-632 {
   max-height: 632px;
+}
+
+.mh-96 {
+  min-height: 96vh;
 }
 
 .max-w-120-px {
@@ -3165,7 +3177,7 @@ select {
 }
 .text-black {
   --tw-text-opacity: 1;
-  color: rgba(0, 0, 0, var(--tw-text-opacity));
+  color: rgba(39, 39, 39, var(--tw-text-opacity));
 }
 .text-green-primary {
   --tw-text-opacity: 1;
@@ -3250,6 +3262,10 @@ select {
 .text-gray-primary {
   --tw-text-opacity: 1;
   color: rgba(155, 155, 155, var(--tw-text-opacity));
+}
+.text-black-primary {
+  --tw-text-opacity: 1;
+  color: rgba(39, 39, 39, var(--tw-text-opacity));
 }
 .text-gray-500 {
   --tw-text-opacity: 1;
@@ -4530,6 +4546,18 @@ CUSTOM CLASSES DASHBOARD
 }
 
 /*
+Mobile view styles
+*/
+
+.filter-img {
+  width: 32px;
+  height: 32px;
+}
+
+.small-logo {
+  width: 64px;
+}
+/*
 Fonts CSS
 */
 
@@ -4674,6 +4702,22 @@ Responsive CSS
 @media (max-width: 1300px) {
   .h3 {
     font-size: 0.75rem;
+  }
+
+  .card .input-primary::placeholder{
+    font-size: 12px;
+  }
+
+  .image-button {
+    font-size: 12px;
+  }
+  .delete-image-button {
+    font-size: 12px;
+  }
+}
+@media (max-width: 600px) {
+  .h3 {
+    font-size: 1rem;
   }
 
   .card .input-primary::placeholder{
