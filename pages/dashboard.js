@@ -50,6 +50,7 @@ export default function DashboardLanding() {
   }
   function openSettings() {
     setOpenTab(3);
+    setConnectFalse();
   }
   function openUpload() {
     setOpenTab(2);
@@ -301,7 +302,6 @@ export default function DashboardLanding() {
     console.log(index, "qq")
     if (index > -1) {
       medicalProfiles[profiletype][index][property] = value;
-      console.log(user);
       user.key = new Date().getMilliseconds()
       setUser({...user});
     }
@@ -311,7 +311,7 @@ export default function DashboardLanding() {
     setActiveDoseUnit(null)
     setActiveFrequency(null)
     const value = itemvalue ? itemvalue : (ischeckbox ? e.target.checked : e.target.value);
-    if (item[property] == value) {
+    if (!ischeckbox && item[property] == value) {
       return false;
     }
     const obj = {
@@ -321,7 +321,9 @@ export default function DashboardLanding() {
       userid: activeuser,
       value
     }
-    setClientSide(profiletype, property, item, value);
+    if (itemvalue) {
+      setClientSide(profiletype, property, item, value);
+    }
     updateMedicalProfile(obj).then(
       (result) => {
         if (result.success) {
@@ -559,14 +561,14 @@ export default function DashboardLanding() {
                                   </h3>
                                   <input
                                     className="react-switch-checkbox"
-                                    id={`react-switch-new`}
+                                    id={`react-switch-new${p.id}`}
                                     type="checkbox"
                                     onClick={handleMedicalProfiles('medication', 'is_taking', p, true)}
                                     defaultChecked={p.is_taking}
                                   />
                                   <label
                                     className="react-switch-label"
-                                    htmlFor={`react-switch-new`}
+                                    htmlFor={`react-switch-new${p.id}`}
                                   >
                                     <span className={`react-switch-button`} />
                                   </label>
