@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import Router, { withRouter, useRouter } from 'next/router'
 import { getToken } from "../services/UserService";
 
@@ -7,16 +7,20 @@ import { getToken } from "../services/UserService";
 import Auth from "layouts/Auth.js";
 
 export default function Index() {
-  if(getToken()) {
-    Router.push({
-      pathname: '/dashboard'
-    })
-  } else {
-    Router.push({
-      pathname: '/login'
-    })
-  }
-  return false;
-}
+  const router = useRouter();
 
-Index.layout = Auth;
+  useEffect(async () => {
+    if(!router.isReady) return;
+    if(await getToken()) {
+      router.push({
+        pathname: '/dashboard'
+      })
+    } else {
+      router.push({
+        pathname: '/login'
+      })
+    }
+  }, [])
+  
+  return null;
+}

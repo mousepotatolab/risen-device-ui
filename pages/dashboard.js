@@ -12,6 +12,9 @@ import DashboardTabs from "../components/Navbars/DasboardTabs";
 import { createPopper } from "@popperjs/core";
 // layout for page
 
+import { getUserInfo, createMedicalProfile, updateMedicalProfile, createEmptyField,
+  getUserMedicalInfo } from "../services/UserService";
+
 import Dashboard from "layouts/Dashboard.js";
 // import { isToastIdValid } from "react-toastify/dist/utils";
 
@@ -111,7 +114,6 @@ export default function DashboardLanding() {
 
   const [openTab, setOpenTab] = React.useState(1);
 
-  const [emptyState, setDashboardState] = useState(true);
   const [uiState, setUIState] = useState(true);
 
   const [isShowing, setIsShowing] = useState(false);
@@ -157,13 +159,11 @@ export default function DashboardLanding() {
   let [email, setEmail] = useState("dwight@dundermifflin.com");
   let [emailValid, isEmailValid] = useState("");
 
-  const toggle = () => {
-    setIsShowing(!isShowing);
+  const toggle = (p) => {
+    p.isShowing = !p.isShowing
   };
 
-  const startMedicalProfile = () => {
-    setDashboardState(false);
-  };
+  
   const toggleUIState = () => {
     setUIState(false);
   };
@@ -231,6 +231,114 @@ export default function DashboardLanding() {
     setDropdownFrequencyShow(false);
   };
 
+
+  // service call
+  const [user, setUser] = useState();
+  const [medicalProfiles, setMedicalProfiles] = useState();
+  const [activeMedication, setActiveMedication] = useState([])
+  const [activeDoseUnit, setActiveDoseUnit] = useState(null)
+  const [activeFrequency, setActiveFrequency] = useState(null)
+  const [activeuser, setActiveuser] = useState(null)
+
+  const startMedicalProfile = () => {
+    createMedicalProfile({userid: activeuser}).then(p => {
+      loadMedicalProfileByUser(activeuser);
+    })
+  };
+
+  const toggleActiveMedication = (item, type) => {
+    console.log(item, type)
+    if (type == "active") {
+      if (activeMedication.indexOf(item.id) < 0) {
+        setActiveMedication([item.id, ...activeMedication])
+      }
+    } else {
+      activeMedication.splice(activeMedication.indexOf(item), 1);
+      setActiveMedication([...activeMedication]);
+    }
+  }
+
+  const toggleActiveDoseUnit = (p) => {
+    if (activeDoseUnit == p.id) {
+      setActiveDoseUnit(null);
+    } else {
+      setActiveDoseUnit(p.id);
+    }
+  }
+
+  const toggleActiveFrequency = (p) => {
+    if (activeFrequency == p.id) {
+      setActiveFrequency(null);
+    } else {
+      setActiveFrequency(p.id);
+    }
+  }
+
+  const loadData = async () => {
+    const result = await getUserInfo();
+    if ("data" in result) {
+      result.data.key = new Date().getMilliseconds()
+      setUser(result.data);
+      setActiveuser(result.data.id);
+      setMedicalProfiles(result.data.medicalProfiles);
+    }
+  }
+
+  const loadMedicalProfileByUser = async (userid) => {
+    const result = await getUserMedicalInfo(userid);
+    if ("data" in result) {
+      setMedicalProfiles(result.data);
+    }
+  };
+
+  useEffect(() => {
+    loadData();
+  }, [])
+
+  const setClientSide = (profiletype, property, item, value) => {
+    const found = medicalProfiles[profiletype].find(p => p.id == item.id);
+    const index = found ? medicalProfiles[profiletype].indexOf(found) : -1;
+    console.log(index, "qq")
+    if (index > -1) {
+      medicalProfiles[profiletype][index][property] = value;
+      console.log(user);
+      user.key = new Date().getMilliseconds()
+      setUser({...user});
+    }
+  }
+
+  const handleMedicalProfiles = (profiletype, property, item, ischeckbox = false, itemvalue = null) => (e) => {
+    setActiveDoseUnit(null)
+    setActiveFrequency(null)
+    const value = itemvalue ? itemvalue : (ischeckbox ? e.target.checked : e.target.value);
+    if (item[property] == value) {
+      return false;
+    }
+    const obj = {
+      profiletype,
+      property,
+      id: item.id,
+      userid: activeuser,
+      value
+    }
+    setClientSide(profiletype, property, item, value);
+    updateMedicalProfile(obj).then(
+      (result) => {
+        if (result.success) {
+          saved();
+        }
+      }
+    )
+  };
+
+  const createMedicalEmptyField = (profiletype) => {
+    createEmptyField({profiletype, userid: activeuser}).then(p => {
+      loadMedicalProfileByUser(activeuser);
+    })
+  };
+
+  const dosageUnit = ["Pills", "Drops", "Pieces", "cc", "ml", "mg"];
+  const frequencyUnit = ["Hourly", "Daily", "Weekly", "Every 2 Week", "Monthly", "Every 3 Month", "Every 6 Month"];
   return (
     <>
       <Modal
@@ -254,7 +362,7 @@ export default function DashboardLanding() {
           connectSuccess={connectSuccess}
         />
       </Modal>
-      <div className="flex h-full">
+      <div className="flex h-full" key={user && user.key}>
         <section className="profile-section min-w-239-px pr-4">
           <ToastContainer
             position="top-center"
@@ -269,11 +377,15 @@ export default function DashboardLanding() {
           />
           <Sidebar
             openSettings={openSettings}
+            user={user}
+            activeuser={activeuser}
+            setActiveuser={setActiveuser}
+            loadMedicalProfileByUser={loadMedicalProfileByUser}
             // signOut={signOut}
           ></Sidebar>
         </section>
         <section className="information-section w-full h-full">
-          {emptyState && (
+          {!medicalProfiles && (
             <div className="flex flex-col justify-center max-w-340-px items-center mx-auto mt-10 h-full pb-38-vh">
               <img src="/img/girl.svg" alt="" />
               <h2 className="h2 text-2xl font-medium font-dark">
@@ -288,7 +400,7 @@ export default function DashboardLanding() {
             </div>
           )}
 
-          {!emptyState && (
+          {medicalProfiles && (
             <div className="fade-in-dashboard">
               <div className="flex container justify-between">
                 <div className="tab-wrapper w-full bg-dashboard mb-4">
@@ -332,28 +444,37 @@ export default function DashboardLanding() {
                                     Medical Condition
                                   </h3>
                                 </div>
-                                <button className="add-card-button">
+                                <button className="add-card-button"
+                                onClick={() => createMedicalEmptyField("medicalcondition")}
+                                >
                                   <i className="icon-Plus2x icon-md text-green-primary"></i>
                                 </button>
                               </div>
-                              <div className="card card-medical mt-2">
-                                <label className="block text-gray-primary text-xs font-normal mb-3">
+                              {medicalProfiles && medicalProfiles.medicalcondition.map(p => (<div className="card card-medical mt-2">
+                                <label key={p.id + 1} className="block text-gray-primary text-xs font-normal mb-3">
                                   Condition Name
                                 </label>
                                 <input
+                                  key={p.id + 2}
                                   type="text"
                                   className="w-full input-primary pl-2 focus:outline-none ph-text-sm"
                                   placeholder="e.g. Diabetes"
+                                  defaultValue={p.condition_name}
+                                  onBlur={handleMedicalProfiles('medicalcondition', 'condition_name', p)}
                                 />
-                                <label className="block text-gray-primary text-xs font-normal my-3">
+                                <label key={p.id + 3} className="block text-gray-primary text-xs font-normal my-3">
                                   Special Note
                                 </label>
                                 <input
+                                  key={p.id + 4}
                                   type="text"
                                   className="w-full input-primary pl-2 focus:outline-none ph-text-sm"
                                   placeholder="e.g. Taking insuline daily"
+                                  defaultValue={p.special_note}
+                                  onBlur={handleMedicalProfiles('medicalcondition', 'special_note', p)}
                                 />
-                              </div>
+                              </div>))}
+                              
                             </div>
                           </div>
                           <div className="w-full pr-4 md:w-4/12 lg:4/12">
@@ -365,11 +486,13 @@ export default function DashboardLanding() {
                                     Allergies
                                   </h3>
                                 </div>
-                                <button className="add-card-button">
+                                <button className="add-card-button"
+                                onClick={() => createMedicalEmptyField("allergies")}
+                                >
                                   <i className="icon-Plus2x icon-md text-green-primary"></i>
                                 </button>
                               </div>
-                              <div className="card card-medical mt-2">
+                              {medicalProfiles && medicalProfiles.allergies.map(p => (<div className="card card-medical mt-2">
                                 <label className="block text-gray-primary text-xs font-normal mb-3">
                                   Name
                                 </label>
@@ -377,6 +500,8 @@ export default function DashboardLanding() {
                                   type="text"
                                   className="w-full input-primary pl-2 focus:outline-none ph-text-sm"
                                   placeholder="e.g. Amoxicillin"
+                                  defaultValue={p.name}
+                                  onBlur={handleMedicalProfiles('allergies', 'name', p)}
                                 />
                                 <label className="block text-gray-primary text-xs font-normal my-3">
                                   Special Note
@@ -385,8 +510,10 @@ export default function DashboardLanding() {
                                   type="text"
                                   className="w-full input-primary pl-2 focus:outline-none ph-text-sm"
                                   placeholder="e.g. Allergic to Amoxicillin"
+                                  defaultValue={p.special_note}
+                                  onBlur={handleMedicalProfiles('allergies', 'special_note', p)}
                                 />
-                              </div>
+                              </div>))}
                             </div>
                           </div>
                           <div className="w-full pr-4 md:w-4/12 lg:4/12">
@@ -398,10 +525,13 @@ export default function DashboardLanding() {
                                     Medication
                                   </h3>
                                 </div>
-                                <button className="add-card-button">
+                                <button className="add-card-button"
+                                onClick={() => createMedicalEmptyField("medication")}
+                                >
                                   <i className="icon-Plus2x icon-md text-green-primary"></i>
                                 </button>
                               </div>
+                              {medicalProfiles && medicalProfiles.medication.map(p => (
                               <div className="card card-medical mt-2">
                                 <label className="block text-gray-primary text-xs font-normal mb-3">
                                   Medication Name
@@ -410,6 +540,8 @@ export default function DashboardLanding() {
                                   type="text"
                                   className="w-full input-primary pl-2 focus:outline-none ph-text-sm"
                                   placeholder="e.g. Captopril"
+                                  defaultValue={p.name}
+                                  onBlur={handleMedicalProfiles('medication', 'name', p)}
                                 />
                                 <label className="block text-gray-primary text-xs font-normal my-3">
                                   Special Note
@@ -418,6 +550,8 @@ export default function DashboardLanding() {
                                   type="text"
                                   className="w-full input-primary pl-2 focus:outline-none ph-text-sm"
                                   placeholder="e.g. Taking for high blood pressure"
+                                  defaultValue={p.special_note}
+                                  onBlur={handleMedicalProfiles('medication', 'special_note', p)}
                                 />
                                 <div className="flex items-center justify-between mt-3">
                                   <h3 className="text-xs text-gray-primary">
@@ -427,7 +561,8 @@ export default function DashboardLanding() {
                                     className="react-switch-checkbox"
                                     id={`react-switch-new`}
                                     type="checkbox"
-                                    onClick={toggleUIState}
+                                    onClick={handleMedicalProfiles('medication', 'is_taking', p, true)}
+                                    defaultChecked={p.is_taking}
                                   />
                                   <label
                                     className="react-switch-label"
@@ -438,43 +573,32 @@ export default function DashboardLanding() {
                                 </div>
                                 <button
                                   style={{
-                                    display: !isShowing ? "block" : "none",
+                                    display: activeMedication.indexOf(p.id) < 0 ? "block" : "none",
                                   }}
                                   className="add-medication text-green-primary text-xs mt-4"
-                                  onClick={toggle}
+                                  onClick={() => toggleActiveMedication(p, "active")}
                                 >
                                   Add More Details
                                   <i className="icon-Plus2x relative top-1 ml-1 icon-xs text-green-primary"></i>
                                 </button>
                                 <button
                                   style={{
-                                    display: isShowing ? "block" : "none",
+                                    display: activeMedication.indexOf(p.id) > -1 ? "block" : "none",
                                   }}
                                   className="add-medication text-green-primary text-xs mt-4"
-                                  onClick={toggle}
+                                  onClick={() => toggleActiveMedication(p, "remove")}
                                 >
                                   Show Less
                                   <i className="icon-Plus2x relative top-1 ml-1 icon-xs text-green-primary"></i>
                                 </button>
                                 <div
                                   style={{
-                                    display: isShowing ? "block" : "none",
+                                    display: activeMedication.indexOf(p.id) > -1 ? "block" : "none",
                                   }}
                                 >
                                   <div className="container">
                                     <div className="flex flex-wrap">
                                       <div className="w-1/2 pr-2">
-                                        <label className="block text-gray-primary text-xs font-normal my-3">
-                                          Ammount
-                                        </label>
-                                        <input
-                                          type="text"
-                                          className="w-full input-primary pl-2 focus:outline-none ph-text-sm"
-                                          placeholder="e.g 200"
-                                        />
-                                      </div>
-
-                                      <div className="w-1/2 pl-2">
                                         <label className="block text-gray-primary text-xs font-normal my-3">
                                           Dosage
                                         </label>
@@ -482,67 +606,46 @@ export default function DashboardLanding() {
                                           type="text"
                                           className="w-full input-primary pl-2 focus:outline-none ph-text-sm"
                                           placeholder="Unit"
+                                          defaultValue={p.dosage}
                                           onClick={() => {
-                                            dropdownDosageShow
-                                              ? closeDosagePopover()
-                                              : openDosagePopover();
+                                            toggleActiveDoseUnit(p)
                                           }}
                                         />
                                         <div
                                           ref={popoverDropdownRefDosage}
                                           className={
-                                            (dropdownDosageShow
+                                            (activeDoseUnit == p.id
                                               ? "block "
                                               : "hidden ") +
                                             "bg-blueGray-500 text-base z-50 float-left py-2 list-none text-left rounded shadow-lg mt-1 bg-white absolute min-w-48"
                                           }
                                         >
-                                          <a
-                                            href="#pablo"
-                                            className="text-sm py-2 px-4 font-normal block w-full whitespace-no-wrap bg-transparent text-primary"
-                                            onClick={(e) => e.preventDefault()}
+                                          {dosageUnit.map(d => (<a
+                                            className="cursor-pointer text-sm py-2 px-4 font-normal block w-full whitespace-no-wrap bg-transparent text-primary"
+                                            onClick={handleMedicalProfiles("medication", "dosage", p, false, d)}
                                           >
-                                            Action
-                                          </a>
-                                          <a
-                                            href="#pablo"
-                                            className="text-sm py-2 px-4 font-normal block w-full whitespace-no-wrap bg-transparent text-primary"
-                                            onClick={(e) => e.preventDefault()}
-                                          >
-                                            Another action
-                                          </a>
-                                          <a
-                                            href="#pablo"
-                                            className="text-sm py-2 px-4 font-normal block w-full whitespace-no-wrap bg-transparent text-primary"
-                                            onClick={(e) => e.preventDefault()}
-                                          >
-                                            Something else here
-                                          </a>
-                                          <a
-                                            href="#pablo"
-                                            className="text-sm py-2 px-4 font-normal block w-full whitespace-no-wrap bg-transparent text-primary"
-                                            onClick={(e) => e.preventDefault()}
-                                          >
-                                            Seprated link
-                                          </a>
+                                            {d}
+                                          </a>))}
+                                          
                                         </div>
+                                      </div>
+                                      <div className="w-1/2 pl-2">
+                                        <label className="block text-gray-primary text-xs font-normal my-3">
+                                          Amount
+                                        </label>
+                                        <input
+                                          type="text"
+                                          className="w-full input-primary pl-2 focus:outline-none ph-text-sm"
+                                          placeholder="e.g 200"
+                                          defaultValue={p.amount}
+                                          onBlur={handleMedicalProfiles('medication', 'amount', p)}
+                                        />
                                       </div>
                                     </div>
                                   </div>
                                   <div className="container">
                                     <div className="flex flex-wrap">
                                       <div className="w-1/2 pr-2">
-                                        <label className="block text-gray-primary text-xs font-normal my-3">
-                                          Times
-                                        </label>
-                                        <input
-                                          type="text"
-                                          className="w-full input-primary pl-2 focus:outline-none ph-text-sm"
-                                          placeholder="e.g. Twice"
-                                        />
-                                      </div>
-
-                                      <div className="w-1/2 pl-2">
                                         <label className="block text-gray-primary text-xs font-normal my-3">
                                           Frequency
                                         </label>
@@ -551,54 +654,43 @@ export default function DashboardLanding() {
                                           className="w-full input-primary pl-2 focus:outline-none ph-text-sm"
                                           placeholder="e.g. Daily"
                                           onClick={() => {
-                                            dropdownFrequencyShow
-                                              ? closeFrequencyPopover()
-                                              : openFrequencyPopover();
+                                            toggleActiveFrequency(p)
                                           }}
+                                          defaultValue={p.frequency}
                                         />
                                         <div
                                           ref={popoverDropdownRefFrequency}
                                           className={
-                                            (dropdownFrequencyShow
+                                            (activeFrequency == p.id
                                               ? "block "
                                               : "hidden ") +
                                             "bg-blueGray-500 text-base z-50 float-left py-2 list-none text-left rounded shadow-lg mt-1 bg-white absolute min-w-48"
                                           }
                                         >
-                                          <a
-                                            href="#pablo"
-                                            className="text-sm py-2 px-4 font-normal block w-full whitespace-no-wrap bg-transparent text-primary"
-                                            onClick={(e) => e.preventDefault()}
+                                          {frequencyUnit.map(d => (<a
+                                            className="cursor-pointer text-sm py-2 px-4 font-normal block w-full whitespace-no-wrap bg-transparent text-primary"
+                                            onClick={handleMedicalProfiles("medication", "frequency", p, false, d)}
                                           >
-                                            Action
-                                          </a>
-                                          <a
-                                            href="#pablo"
-                                            className="text-sm py-2 px-4 font-normal block w-full whitespace-no-wrap bg-transparent text-primary"
-                                            onClick={(e) => e.preventDefault()}
-                                          >
-                                            Another action
-                                          </a>
-                                          <a
-                                            href="#pablo"
-                                            className="text-sm py-2 px-4 font-normal block w-full whitespace-no-wrap bg-transparent text-primary"
-                                            onClick={(e) => e.preventDefault()}
-                                          >
-                                            Something else here
-                                          </a>
-                                          <a
-                                            href="#pablo"
-                                            className="text-sm py-2 px-4 font-normal block w-full whitespace-no-wrap bg-transparent text-primary"
-                                            onClick={(e) => e.preventDefault()}
-                                          >
-                                            Seprated link
-                                          </a>
+                                            {d}
+                                          </a>))}
                                         </div>
+                                      </div>
+                                      <div className="w-1/2 pl-2">
+                                        <label className="block text-gray-primary text-xs font-normal my-3">
+                                          Times
+                                        </label>
+                                        <input
+                                          type="text"
+                                          className="w-full input-primary pl-2 focus:outline-none ph-text-sm"
+                                          placeholder="e.g. Twice"
+                                          defaultValue={p.times}
+                                          onBlur={handleMedicalProfiles('medication', 'times', p)}
+                                        />
                                       </div>
                                     </div>
                                   </div>
                                 </div>
-                              </div>
+                              </div>))}
                             </div>
                           </div>
                           <div className="w-full  md:w-4/12 lg:4/12">
@@ -610,11 +702,13 @@ export default function DashboardLanding() {
                                     Emergency Contact
                                   </h3>
                                 </div>
-                                <button className="add-card-button">
+                                <button className="add-card-button"
+                                onClick={() => createMedicalEmptyField("emergency")}
+                                >
                                   <i className="icon-Plus2x icon-md text-green-primary"></i>
                                 </button>
                               </div>
-                              <div className="card card-medical mt-2">
+                              {medicalProfiles && medicalProfiles.emergency.map(p => (<div className="card card-medical mt-2">
                                 <label className="block text-gray-primary text-xs font-normal mb-3">
                                   Name
                                 </label>
@@ -622,7 +716,9 @@ export default function DashboardLanding() {
                                   type="text"
                                   className="w-full input-primary pl-2 focus:outline-none ph-text-sm"
                                   placeholder="Michael Scott"
-                                />
+                                  defaultValue={p.name}
+                                  onBlur={handleMedicalProfiles('emergency', 'name', p)}
+                                  />
                                 <label className="block text-gray-primary text-xs font-normal my-3">
                                   Email Address
                                 </label>
@@ -630,6 +726,8 @@ export default function DashboardLanding() {
                                   type="text"
                                   className="w-full input-primary pl-2 focus:outline-none ph-text-sm"
                                   placeholder="e.g. michael@dunder.com"
+                                  defaultValue={p.email}
+                                  onBlur={handleMedicalProfiles('emergency', 'email', p)}
                                 />
                                 <label className="block text-gray-primary text-xs font-normal my-3">
                                   Phone
@@ -638,8 +736,10 @@ export default function DashboardLanding() {
                                   type="text"
                                   className="w-full input-primary pl-2 focus:outline-none ph-text-sm"
                                   placeholder="e.g. (123) 456-7890"
+                                  defaultValue={p.phone}
+                                  onBlur={handleMedicalProfiles('emergency', 'phone', p)}
                                 />
-                              </div>
+                              </div>))}
                             </div>
                             <div className="card-wrapper">
                               <div className="title-wrapper flex justify-between items-center">
@@ -649,11 +749,13 @@ export default function DashboardLanding() {
                                     Insurance
                                   </h3>
                                 </div>
-                                <button className="add-card-button">
+                                <button className="add-card-button"
+                                onClick={() => createMedicalEmptyField("insurance")}
+                                >
                                   <i className="icon-Plus2x icon-md text-green-primary"></i>
                                 </button>
                               </div>
-                              <div className="card card-medical mt-2">
+                              {medicalProfiles && medicalProfiles.insurance.map(p => (<div className="card card-medical mt-2">
                                 <label className="block text-gray-primary text-xs font-normal mb-3">
                                   Carrier Name
                                 </label>
@@ -661,6 +763,8 @@ export default function DashboardLanding() {
                                   type="text"
                                   className="w-full input-primary pl-2 focus:outline-none ph-text-sm"
                                   placeholder="e.g. Kaiser Permanente"
+                                  defaultValue={p.carrier}
+                                  onBlur={handleMedicalProfiles("insurance", "carrier", p)}
                                 />
                                 <label className="block text-gray-primary text-xs font-normal my-3">
                                   Insurance Company Name
@@ -669,6 +773,8 @@ export default function DashboardLanding() {
                                   type="text"
                                   className="w-full input-primary pl-2 focus:outline-none ph-text-sm"
                                   placeholder="e.g. Kaiser Permanente"
+                                  defaultValue={p.company}
+                                  onBlur={handleMedicalProfiles("insurance", "company", p)}
                                 />
                                 <label className="block text-gray-primary text-xs font-normal my-3">
                                   Plan No.
@@ -677,6 +783,8 @@ export default function DashboardLanding() {
                                   type="text"
                                   className="w-full input-primary pl-2 focus:outline-none ph-text-sm"
                                   placeholder="e.g. 26346346"
+                                  defaultValue={p.plan}
+                                  onBlur={handleMedicalProfiles("insurance", "plan", p)}
                                 />
                                 <label className="block text-gray-primary text-xs font-normal my-3">
                                   Policy No.
@@ -685,6 +793,8 @@ export default function DashboardLanding() {
                                   type="text"
                                   className="w-full input-primary pl-2 focus:outline-none ph-text-sm"
                                   placeholder="e.g. 23452345"
+                                  defaultValue={p.policy}
+                                  onBlur={handleMedicalProfiles("insurance", "policy", p)}
                                 />
                                 <label className="block text-gray-primary text-xs font-normal my-3">
                                   Group No.
@@ -693,8 +803,10 @@ export default function DashboardLanding() {
                                   type="text"
                                   className="w-full input-primary pl-2 focus:outline-none ph-text-sm"
                                   placeholder="e.g. 2345346"
+                                  defaultValue={p.group}
+                                  onBlur={handleMedicalProfiles("insurance", "group", p)}
                                 />
-                              </div>
+                              </div>))}
                             </div>
                             <div className="card-wrapper">
                               <div className="title-wrapper flex justify-between items-center">
@@ -704,11 +816,13 @@ export default function DashboardLanding() {
                                     Preferred Hospital
                                   </h3>
                                 </div>
-                                <button className="add-card-button">
+                                <button className="add-card-button"
+                                onClick={() => createMedicalEmptyField("hospital")}
+                                >
                                   <i className="icon-Plus2x icon-md text-green-primary"></i>
                                 </button>
                               </div>
-                              <div className="card card-medical mt-2">
+                              {medicalProfiles && medicalProfiles.hospital.map(p => (<div className="card card-medical mt-2">
                                 <label className="block text-gray-primary text-xs font-normal mb-3">
                                   Hosipital Name
                                 </label>
@@ -716,6 +830,8 @@ export default function DashboardLanding() {
                                   type="text"
                                   className="w-full input-primary pl-2 focus:outline-none ph-text-sm"
                                   placeholder="e.g. Scranton Hospital"
+                                  defaultValue={p.name}
+                                  onBlur={handleMedicalProfiles("hospital", "name", p)}
                                 />
                                 <label className="block text-gray-primary text-xs font-normal my-3">
                                   Address
@@ -724,6 +840,8 @@ export default function DashboardLanding() {
                                   type="text"
                                   className="w-full input-primary pl-2 focus:outline-none ph-text-sm"
                                   placeholder="e.g. 123 Main St. Scranton, PA"
+                                  defaultValue={p.address}
+                                  onBlur={handleMedicalProfiles("hospital", "address", p)}
                                 />
                                 <label className="block text-gray-primary text-xs font-normal my-3">
                                   Phone
@@ -732,8 +850,10 @@ export default function DashboardLanding() {
                                   type="text"
                                   className="w-full input-primary pl-2 focus:outline-none ph-text-sm"
                                   placeholder="e.g. (916) 835-8765"
+                                  defaultValue={p.phone}
+                                  onBlur={handleMedicalProfiles("hospital", "phone", p)}
                                 />
-                              </div>
+                              </div>))}
                             </div>
                             <div className="card-wrapper">
                               <div className="title-wrapper flex justify-between items-center">
@@ -743,11 +863,13 @@ export default function DashboardLanding() {
                                     Primary Caregiver
                                   </h3>
                                 </div>
-                                <button className="add-card-button">
+                                <button className="add-card-button"
+                                onClick={() => createMedicalEmptyField("caregiver")}
+                                >
                                   <i className="icon-Plus2x icon-md text-green-primary"></i>
                                 </button>
                               </div>
-                              <div className="card card-medical mt-2">
+                              {medicalProfiles && medicalProfiles.caregiver.map(p => (<div className="card card-medical mt-2">
                                 <label className="block text-gray-primary text-xs font-normal mb-3">
                                   Name
                                 </label>
@@ -755,6 +877,8 @@ export default function DashboardLanding() {
                                   type="text"
                                   className="w-full input-primary pl-2 focus:outline-none ph-text-sm"
                                   placeholder="e.g. Jim Halpert"
+                                  defaultValue={p.name}
+                                  onBlur={handleMedicalProfiles("caregiver", "name", p)}
                                 />
                                 <label className="block text-gray-primary text-xs font-normal my-3">
                                   Email Address
@@ -763,6 +887,8 @@ export default function DashboardLanding() {
                                   type="text"
                                   className="w-full input-primary pl-2 focus:outline-none ph-text-sm"
                                   placeholder="e.g. jim@dunder.com"
+                                  defaultValue={p.email}
+                                  onBlur={handleMedicalProfiles("caregiver", "email", p)}
                                 />
                                 <label className="block text-gray-primary text-xs font-normal my-3">
                                   Phone
@@ -771,8 +897,10 @@ export default function DashboardLanding() {
                                   type="text"
                                   className="w-full input-primary pl-2 focus:outline-none ph-text-sm"
                                   placeholder="e.g.(916) 835-8551"
+                                  defaultValue={p.phone}
+                                  onBlur={handleMedicalProfiles("caregiver", "phone", p)}
                                 />
-                              </div>
+                              </div>))}
                             </div>
                           </div>
                         </div>
@@ -1119,7 +1247,6 @@ export default function DashboardLanding() {
                                 </div>
                                 <button
                                   className="add-card-button"
-                                  onClick={saved}
                                 >
                                   <i className="icon-Plus2x icon-md text-green-primary"></i>
                                 </button>

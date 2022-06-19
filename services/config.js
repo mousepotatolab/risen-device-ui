@@ -2,7 +2,7 @@ const baseurl = 'http://localhost:5100/it-20y/us-central1/api/';
 import { getToken } from "./UserService";
 
 export const makeApiCall = async (url, option) => {
-    const token = getToken();
+    const token = await getToken();
     if (token) {
         option.headers = option.headers ? option.headers : {};
         option.headers["risen-access-token"] = token;
