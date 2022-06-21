@@ -79,10 +79,19 @@ export async function createEmptyField(data) {
     return response;
 }
 
-export async function getUserMedicalInfo(userid) {
-    const response = await makeApiCall(`user/user-medical-info?userid=${userid}`, {
+export async function getUserInfoById(userid) {
+    const response = await makeApiCall(`user/user-info-by-id?userid=${userid}`, {
         method: 'GET',
         headers: {'Content-Type': 'application/json'}
+    })
+    return response;
+}
+
+export async function updateProfileInfo(data) {
+    const response = await makeApiCall(`user/update-user-profile`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(data)
     })
     return response;
 }

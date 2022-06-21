@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import Router, { withRouter, useRouter } from 'next/router'
 
-function Sidebar({openSettings, user, activeuser, setActiveuser, loadMedicalProfileByUser}) {
+function Sidebar({openSettings, user, activeuser, setActiveuser, loadInfoByUser}) {
   const router = useRouter();
   // const [openTab, setOpenTab] = React.useState(1);
   const logout = () => {
@@ -13,7 +13,7 @@ function Sidebar({openSettings, user, activeuser, setActiveuser, loadMedicalProf
 
   const handleActiveUser = (id) => {
     setActiveuser(id);
-    loadMedicalProfileByUser(id);
+    loadInfoByUser(id);
   }
   return (
     <>
