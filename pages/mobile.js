@@ -55,6 +55,10 @@ export default function MobileLanding() {
       }
     }
     const clearModal = () => {
+      window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
         isPinValid(true)
     }
 
