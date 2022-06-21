@@ -2128,6 +2128,9 @@ select {
 .h-full {
   height: 100%;
 }
+.h-full-mobile {
+  height: calc(100vh - 32px);
+}
 
 .h-95-px {
   height: 95px;
@@ -2582,6 +2585,9 @@ select {
   object-fit: scale-down;
 }
 
+.opacity-0 {
+  opacity: 0;
+}
 .opacity-50 {
   opacity: 0.5;
 }
@@ -4343,6 +4349,11 @@ CUSTOM CLASSES DASHBOARD
   height: 80px;
   border-radius: 50%;
 }
+.profile-mobile {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+}
 .profile-sm {
   width: 24px;
   height: 24px;
@@ -4559,6 +4570,25 @@ Mobile view styles
 
 .small-logo {
   width: 64px;
+}
+.medium-logo {
+  width: 138px;
+}
+
+.pin-heart {
+  transform: scale(1.2);
+}
+
+.before-circle-green:before{
+  content: '';
+  background-color: rgb(239, 250, 248);
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  border-radius: 50%;
+  z-index: 0;
+  top: -25px;
+  left: -25px;
 }
 /*
 Fonts CSS
