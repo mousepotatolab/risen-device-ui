@@ -363,7 +363,7 @@ export default function MobileLanding() {
               placeholder="Enter 6 digit number"
               />
               {valid &&
-            <span style={{top: '72px', right: '9px'}} className="z-10 h-full leading-snug font-normal absolute text-center text-blueGray-300 bg-transparent rounded text-base items-center justify-center w-8 pl-2 py-1">
+            <span style={{top: '72px', right: '9px'}} className="z-10 h-full leading-snug font-normal absolute text-center text-blueGray-300 bg-transparent text-lg rounded text-base items-center justify-center w-8 pl-2 py-1">
               <i className="icon-check text-green-active disabled:display-none"></i>
             </span>
             }
@@ -583,9 +583,6 @@ export default function MobileLanding() {
                    Medical Condition
                  </h3>
                </div>
-               <button className="add-card-button">
-                 <i className="icon-Plus2x icon-md text-green-primary"></i>
-               </button>
              </div>
              <div className="card card-medical mt-2">
                <div className="flex justify-between">
@@ -615,9 +612,6 @@ export default function MobileLanding() {
                    Allergies
                  </h3>
                </div>
-               <button className="add-card-button">
-                 <i className="icon-Plus2x icon-md text-green-primary"></i>
-               </button>
              </div>
              <div className="card card-medical mt-2">
                <div className="flex justify-between">
@@ -647,11 +641,7 @@ export default function MobileLanding() {
                    Medication
                  </h3>
                </div>
-               <button
-                 className="add-card-button"
-               >
-                 <i className="icon-Plus2x icon-md text-green-primary"></i>
-               </button>
+               
              </div>
              <div className="card card-medical mt-2">
                <div className="flex justify-between">
@@ -748,9 +738,6 @@ export default function MobileLanding() {
                    Emergency Contact
                  </h3>
                </div>
-               <button className="add-card-button">
-                 <i className="icon-Plus2x icon-md text-green-primary"></i>
-               </button>
              </div>
              <div className="card card-medical mt-2">
                <div className="flex justify-between">
@@ -785,9 +772,7 @@ export default function MobileLanding() {
                    Insurance
                  </h3>
                </div>
-               <button className="add-card-button">
-                 <i className="icon-Plus2x icon-md text-green-primary"></i>
-               </button>
+               
              </div>
              <div className="card card-medical mt-2">
                <div className="flex justify-between">
@@ -834,9 +819,6 @@ export default function MobileLanding() {
                    Preferred Hospital
                  </h3>
                </div>
-               <button className="add-card-button">
-                 <i className="icon-Plus2x icon-md text-green-primary"></i>
-               </button>
              </div>
              <div className="card card-medical mt-2">
                <div className="flex justify-between">
@@ -871,9 +853,6 @@ export default function MobileLanding() {
                     Primary Caregiver
                   </h3>
                 </div>
-                <button className="add-card-button">
-                  <i className="icon-Plus2x icon-md text-green-primary"></i>
-                </button>
               </div>
               <div className="card card-medical mt-2">
                 <div className="flex justify-between">
