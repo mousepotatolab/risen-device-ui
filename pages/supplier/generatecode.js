@@ -2,8 +2,6 @@ import React, {useEffect, useState} from "react";
 
 // components
 
-import CardTable from "components/Cards/CardTable.js";
-
 // layout for page
 
 import Admin from "layouts/Admin.js";

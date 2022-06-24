@@ -1,4 +1,4 @@
-const baseurl = 'http://localhost:5100/it-20y/us-central1/api/';
+const baseurl = 'http://localhost:5100/risen-devices/us-central1/api/';
 import { getToken } from "./UserService";
 
 export const makeApiCall = async (url, option) => {
