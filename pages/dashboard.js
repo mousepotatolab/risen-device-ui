@@ -169,7 +169,6 @@ export default function DashboardLanding() {
 
   const enablePhone = () => {
     setDisabledPhone(false);
-    setPhone("916 867-5309");
   };
 
   // service call
@@ -248,32 +247,6 @@ export default function DashboardLanding() {
     }
   }
 
-  const handleMedicalProfiles = (profiletype, property, item, ischeckbox = false, itemvalue = null) => (e) => {
-    setActiveDoseUnit(null)
-    setActiveFrequency(null)
-    const value = itemvalue ? itemvalue : (ischeckbox ? e.target.checked : e.target.value);
-    if (!ischeckbox && item[property] == value) {
-      return false;
-    }
-    const obj = {
-      profiletype,
-      property,
-      id: item.id,
-      userid: activeuser,
-      value
-    }
-    if (itemvalue) {
-      setClientSide(profiletype, property, item, value);
-    }
-    updateMedicalProfile(obj).then(
-      (result) => {
-        if (result.success) {
-          saved();
-          loadInfoByUser(activeuser);
-        }
-      }
-    )
-  };
 
   const createMedicalEmptyField = (profiletype) => {
     if (activeuserInfo.medicalProfiles) {
@@ -322,7 +295,19 @@ export default function DashboardLanding() {
   const handleOutsideClick = (type, item) => {
     if (activeCardInput && activeCardInput.profiletype == type && activeCardInput.item.id == item.id) {
         if (type == "profile") {
-          console.log("update here") 
+          console.log("here", activeCardInput)
+          if (activeCardInput.items.length > 0) {
+            updateProfileInfo({items: activeCardInput.items, userid: activeuserInfo.id}).then(
+              (result) => {
+                if ("success" in result) {
+                  saved();
+                } else if ("message" in result) {
+                  error(result.message);
+                }
+              }
+            )
+            setActiveCardInput(null);
+          }
         } else {
           if (activeCardInput.items.length > 0) {
             updateMedicalProfile({
