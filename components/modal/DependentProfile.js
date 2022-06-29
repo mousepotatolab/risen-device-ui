@@ -115,10 +115,10 @@ firstNameDependent, lastNameDependent, dobDependent, genderDependent, emailDepen
               value={genderDependent}
               placeholder="e.g."
             >
-              <option>Female</option>
-              <option>Male</option>
-              <option>Non-binary</option>
-              <option>N/A</option>
+              <option value="Female">Female</option>
+              <option value="Male">Male</option>
+              <option value="Non-binary">Non-binary</option>
+              <option value="N/A">N/A</option>
             </select>
           <label
             className="block text-gray-primary text-xs font-normal my-3"

@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import Router, { withRouter, useRouter } from 'next/router'
 
-function Sidebar({openSettings, user, activeuser, setActiveuser, loadInfoByUser}) {
+function Sidebar({openSettings, user, activeuser, setActiveuser, loadInfoByUser, newProfile}) {
   const router = useRouter();
   // const [openTab, setOpenTab] = React.useState(1);
   const logout = () => {
@@ -31,7 +31,7 @@ function Sidebar({openSettings, user, activeuser, setActiveuser, loadInfoByUser}
                     </div>
                     <div className="flex justify-between mb-6">
                       <p className="p text-xs font-normal">Medical Profiles</p>
-                      <i className="icon-Plus2x icon-sm text-green-primary"></i>
+                      <i onClick={newProfile} className="icon-Plus2x icon-sm text-green-primary"></i>
                     </div>
                     <div className="wrapper profile-tab"
                     onClick={()=> handleActiveUser(user.id)}
@@ -51,7 +51,7 @@ function Sidebar({openSettings, user, activeuser, setActiveuser, loadInfoByUser}
                       </button>
                     </div>))}
                     <div className="wrapper">
-                      <button className="add-profile-button w-full font-medium flex items-center">
+                      <button onClick={newProfile} className="add-profile-button w-full font-medium flex items-center">
                         Add New Profile <i className=" ml-3 icon-Plus2x text-green-primary"></i>
                       </button>
                     </div>

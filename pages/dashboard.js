@@ -32,7 +32,7 @@ const phoneUtil = require('google-libphonenumber').PhoneNumberUtil.getInstance()
 
 import {
   getUserInfo, createMedicalProfile, updateMedicalProfile, createEmptyField, getUserInfoById,
-  updateProfileInfo
+  updateProfileInfo, createDependentProfile
 } from "../services/UserService";
 
 import Dashboard from "layouts/Dashboard.js";
@@ -129,21 +129,25 @@ export default function DashboardLanding() {
   const [notDependent, startDependent] = React.useState(true);
   const [dependentProfileValid, isDependentValid] = React.useState(true);
 
-  const checkValidProfile = () => {
-    if (firstNameDependent && lastNameDependent && dobDependent && genderDependent && emailDependent && dependentEmaillValid && phoneDependent ) {
-      isDependentValid(false)
-      console.log('here')
-      console.log(dependentProfileValid)
-    }
-  }
-
   const addDependentProfile = () => {
-    setDependentOpen(true)
+    setFirstNameDependent("");
+    setLastNameDependent("");
+    setDobDependent("");
+    setGenderDependent("Female");
+    setEmailDependent("");
+    setPhoneDependent("");
+    setIdDependent("");
+    setPinDependent("");
+    isDependentEmailValid(false);
+    isDependentDobValid(false);
+    isDependentPhoneValid(false);
+    setDependentOpen(true);
   }
 
   const [dependentModalIsOpen, setDependentOpen] = React.useState(false);
 
   function closeDependentModal() {
+    setDependentSuccess(false);
     setDependentOpen(false);
   }
 
@@ -152,44 +156,95 @@ export default function DashboardLanding() {
    const [firstNameDependent, setFirstNameDependent] = React.useState("");
    const [lastNameDependent, setLastNameDependent] = React.useState("");
    const [dobDependent, setDobDependent] = React.useState("");
-   const [genderDependent, setGenderDependent] = React.useState("");
+   const [genderDependent, setGenderDependent] = React.useState("Female");
    const [emailDependent, setEmailDependent] = React.useState("");
    const [phoneDependent, setPhoneDependent] = React.useState("");
    const [idDependent, setIdDependent] = React.useState("");
    const [pinDependent, setPinDependent] = React.useState("");
 
-   const createdDependent = () => {
-    setDependentSuccess(true)
-    startDependent(false)
+   const createdDependent = (e) => {
+     e.preventDefault();
+    if (!dependentProfileValid) {
+      const obj = {
+        firstName: firstNameDependent,
+        lastName: lastNameDependent,
+        email: emailDependent,
+        gender: genderDependent,
+        phone: phoneDependent,
+        dob: dobDependent,
+        deviceId: idDependent,
+        devicePin: pinDependent
+      };
+      createDependentProfile(obj).then(
+        (res) => {
+          if (res.message) {
+            error(res.message);
+          } else {
+            loadData();
+            setDependentSuccess(true)
+            startDependent(false)
+          }
+        }
+      )
+    } 
+   
    }
 
-   const inputIDDependent = (event) => {
-    setIdDependent(event.target.value);
-    checkValidProfile()
-   }
-   const inputPinDependent = (event) => {
-    setPinDependent(event.target.value);
-    checkValidProfile()
-   }
-   const handleFirstDependent = (event) => {
+  useEffect(() => {
+    checkValidProfile();
+  }, [firstNameDependent]);
+  useEffect(() => {
+    checkValidProfile();
+  }, [lastNameDependent]);
+  useEffect(() => {
+    checkValidProfile();
+  }, [dobDependent]);
+  useEffect(() => {
+    checkValidProfile();
+  }, [genderDependent]);
+  useEffect(() => {
+    checkValidProfile();
+  }, [emailDependent]);
+  useEffect(() => {
+    checkValidProfile();
+  }, [phoneDependent]);
+
+  let [dependentEmaillValid, isDependentEmailValid] = useState(false);
+  let [dependentPhoneValid, isDependentPhoneValid] = useState(false);
+  let [dependentDobValid, isDependentDobValid] = useState(false);
+
+  const inputIDDependent = (event) => {
+  setIdDependent(event.target.value);
+  checkValidProfile()
+  }
+  const inputPinDependent = (event) => {
+  setPinDependent(event.target.value);
+  checkValidProfile()
+  }
+  const handleFirstDependent = (event) => {
     setFirstNameDependent(event.target.value);
-    checkValidProfile()
-   }
-   const handleLastDependent = (event) => {
+  }
+  const handleLastDependent = (event) => {
     setLastNameDependent(event.target.value);
-    checkValidProfile()
-   }
-   const inputDobDependent = (event) => {
+  }
+  const inputDobDependent = (event) => {
+    isDependentDobValid(false);
+    if(isDate(event.target.value, {format: "MM/DD/YYYY"})) {
+      isDependentDobValid(true);
+    }
     setDobDependent(event.target.value);
-    checkValidProfile()
-   }
-   const handlePhoneDependent = (event) => {
+  }
+  const handlePhoneDependent = (event) => {
+    isDependentPhoneValid(false);
+    if (validatePhoneNumber(event.target.value)) {
+      isDependentPhoneValid(true);
+    }
     setPhoneDependent(event.target.value);
-    checkValidProfile()
-   }
-   let [dependentEmaillValid, isDependentEmailValid] = useState();
+  }
+
 
    const handleEmailDependent = (event) => {
+    isDependentEmailValid(false);
     if (isEmail(event.target.value)) {
       isDependentEmailValid(true);
     }
@@ -198,6 +253,14 @@ export default function DashboardLanding() {
    const handleGenderDependent = (event) => {
     setGenderDependent(event.target.value);
    }
+
+   const checkValidProfile = () => {
+    isDependentValid(true)
+    if (firstNameDependent && lastNameDependent && dobDependent && genderDependent && dependentDobValid
+        && emailDependent && dependentEmaillValid && phoneDependent && dependentPhoneValid) {
+      isDependentValid(false)
+    }
+  }
    // End Dependent Profile
 
 
@@ -414,7 +477,7 @@ export default function DashboardLanding() {
     if (activeCardInput && activeCardInput.profiletype == type && activeCardInput.item.id == item.id) {
         if (type == "profile") {
           if (activeCardInput.items.length > 0) {
-            setEditFalse(activeCardInput.items);
+            // setEditFalse(activeCardInput.items);
             updateProfileInfo({items: activeCardInput.items, userid: activeuserInfo.id}).then(
               (result) => {
                 if ("success" in result) {
@@ -521,23 +584,23 @@ export default function DashboardLanding() {
       
   };
 
-  useEffect(() => {
-    const keyUpHandler = event => {
-      console.log('User pressed: ', event.key);
+  // useEffect(() => {
+  //   const keyUpHandler = event => {
+  //     console.log('User pressed: ', event.key);
 
-      if (event.key == 'Enter') {
-        event.preventDefault();
-        console.log(activeCardInput, "klm")
-        setEditFalse();
-      }
-    };
+  //     if (event.key == 'Enter') {
+  //       event.preventDefault();
+  //       console.log(activeCardInput, "klm")
+  //       setEditFalse();
+  //     }
+  //   };
 
-    document.addEventListener('keyup', keyUpHandler);
+  //   document.addEventListener('keyup', keyUpHandler);
 
-    return () => {
-      document.removeEventListener('keyup', keyUpHandler);
-    };
-  }, []);
+  //   return () => {
+  //     document.removeEventListener('keyup', keyUpHandler);
+  //   };
+  // }, []);
 
   const dosageUnit = ["Pills", "Drops", "Pieces", "cc", "ml", "mg"];
   const frequencyUnit = ["Hourly", "Daily", "Weekly", "Every 2 Week", "Monthly", "Every 3 Month", "Every 6 Month"];
@@ -630,6 +693,7 @@ export default function DashboardLanding() {
             activeuser={activeuser}
             setActiveuser={setActiveuser}
             loadInfoByUser={loadInfoByUser}
+            newProfile={addDependentProfile}
           // signOut={signOut}
           ></Sidebar>
         </section>
@@ -884,6 +948,7 @@ export default function DashboardLanding() {
                           </div>
                         </div>
                       </div>
+                      </div>
                       <div
                         className={openTab === 2 ? "block" : "hidden"}
                         id="link2"
@@ -973,8 +1038,7 @@ export default function DashboardLanding() {
                             enablePhone={enablePhone}
                             activeuser={activeuser}
                           />
-                        </div>
-                        <div className="fb-576">
+                          <div className="fb-576">
                           <div className="card-wrapper w-full ml-4">
                             {user && activeuser && user.id == activeuser && (<div className="card p-24">
                               <div className="relative flex flex-wrap items-stretch w-full">
@@ -1108,8 +1172,9 @@ export default function DashboardLanding() {
                             </div>
                           </div>
                         </div>
+                        </div>
+                        
                       </div>
-                    </div>
                   </div>
                 </div>
               </div>

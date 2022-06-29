@@ -95,3 +95,12 @@ export async function updateProfileInfo(data) {
     })
     return response;
 }
+
+export async function createDependentProfile(data) {
+    const response = await makeApiCall(`user/create-dependent-profile`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(data)
+    })
+    return response;
+}
