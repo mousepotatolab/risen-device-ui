@@ -8,6 +8,8 @@ import validator from "validator";
 import isEmail from "validator/lib/isEmail";
 import isDate from "validator/lib/isDate";
 import ConnectDeviceModal from "../components/modal/ConnectDevice";
+import DependentProfileModal from "../components/modal/DependentProfile";
+import UploadDocumentModal from "../components/modal/UploadDocument";
 import Sidebar from "../components/Sidebar/Sidebar";
 import DashboardTabs from "../components/Navbars/DasboardTabs";
 import { createPopper } from "@popperjs/core";
@@ -44,6 +46,9 @@ export default function DashboardLanding() {
   }
 
   function closeModal() {
+    setIsOpen(false);
+  }
+  function closeModalDependent() {
     setIsOpen(false);
   }
   function openSettings() {
@@ -97,6 +102,101 @@ export default function DashboardLanding() {
   const setConnectTrue = () => {
     setConnect(true);
   };
+
+  // Add Dependent Profile
+  const [notDependent, startDependent] = React.useState(true);
+  const [dependentProfileValid, isDependentValid] = React.useState(true);
+
+  const checkValidProfile = () => {
+    if (firstNameDependent && lastNameDependent && dobDependent && genderDependent && emailDependent && dependentEmaillValid && phoneDependent ) {
+      isDependentValid(false)
+      console.log('here')
+      console.log(dependentProfileValid)
+    }
+  }
+
+  const addDependentProfile = () => {
+    setDependentOpen(true)
+  }
+
+  const [dependentModalIsOpen, setDependentOpen] = React.useState(false);
+
+  function closeDependentModal() {
+    setDependentOpen(false);
+  }
+
+   //Dependent Profile Details
+   const [dependentSuccess, setDependentSuccess] = React.useState(false);
+   const [firstNameDependent, setFirstNameDependent] = React.useState("");
+   const [lastNameDependent, setLastNameDependent] = React.useState("");
+   const [dobDependent, setDobDependent] = React.useState("");
+   const [genderDependent, setGenderDependent] = React.useState("");
+   const [emailDependent, setEmailDependent] = React.useState("");
+   const [phoneDependent, setPhoneDependent] = React.useState("");
+   const [idDependent, setIdDependent] = React.useState("");
+   const [pinDependent, setPinDependent] = React.useState("");
+
+   const createdDependent = () => {
+    setDependentSuccess(true)
+    startDependent(false)
+   }
+
+   const inputIDDependent = (event) => {
+    setIdDependent(event.target.value);
+    checkValidProfile()
+   }
+   const inputPinDependent = (event) => {
+    setPinDependent(event.target.value);
+    checkValidProfile()
+   }
+   const handleFirstDependent = (event) => {
+    setFirstNameDependent(event.target.value);
+    checkValidProfile()
+   }
+   const handleLastDependent = (event) => {
+    setLastNameDependent(event.target.value);
+    checkValidProfile()
+   }
+   const inputDobDependent = (event) => {
+    setDobDependent(event.target.value);
+    checkValidProfile()
+   }
+   const handlePhoneDependent = (event) => {
+    setPhoneDependent(event.target.value);
+    checkValidProfile()
+   }
+   let [dependentEmaillValid, isDependentEmailValid] = useState();
+
+   const handleEmailDependent = (event) => {
+    if (isEmail(event.target.value)) {
+      isDependentEmailValid(true);
+    }
+    setEmailDependent(event.target.value);
+   }
+   const handleGenderDependent = (event) => {
+    setGenderDependent(event.target.value);
+   }
+   // End Dependent Profile
+
+
+   // Documents Section 
+   const [noDocuments, startDocumentUpload] = useState(true);
+
+   const uploadDocument = () => {
+    setDocumentOpen(true)
+  }
+
+  function closeDocumentModal() {
+    setDocumentOpen(false);
+  }
+
+  const saveDocument = () => {
+    startDocumentUpload(false)
+    setDocumentOpen(false);
+  }
+
+  const [DocumentUploadIsOpen, setDocumentOpen] = React.useState(false);
+
 
   // Toast
   const saved = () =>
@@ -194,7 +294,6 @@ export default function DashboardLanding() {
 
   const handlePhoneUpdate = (event) => {
     setPhone(event.target.value);
-    console.log(firstName + lastName);
   };
 
   //Dropdowns
@@ -239,7 +338,7 @@ export default function DashboardLanding() {
         // onAfterOpen={afterOpenModal}
         onRequestClose={closeModal}
         style={customStyles}
-        contentLabel="Example Modal"
+        contentLabel="Device Connect Modal"
         // className="Modal"
         // overlayClassName="Overlay"
       >
@@ -253,6 +352,53 @@ export default function DashboardLanding() {
           connectDevice={connectDevice}
           deviceConnected={deviceConnected}
           connectSuccess={connectSuccess}
+        />
+      </Modal>
+      <Modal
+        isOpen={dependentModalIsOpen}
+        // onAfterOpen={afterOpenModal}
+        onRequestClose={closeDependentModal}
+        style={customStyles}
+        contentLabel="Dependent Profile Modal"
+        // className="Modal"
+        // overlayClassName="Overlay"
+      >
+        <DependentProfileModal
+         notDependent={notDependent} 
+         createDependent={createdDependent}
+         closeDependentModal={closeDependentModal}
+         inputIDDependent={inputIDDependent}
+        inputPinDependent={inputPinDependent}
+        handleFirstDependent={handleFirstDependent}
+        inputDobDependent={inputDobDependent}
+        handleLastDependent={handleLastDependent}
+        handleGenderDependent={handleGenderDependent}
+        handlePhoneDependent={handlePhoneDependent}
+        handleEmailDependent={handleEmailDependent}
+        dependentSuccess={dependentSuccess}
+        firstNameDependent={firstNameDependent}
+        lastNameDependent={lastNameDependent}
+        dobDependent={dobDependent}
+        genderDependent={genderDependent}
+        emailDependent={emailDependent}
+        phoneDependent={phoneDependent}
+        idDependent={idDependent}
+        pinDependent={pinDependent}
+        dependentProfileValid={dependentProfileValid}
+        />
+      </Modal>
+      <Modal
+        isOpen={DocumentUploadIsOpen}
+        // onAfterOpen={afterOpenModal}
+        onRequestClose={closeDocumentModal}
+        style={customStyles}
+        contentLabel="Dependent Profile Modal"
+        // className="Modal"
+        // overlayClassName="Overlay"
+      >
+        <UploadDocumentModal
+        closeDocumentModal={closeDocumentModal}
+        saveDocument={saveDocument}
         />
       </Modal>
       <div className="flex h-full">
@@ -270,12 +416,13 @@ export default function DashboardLanding() {
           />
           <Sidebar
             openSettings={openSettings}
+            newProfile={addDependentProfile}
             // signOut={signOut}
           ></Sidebar>
         </section>
         <section className="information-section w-full h-full">
           {emptyState && (
-            <div className="flex flex-col justify-center max-w-340-px items-center mx-auto mt-10 h-full pb-38-vh">
+            <div className="flex flex-col justify-center max-w-370-px items-center mx-auto mt-10 h-full pb-38-vh">
               <img src="/img/girl.svg" alt="" />
               <h2 className="h2 text-2xl font-medium font-dark">
                 Let's create your medical profile
@@ -782,7 +929,76 @@ export default function DashboardLanding() {
                         className={openTab === 2 ? "block" : "hidden"}
                         id="link2"
                       >
-                        <p>Placeholder for documents page</p>
+                        {noDocuments && (
+                          <div className="flex flex-col justify-center max-w-370-px items-center mx-auto mt-10 h-full pb-38-vh">
+                            <img src="/img/girl.svg" alt="" />
+                            <h2 className="h2 text-2xl font-medium font-dark">
+                              You don't have any documents yet
+                            </h2>
+                            <button
+                              className="button-dark-green px-10 text-md font-bold mt-6"
+                              onClick={uploadDocument}
+                            >
+                             Upload Document
+                            </button>
+                          </div>
+                        )}
+                        {!noDocuments && (
+                          <div className="flex mx-auto mt-10 h-full pb-100-vh">
+                          <div className="card-wrapper fb-487">
+                          <div className="title-wrapper flex justify-between items-center">
+                            <div className="flex items-center">
+                              <img
+                                src="/img/medical-condition.svg"
+                                alt=""
+                              />
+                              <h3 className="h3 font-medium ml-2">
+                                Documents
+                              </h3>
+                            </div>
+                            <button className="add-card-button">
+                              <i className="icon-Plus2x icon-md text-green-primary"></i>
+                            </button>
+                          </div>
+                          <div className="card card-medical mt-2">
+                            <h6 className="block text-gray-primary text-xs font-normal mb-2 ml-4">
+                              Title
+                            </h6>
+                            <div className="flex justify-between">
+                              <div className="flex">
+                                {/* <img src="/img/allergies.svg" alt="" /> */}
+                                <h4 className="h4 text-green-primary mb-4">Recent ECG</h4>
+                              </div>
+                              <div className="icon-wrapper">
+                                <button className="edit-card">
+                                  <i className="icon-edit text-green-secondary text-xs mr-1"></i>
+                                </button>
+                                <button className="delete-card">
+                                  <i className="icon-delete text-red-secondary text-xs"></i>
+                                </button>
+                              </div>
+                            </div>
+                            <h6 className="block text-gray-primary text-xs font-normal mb-2 ml-4">
+                              Title
+                            </h6>
+                            <div className="flex justify-between">
+                              <div className="flex">
+                                {/* <img src="/img/allergies.svg" alt="" /> */}
+                                <h4 className="h4 text-green-primary mb-4">this_is_a_document_title_02.png</h4>
+                              </div>
+                              <div className="icon-wrapper">
+                                <button className="edit-card">
+                                  <i className="icon-edit text-green-secondary text-xs mr-1"></i>
+                                </button>
+                                <button className="delete-card">
+                                  <i className="icon-delete text-red-secondary text-xs"></i>
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        </div>
+                        )}
                       </div>
                       <div
                         className={openTab === 3 ? "block" : "hidden"}

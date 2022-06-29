@@ -1,50 +1,52 @@
 import React, {useState} from "react";
 
-function Sidebar({openSettings}) {
+function Sidebar({openSettings, newProfile}) {
 
   // const [openTab, setOpenTab] = React.useState(1);
 
   return (
     <>
       <div className="container">
-                <div className="flex flex-col">
-                    <img src="/img/primaryFull.svg" alt="" className="logo mb-8" />
-                    <div className="flex mb-6">
-                        <div className="profile-photo mr-2">
-                            <img src="/img/dwight.jpeg" alt="" className="profile" />
-                        </div>
-                        <div className="profile-info">
-                            <h3 className="h3 font-medium">Dwight Schrute</h3>
-                            <h5 className="h5 text-xs text-gray-primary">Primary Account</h5>
-                        </div>
-                    </div>
-                    <div className="flex justify-between mb-6">
-                      <p className="p text-xs font-normal">Medical Profiles</p>
-                      <i className="icon-Plus2x icon-sm text-green-primary"></i>
-                    </div>
-                    <div className="wrapper profile-tab">
-                      <button className="flex w-full active-profile mb-2">
-                        <img src="/img/dwight.jpeg" alt="proflie" className="profile-sm mr-2" />
-                        <h5 className="h5 profile-name text-sm">Dwight Schrute</h5>
-                      </button>
-                    </div>
-                    <div className="wrapper profile-tab-last">
-                      <button className="flex w-full inactive-profile">
-                        <img src="/img/angela.jpeg" alt="proflie" className="profile-sm mr-2" />
-                        <h5 className="h5 profile-name text-sm">Angela Martin</h5>
-                      </button>
-                    </div>
-                    <div className="wrapper">
-                      <button className="add-profile-button w-full font-medium flex items-center">
-                        Add New Profile <i className=" ml-3 icon-Plus2x text-green-primary"></i>
-                      </button>
-                    </div>
+        <div className="flex flex-col">
+            <img src="/img/primaryFull.svg" alt="" className="logo mb-8" />
+            <div className="flex mb-6">
+                <div className="profile-photo mr-2">
+                    <img src="/img/dwight.jpeg" alt="" className="profile" />
                 </div>
-                <div className="wrapper fixed-bottom">
-                  <div className="flex mb-4"><img src="/img/settings.svg" alt="settings-icon"></img><button onClick={openSettings} className="h5 font-medium ml-2">Settings</button> </div>
-                  <div className="flex"><img src="/img/logout.svg" alt="logout-icon"></img> <h5 className="h5 font-medium ml-2">Sign Out</h5> </div>
+                <div className="profile-info">
+                    <h3 className="h3 font-medium">Dwight Schrute</h3>
+                    <h5 className="h5 text-xs text-gray-primary">Primary Account</h5>
                 </div>
             </div>
+            <div className="flex justify-between mb-6">
+              <p className="p text-xs font-normal">Medical Profiles</p>
+              <i className="icon-Plus2x icon-sm text-green-primary"></i>
+            </div>
+            <div className="wrapper profile-tab">
+              <button className="flex w-full active-profile mb-2">
+                <img src="/img/dwight.jpeg" alt="proflie" className="profile-sm mr-2" />
+                <h5 className="h5 profile-name text-sm">Dwight Schrute</h5>
+              </button>
+            </div>
+            <div className="wrapper profile-tab-last">
+              <button className="flex w-full inactive-profile">
+                <img src="/img/angela.jpeg" alt="proflie" className="profile-sm mr-2" />
+                <h5 className="h5 profile-name text-sm">Angela Martin</h5>
+              </button>
+            </div>
+            <div className="wrapper">
+              <button className="add-profile-button w-full font-medium flex items-center"
+              onClick={newProfile}
+              >
+                Add New Profile <i className=" ml-3 icon-Plus2x text-green-primary"></i>
+              </button>
+            </div>
+        </div>
+        <div className="wrapper fixed-bottom">
+          <div className="flex mb-4"><img src="/img/settings.svg" alt="settings-icon"></img><button onClick={openSettings} className="h5 font-medium ml-2">Settings</button> </div>
+          <div className="flex"><img src="/img/logout.svg" alt="logout-icon"></img> <h5 className="h5 font-medium ml-2">Sign Out</h5> </div>
+        </div>
+    </div>
     </>
   );
 }

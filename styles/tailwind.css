@@ -2382,6 +2382,9 @@ select {
 .mr-4 {
   margin-right: 1rem;
 }
+.mr-8 {
+  margin-right: 2rem;
+}
 .ml-4 {
   margin-left: 1rem;
 }
@@ -2508,6 +2511,12 @@ select {
 .mw-343 {
   max-width: 343px;
 }
+.fb-487 {
+  flex-basis: 487px;
+}
+.w-343 {
+  width: 343px;
+}
 .mw-423 {
   max-width: 423px;
   flex-basis: 423px;
@@ -2563,6 +2572,13 @@ select {
 }
 .max-w-340-px {
   max-width: 340px;
+}
+.max-w-370-px {
+  max-width: 370px;
+}
+
+.pb-100-vh {
+  padding-bottom: calc(56vh - 32px);
 }
 
 .object-contain {
@@ -4423,6 +4439,36 @@ CUSTOM CLASSES DASHBOARD
   border-radius: 16px;
   padding: 0px 15px;
   color: #fff;
+}
+
+.center {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.upload-card {
+  background-color: rgb(239, 250, 248);
+  border-radius: 8px;
+}
+
+.w-60 {
+  width: 60px;
+}
+
+.uploaded-document {
+  background-color: rgba(12, 140, 135, 0.5);
+  padding: 8px;
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+
+.upload-title {
+  margin: 16px -6px 0;
+}
+
+.close-document {
+  right: 8px;
+  top: 2px;
 }
 
 

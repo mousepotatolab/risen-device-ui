@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="60px" height="40px" viewBox="0 0 60 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>icon/upload</title>
+    <g id="Landing---Documents" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Landing-Page---Document---Upload-Modal" transform="translate(-688.000000, -229.000000)" fill="#0C8C87" fill-rule="nonzero">
+            <g id="upload-document" transform="translate(474.000000, 53.000000)">
+                <g id="drag-drop-upload" transform="translate(72.000000, 152.000000)">
+                    <path d="M188.7625,36.51 C186.5975,29.14 179.875,24 172,24 C166.27,24 160.9,26.845 157.645,31.5125 C148.965,31.8325 142,38.9925 142,47.75 C142,56.71 149.29,64 158.25,64 L164.5,64 L169.5,64 L169.5,49 L162,49 L172,39 L182,49 L174.5,49 L174.5,64 L179.5,64 L188.25,64 C195.8325,64 202,57.83 202,50.25 C202,42.84 196.1075,36.7775 188.7625,36.51 Z" id="icon/upload"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
