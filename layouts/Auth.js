@@ -1,9 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 // components
-
+import { getToken } from "../services/UserService";
+import Router, { withRouter, useRouter } from 'next/router'
 
 export default function Auth({ children }) {
+  const router = useRouter();
+
+  useEffect(async () => {
+    if (await getToken()) {
+      Router.push({pathname: "/dashboard"})
+      return null;
+    }
+  }, [router.isReady])
+  
   return (
     <>
       <main className="bg-secondary flex justify-center">
