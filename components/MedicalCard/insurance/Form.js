@@ -11,7 +11,7 @@ function InsuranceForm({ item, handleOutsideClick, handleFormInput }) {
                     handleOutsideClick("insurance", item)
                 }}
             >
-                <div className="card card-medical mt-2">
+                <div className="card card-medical mt-4">
                     <label className="block text-gray-primary text-xs font-normal mb-3">
                         Carrier Name
                     </label>
@@ -20,7 +20,8 @@ function InsuranceForm({ item, handleOutsideClick, handleFormInput }) {
                         className="w-full input-primary pl-2 focus:outline-none ph-text-sm"
                         placeholder="e.g. Kaiser Permanente"
                         defaultValue={item.carrier}
-                        onBlur={handleFormInput("insurance", "carrier",  item)}
+                        onChange={handleFormInput("insurance", "carrier",  item)}
+                        onKeyUp={handleFormInput("insurance", "carrier",  item)}
                     />
                     <label className="block text-gray-primary text-xs font-normal my-3">
                         Insurance Company Name
@@ -30,7 +31,8 @@ function InsuranceForm({ item, handleOutsideClick, handleFormInput }) {
                         className="w-full input-primary pl-2 focus:outline-none ph-text-sm"
                         placeholder="e.g. Kaiser Permanente"
                         defaultValue={item.company}
-                        onBlur={handleFormInput("insurance", "company",  item)}
+                        onChange={handleFormInput("insurance", "company",  item)}
+                        onKeyUp={handleFormInput("insurance", "company",  item)}
                     />
                     <label className="block text-gray-primary text-xs font-normal my-3">
                         Plan No.
@@ -40,7 +42,8 @@ function InsuranceForm({ item, handleOutsideClick, handleFormInput }) {
                         className="w-full input-primary pl-2 focus:outline-none ph-text-sm"
                         placeholder="e.g. 26346346"
                         defaultValue={item.plan}
-                        onBlur={handleFormInput("insurance", "plan",  item)}
+                        onChange={handleFormInput("insurance", "plan",  item)}
+                        onKeyUp={handleFormInput("insurance", "plan",  item)}
                     />
                     <label className="block text-gray-primary text-xs font-normal my-3">
                         Policy No.
@@ -50,7 +53,8 @@ function InsuranceForm({ item, handleOutsideClick, handleFormInput }) {
                         className="w-full input-primary pl-2 focus:outline-none ph-text-sm"
                         placeholder="e.g. 23452345"
                         defaultValue={item.policy}
-                        onBlur={handleFormInput("insurance", "policy",  item)}
+                        onChange={handleFormInput("insurance", "policy",  item)}
+                        onKeyUp={handleFormInput("insurance", "policy",  item)}
                     />
                     <label className="block text-gray-primary text-xs font-normal my-3">
                         Group No.
@@ -60,7 +64,8 @@ function InsuranceForm({ item, handleOutsideClick, handleFormInput }) {
                         className="w-full input-primary pl-2 focus:outline-none ph-text-sm"
                         placeholder="e.g. 2345346"
                         defaultValue={item.group}
-                        onBlur={handleFormInput("insurance", "group",  item)}
+                        onChange={handleFormInput("insurance", "group",  item)}
+                        onKeyUp={handleFormInput("insurance", "group",  item)}
                     />
                 </div>
             </OutsideClickHandler>)}

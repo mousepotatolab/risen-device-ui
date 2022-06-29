@@ -11,7 +11,7 @@ function AllergiesForm({ item, handleOutsideClick, handleFormInput }) {
                     handleOutsideClick("allergies", item)
                 }}
             >
-                <div className="card card-medical mt-2">
+                <div className="card card-medical mt-4">
                     <label className="block text-gray-primary text-xs font-normal mb-3">
                         Name
                     </label>
@@ -21,6 +21,7 @@ function AllergiesForm({ item, handleOutsideClick, handleFormInput }) {
                         placeholder="e.g. Amoxicillin"
                         defaultValue={item.name}
                         onChange={handleFormInput('allergies', 'name', item)}
+                        onKeyUp={handleFormInput('allergies', 'name', item)}
                     />
                     <label className="block text-gray-primary text-xs font-normal my-3">
                         Special Note
@@ -31,6 +32,7 @@ function AllergiesForm({ item, handleOutsideClick, handleFormInput }) {
                         placeholder="e.g. Allergic to Amoxicillin"
                         defaultValue={item.special_note}
                         onChange={handleFormInput('allergies', 'special_note', item)}
+                        onKeyUp={handleFormInput('allergies', 'special_note', item)}
                     />
                 </div>
             </OutsideClickHandler>)}

@@ -24,6 +24,7 @@ import InsuranceView from "../components/MedicalCard/insurance/View";
 import PrimaryCaregiverForm from "../components/MedicalCard/primarycaregiver/Form";
 import PrimaryCaregiverView from "../components/MedicalCard/primarycaregiver/View";
 import Profile from "../components/Profile";
+const phoneUtil = require('google-libphonenumber').PhoneNumberUtil.getInstance();
 
 // layout for page
 
@@ -33,6 +34,7 @@ import {
 } from "../services/UserService";
 
 import Dashboard from "layouts/Dashboard.js";
+import { compose } from "redux";
 // import { isToastIdValid } from "react-toastify/dist/utils";
 
 export default function DashboardLanding() {
@@ -180,6 +182,18 @@ export default function DashboardLanding() {
   const [activeuser, setActiveuser] = useState(null)
   const [activeCardInput, setActiveCardInput] = useState(null);
   
+  const validatePhoneNumber = (value) => {
+    if (!value) {
+      return false;
+    }
+    try {
+      let isValidPhoneNumber = phoneUtil.isValidNumberForRegion(phoneUtil.parse(String(value), 'US'), 'US');
+      return isValidPhoneNumber
+    } catch (error) {
+      return false;
+    }
+  }
+
   const startMedicalProfile = () => {
     createMedicalProfile({ userid: activeuser }).then(p => {
       loadInfoByUser(activeuser);
@@ -253,7 +267,6 @@ export default function DashboardLanding() {
       const items = activeuserInfo.medicalProfiles[profiletype];
       const lastIndex = items.length - 1;
       const {id, edit, ...item} = items[lastIndex];
-      console.log(item, "qqq")
       if (!(Object.values(item).every(p => p == ""))) {
         createEmptyField({ profiletype, userid: activeuser }).then(p => {
            if ("success" in p && p.success) {
@@ -267,36 +280,41 @@ export default function DashboardLanding() {
     }
   };
 
-  const handleProfileUpdate = (field) => (e) => {
-    const value = e.target.value;
-    if (field == "dob") {
-      if (!(isDate(value, { format: "MM/DD/YYYY" }))) {
-        return false;
-      }
-    }
-    if (field == "email") {
-      if (!(isEmail(value))) {
-        return false;
-      }
-    }
-    if (value) {
-      updateProfileInfo({ field, value, userid: activeuserInfo.id }).then(
-        (result) => {
-          if ("success" in result) {
-            saved();
-          } else if ("message" in result) {
-            error(result.message);
+  const checkIfObjectEmpty = (items) => {
+    const {id, edit, ...item} = items;
+    return Object.values(item).every(q => q == "");
+  }
+
+  const setEditFalse = (items) => {
+    if (activeCardInput) {
+      const profileitem = activeuserInfo.medicalProfiles[activeCardInput.profiletype];
+      const found = profileitem.find(p => p.id === activeCardInput.item.id);
+      if (found) {
+        const index = profileitem.indexOf(found);
+        if (items) {
+          for (const item of items) {
+            activeuserInfo.medicalProfiles[activeCardInput.profiletype][index][item.field] = item.value;
           }
         }
-      )
+        activeuserInfo.medicalProfiles[activeCardInput.profiletype][index].edit = false;
+        if (checkIfObjectEmpty(profileitem[index])) {
+          if (profileitem.length == 1) {
+            activeuserInfo.medicalProfiles[activeCardInput.profiletype][index].edit = true;
+          } else {
+            activeuserInfo.medicalProfiles[activeCardInput.profiletype].splice(index, 1);
+          }
+        }
+        setActiveuserInfo({ ...activeuserInfo });
+      }
     }
   }
 
   const handleOutsideClick = (type, item) => {
+
     if (activeCardInput && activeCardInput.profiletype == type && activeCardInput.item.id == item.id) {
         if (type == "profile") {
-          console.log("here", activeCardInput)
           if (activeCardInput.items.length > 0) {
+            setEditFalse(activeCardInput.items);
             updateProfileInfo({items: activeCardInput.items, userid: activeuserInfo.id}).then(
               (result) => {
                 if ("success" in result) {
@@ -310,6 +328,7 @@ export default function DashboardLanding() {
           }
         } else {
           if (activeCardInput.items.length > 0) {
+            setEditFalse(activeCardInput.items);
             updateMedicalProfile({
               profiletype: activeCardInput.profiletype,
               id: activeCardInput.item.id,
@@ -319,26 +338,50 @@ export default function DashboardLanding() {
               (result) => {
                 if (result.success) {
                   saved();
-                  loadInfoByUser(activeuser);
+                  // loadInfoByUser(activeuser);
                 }
               }
             )
             setActiveCardInput(null);
           } else {
-            console.log(activeCardInput, "qqq")
-            const found = activeuserInfo.medicalProfiles[activeCardInput.profiletype].find(p => p.id === activeCardInput.item.id);
-            if (found) {
-              const index = activeuserInfo.medicalProfiles[activeCardInput.profiletype].indexOf(found);
-              activeuserInfo.medicalProfiles[activeCardInput.profiletype][index].edit = false;
-            }
+            setEditFalse(activeCardInput.items);
             setActiveCardInput(null);
           }
         }
     }
   }
 
+  const checkValidEmail = (e) => {
+    if (!(isEmail(e.target.value))) {
+      error("Please enter a valid email address");
+    }
+  };
+
+  const checkValidPhone = (e) => {
+    if(!(validatePhoneNumber(e.target.value))) {
+      error("Please enter a valid phone number");
+    }
+  };
+
   const handleFormInput = (profiletype, property, item, ischeckbox = false, itemvalue = null) => (e) => {
     const value = itemvalue ? itemvalue : (ischeckbox ? e.target.checked : e.target.value);
+    const isEnterKey = e.key === 'Enter';
+    if (isEnterKey) {
+      handleOutsideClick(profiletype, item);
+      return false;
+    }
+    // console.log(isEnterKey, "[[")
+    if (property == "email") {
+      if (!(isEmail(value))) {
+        return false;
+      }
+    }
+
+    if (property == "phone") {
+      if(!(validatePhoneNumber(e.target.value))) {
+        return false;
+      }
+    }
     if (!activeCardInput) {
       setActiveCardInput({
         profiletype,
@@ -364,7 +407,6 @@ export default function DashboardLanding() {
       setActiveFrequency(null)
       setClientSide(profiletype, property, item, value);
     }
-    console.log(activeCardInput)
   }
 
   const onEditCard = (profiletype, item) => {
@@ -378,6 +420,24 @@ export default function DashboardLanding() {
       setUser({ ...user });
       
   };
+
+  useEffect(() => {
+    const keyUpHandler = event => {
+      console.log('User pressed: ', event.key);
+
+      if (event.key == 'Enter') {
+        event.preventDefault();
+        console.log(activeCardInput, "klm")
+        setEditFalse();
+      }
+    };
+
+    document.addEventListener('keyup', keyUpHandler);
+
+    return () => {
+      document.removeEventListener('keyup', keyUpHandler);
+    };
+  }, []);
 
   const dosageUnit = ["Pills", "Drops", "Pieces", "cc", "ml", "mg"];
   const frequencyUnit = ["Hourly", "Daily", "Weekly", "Every 2 Week", "Monthly", "Every 3 Month", "Every 6 Month"];
@@ -602,6 +662,8 @@ export default function DashboardLanding() {
                                 item={p}
                                 handleFormInput={handleFormInput}
                                 handleOutsideClick={handleOutsideClick}
+                                checkValidEmail={checkValidEmail}
+                                checkValidPhone={checkValidPhone}
                               />}
                               {p.edit == false && <EmergencyView 
                                 item={p}
@@ -661,6 +723,8 @@ export default function DashboardLanding() {
                                   item={p}
                                   handleFormInput={handleFormInput}
                                   handleOutsideClick={handleOutsideClick}
+                                  checkValidEmail={checkValidEmail}
+                                  checkValidPhone={checkValidPhone}
                                 />)}
                                 {p.edit == false && (
                                   <PrimaryCaregiverView 

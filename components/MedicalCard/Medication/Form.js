@@ -14,7 +14,7 @@ function MedicationForm({ item, handleOutsideClick, handleFormInput,
                     handleOutsideClick("medication", item)
                 }}
             >
-                <div className="card card-medical mt-2">
+                <div className="card card-medical mt-4">
                     <label className="block text-gray-primary text-xs font-normal mb-3">
                         Medication Name
                     </label>
@@ -23,7 +23,8 @@ function MedicationForm({ item, handleOutsideClick, handleFormInput,
                         className="w-full input-primary pl-2 focus:outline-none ph-text-sm"
                         placeholder="e.g. Captopril"
                         defaultValue={item.name}
-                        onBlur={handleFormInput('medication', 'name', item)}
+                        onChange={handleFormInput('medication', 'name', item)}
+                        onKeyUp={handleFormInput('medication', 'name', item)}
                     />
                     <label className="block text-gray-primary text-xs font-normal my-3">
                         Special Note
@@ -33,7 +34,8 @@ function MedicationForm({ item, handleOutsideClick, handleFormInput,
                         className="w-full input-primary pl-2 focus:outline-none ph-text-sm"
                         placeholder="e.g. Taking for high blood pressure"
                         defaultValue={item.special_note}
-                        onBlur={handleFormInput('medication', 'special_note', item)}
+                        onChange={handleFormInput('medication', 'special_note', item)}
+                        onKeyUp={handleFormInput('medication', 'special_note', item)}
                     />
                     <div className="flex items-center justify-between mt-3">
                         <h3 className="text-xs text-gray-primary">
@@ -120,7 +122,8 @@ function MedicationForm({ item, handleOutsideClick, handleFormInput,
                                         className="w-full input-primary pl-2 focus:outline-none ph-text-sm"
                                         placeholder="e.g 200"
                                         defaultValue={item.amount}
-                                        onBlur={handleFormInput('medication', 'amount', item)}
+                                        onChange={handleFormInput('medication', 'amount', item)}
+                                        onKeyUp={handleFormInput('medication', 'amount', item)}
                                     />
                                 </div>
                             </div>
@@ -166,7 +169,8 @@ function MedicationForm({ item, handleOutsideClick, handleFormInput,
                                         className="w-full input-primary pl-2 focus:outline-none ph-text-sm"
                                         placeholder="e.g. Twice"
                                         defaultValue={item.times}
-                                        onBlur={handleFormInput('medication', 'times', item)}
+                                        onChange={handleFormInput('medication', 'times', item)}
+                                        onKeyUp={handleFormInput('medication', 'times', item)}
                                     />
                                 </div>
                             </div>

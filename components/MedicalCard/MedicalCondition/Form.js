@@ -11,7 +11,7 @@ function MedicalConditionForm({ item, handleOutsideClick, handleFormInput }) {
                     handleOutsideClick("medicalcondition", item)
                 }}
             >
-                <div className="card card-medical mt-2">
+                <div className="card card-medical mt-4">
                     <label className="block text-gray-primary text-xs font-normal mb-3">
                         Condition Name
                     </label>
@@ -21,6 +21,7 @@ function MedicalConditionForm({ item, handleOutsideClick, handleFormInput }) {
                         placeholder="e.g. Diabetes"
                         defaultValue={item.condition_name}
                         onChange={handleFormInput("medicalcondition", "condition_name", item)}
+                        onKeyUp={handleFormInput("medicalcondition", "condition_name", item)}
                     />
                     <label className="block text-gray-primary text-xs font-normal my-3">
                         Special Note
@@ -31,6 +32,7 @@ function MedicalConditionForm({ item, handleOutsideClick, handleFormInput }) {
                         placeholder="e.g. Taking insuline daily"
                         defaultValue={item.special_note}
                         onChange={handleFormInput("medicalcondition", "special_note", item)}
+                        onKeyUp={handleFormInput("medicalcondition", "special_note", item)}
                     />
                 </div>
             </OutsideClickHandler>)}

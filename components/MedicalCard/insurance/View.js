@@ -4,17 +4,17 @@ import Router, { withRouter, useRouter } from 'next/router'
 function InsuranceView({ item, onEditCard }) {
     return (
         <>
-            {item && (<div className="card card-medical mt-2">
+            {item && (<div className="card card-medical mt-4">
                 <div className="flex justify-between">
                     <label className="block text-gray-primary text-xs font-normal mb-3">
                         Carrier Name
                     </label>
                     <div className="icon-wrapper">
                         <button className="edit-card" onClick={() => onEditCard("insurance", item)}>
-                            <i className="icon-edit text-green-secondary text-xxs mr-1"></i>
+                            <i className="icon-edit text-green-secondary text-base mr-1"></i>
                         </button>
                         <button className="delete-card">
-                            <i className="icon-delete text-red-secondary text-xxs"></i>
+                            <i className="icon-delete text-red-secondary text-base"></i>
                         </button>
                     </div>
                 </div>
@@ -31,19 +31,19 @@ function InsuranceView({ item, onEditCard }) {
                     Plan No.
                 </label>
                 <h5 className="h5 text-green-tertiary font-medium">
-                    XXXXXXXX
+                    {item.plan}
                 </h5>
                 <label className="block text-gray-primary text-xs font-normal my-3">
                     Policy No.
                 </label>
                 <h5 className="h5 text-green-tertiary font-medium">
-                    XXXXXXXX
+                    {item.policy}
                 </h5>
                 <label className="block text-gray-primary text-xs font-normal my-3">
                     Group No.
                 </label>
                 <h5 className="h5 text-green-tertiary font-medium">
-                    XXXXXXXX
+                    {item.group}
                 </h5>
             </div>)}
         </>
