@@ -17,21 +17,4 @@ export const makeApiCall = async (url, option) => {
     return response;
 };
 
-
-export const fileUploadApiCall = async (url, option) => {
-    const token = await getToken();
-    if (token) {
-        option.headers = option.headers ? option.headers : {};
-        option.headers["risen-access-token"] = token;
-    }
-    url = baseurl + url;
-    const data = await axios.request({
-        method: "post",
-        url,
-        option,
-        onUploadProgress: (p) => {
-          console.log(p, p.loaded / p.total);
-        },
-    });
-    return data; 
-}
+export const baseapiurl = baseurl;

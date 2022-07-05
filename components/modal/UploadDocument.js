@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import { FileUploader } from "react-drag-drop-files";
+import { getToken } from "../../services/UserService";
+import { baseapiurl } from "services/config";
+const axios = require("axios");
 
 const fileTypes = ["JPG", "PNG", "PDF"];
 
@@ -20,11 +23,44 @@ function UploadDocumentModal({ closeDocumentModal, saveDocument, files, setFiles
       alert("File size exceeded limit 25mb");
       return;
     }
-    files.push({file, uploading: true, percentage: 0});
+    const index = files.length;
+    files.push({index, file, uploading: true, percentage: 0});
+    fileUploadApi(file, index)
     setFiles([...files]);
     console.log(files);
     setRenderkey(new Date().valueOf())
   };
+
+  const fileUploadApi = async (file, index) => {
+    const headers = {};
+    const url = baseapiurl + `user/upload-medical-document`;
+    const formData = new FormData();
+    formData.append("image", file);
+    const token = await getToken();
+    console.log(token, "lll")
+    if (token) {
+        headers["risen-access-token"] = token;
+        headers["Content-Type"] = "multipart/form-data";
+    }
+    const data = await axios.post(
+        url,
+        formData,
+        {
+          headers,
+          onUploadProgress: (p) => {
+            const percentage = parseInt(String((p.loaded/p.total) * 100));
+            files[index].percentage = percentage;
+            if (percentage == 100) {
+              files[index].uploading = false;
+            }
+            setFiles([...files]);
+            setRenderkey(new Date().valueOf())
+          },
+        }
+        
+    );
+    return data; 
+  }
 
   return (
     <>
