@@ -4466,6 +4466,20 @@ CUSTOM CLASSES DASHBOARD
   margin-bottom: 8px;
 }
 
+.uploading {
+  border: 1px dashed #018D88;
+  background: #EFFAF8 !important;
+}
+
+.percentage {
+  position: absolute;
+  background: rgba(12, 140, 135, 0.5)!important;
+  height: 35px;
+  padding: 8px;
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+
 .upload-title {
   margin: 16px -6px 0;
 }

@@ -344,7 +344,8 @@ export default function DashboardLanding() {
   const [activeFrequency, setActiveFrequency] = useState(null)
   const [activeuser, setActiveuser] = useState(null)
   const [activeCardInput, setActiveCardInput] = useState(null);
-  
+  const [files, setFiles] = useState([]);
+
   const validatePhoneNumber = (value) => {
     if (!value) {
       return false;
@@ -672,6 +673,8 @@ export default function DashboardLanding() {
         <UploadDocumentModal
         closeDocumentModal={closeDocumentModal}
         saveDocument={saveDocument}
+        setFiles={setFiles}
+        files={files}
         />
       </Modal>
       <div className="flex h-full">
@@ -953,7 +956,7 @@ export default function DashboardLanding() {
                         className={openTab === 2 ? "block" : "hidden"}
                         id="link2"
                       >
-                        {noDocuments && (
+                        {!activeuserInfo.documents && (
                           <div className="flex flex-col justify-center max-w-370-px items-center mx-auto mt-10 h-full pb-38-vh">
                             <img src="/img/girl.svg" alt="" />
                             <h2 className="h2 text-2xl font-medium font-dark">
@@ -967,7 +970,7 @@ export default function DashboardLanding() {
                             </button>
                           </div>
                         )}
-                        {!noDocuments && (
+                        {activeuserInfo.documents && (
                           <div className="flex mx-auto mt-10 h-full pb-100-vh">
                           <div className="card-wrapper fb-487">
                           <div className="title-wrapper flex justify-between items-center">
