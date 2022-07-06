@@ -104,3 +104,12 @@ export async function createDependentProfile(data) {
     })
     return response;
 }
+
+export async function saveDocuments (data) {
+    const response = await makeApiCall(`user/save-uploaded-document`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(data)
+    })
+    return response;
+}

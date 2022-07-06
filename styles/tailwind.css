@@ -4466,6 +4466,19 @@ CUSTOM CLASSES DASHBOARD
   margin-bottom: 8px;
 }
 
+.uploaded-document-edit {
+  background-color: #7DC5C1;
+    padding: 4px !important;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    height: 35px;
+    opacity: 1;
+    color: rgba(39,39,39,1);
+    font-family: "Roboto-Regular";
+    font-size: 14px;
+    font-weight: 400;
+}
+
 .uploading {
   border: 1px dashed #018D88;
   background: #EFFAF8 !important;

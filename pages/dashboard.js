@@ -26,6 +26,9 @@ import InsuranceView from "../components/MedicalCard/insurance/View";
 import PrimaryCaregiverForm from "../components/MedicalCard/primarycaregiver/Form";
 import PrimaryCaregiverView from "../components/MedicalCard/primarycaregiver/View";
 import Profile from "../components/Profile";
+
+import { baseapiurl } from "services/config";
+
 const phoneUtil = require('google-libphonenumber').PhoneNumberUtil.getInstance();
 
 // layout for page
@@ -272,11 +275,6 @@ export default function DashboardLanding() {
   }
 
   function closeDocumentModal() {
-    setDocumentOpen(false);
-  }
-
-  const saveDocument = () => {
-    startDocumentUpload(false)
     setDocumentOpen(false);
   }
 
@@ -672,7 +670,6 @@ export default function DashboardLanding() {
       >
         <UploadDocumentModal
         closeDocumentModal={closeDocumentModal}
-        saveDocument={saveDocument}
         setFiles={setFiles}
         files={files}
         />
@@ -983,45 +980,30 @@ export default function DashboardLanding() {
                                 Documents
                               </h3>
                             </div>
-                            <button className="add-card-button">
+                            <button className="add-card-button" onClick={uploadDocument}>
                               <i className="icon-Plus2x icon-md text-green-primary"></i>
                             </button>
                           </div>
                           <div className="card card-medical mt-2">
-                            <h6 className="block text-gray-primary text-xs font-normal mb-2 ml-4">
-                              Title
-                            </h6>
-                            <div className="flex justify-between">
-                              <div className="flex">
-                                {/* <img src="/img/allergies.svg" alt="" /> */}
-                                <h4 className="h4 text-green-primary mb-4">Recent ECG</h4>
-                              </div>
-                              <div className="icon-wrapper">
-                                <button className="edit-card">
-                                  <i className="icon-edit text-green-secondary text-xs mr-1"></i>
-                                </button>
-                                <button className="delete-card">
-                                  <i className="icon-delete text-red-secondary text-xs"></i>
-                                </button>
-                              </div>
-                            </div>
-                            <h6 className="block text-gray-primary text-xs font-normal mb-2 ml-4">
-                              Title
-                            </h6>
-                            <div className="flex justify-between">
-                              <div className="flex">
-                                {/* <img src="/img/allergies.svg" alt="" /> */}
-                                <h4 className="h4 text-green-primary mb-4">this_is_a_document_title_02.png</h4>
-                              </div>
-                              <div className="icon-wrapper">
-                                <button className="edit-card">
-                                  <i className="icon-edit text-green-secondary text-xs mr-1"></i>
-                                </button>
-                                <button className="delete-card">
-                                  <i className="icon-delete text-red-secondary text-xs"></i>
-                                </button>
-                              </div>
-                            </div>
+                            {activeuserInfo && activeuserInfo.documents && activeuserInfo.documents.map(p => 
+                              <><h6 className="block text-gray-primary text-xs font-normal mb-2 ml-4">
+                                Title
+                              </h6>
+                              <div className="flex justify-between">
+                                <div className="flex">
+                                  {/* <img src="/img/allergies.svg" alt="" /> */}
+                                  <a target="_blank" href={baseapiurl + 'uploads/' + p.filename}><h4 className="h4 text-green-primary mb-4">{p.title}</h4></a>
+                                </div>
+                                <div className="icon-wrapper">
+                                  <button className="edit-card">
+                                    <i className="icon-edit text-green-secondary text-xs mr-1"></i>
+                                  </button>
+                                  <button className="delete-card">
+                                    <i className="icon-delete text-red-secondary text-xs"></i>
+                                  </button>
+                                </div>
+                              </div></>
+                            )}
                           </div>
                         </div>
                         </div>
@@ -1090,7 +1072,7 @@ export default function DashboardLanding() {
                                 </p>
                               </div>
                             </div>)}
-                            {user && activeuser && user.id == activeuser && (<div className="wrapper w-full mt-4">
+                            {/* {user && activeuser && user.id == activeuser && (<div className="wrapper w-full mt-4">
                               <div className="card p-24">
                                 <div className="relative flex flex-wrap items-stretch w-full mb-3">
                                   <div className="flex w-full justify-between items-center mb-4">
@@ -1138,7 +1120,7 @@ export default function DashboardLanding() {
                                   </button>
                                 </div>
                               </div>
-                            </div>)}
+                            </div>)} */}
                             <div className="wrapper w-full mt-4">
                               <div className="card p-24">
                                 <div className="relative flex flex-wrap items-stretch w-full mb-6">

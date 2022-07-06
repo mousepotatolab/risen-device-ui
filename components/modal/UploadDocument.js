@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { FileUploader } from "react-drag-drop-files";
-import { getToken } from "../../services/UserService";
+import { getToken, saveDocuments } from "../../services/UserService";
 import { baseapiurl } from "services/config";
 const axios = require("axios");
 
 const fileTypes = ["JPG", "PNG", "PDF"];
 
-function UploadDocumentModal({ closeDocumentModal, saveDocument, files, setFiles }) {
+function UploadDocumentModal({ closeDocumentModal, files, setFiles }) {
   const [renderkey, setRenderkey] = useState("1");
+  const [editIndex, setEditIndex] = useState(null)
   const handleChange = (file) => {
     console.log(file, "qq")
     let type = file.type.split("/");
@@ -23,6 +24,7 @@ function UploadDocumentModal({ closeDocumentModal, saveDocument, files, setFiles
       alert("File size exceeded limit 25mb");
       return;
     }
+    files = files ? files : []
     const index = files.length;
     files.push({index, file, uploading: true, percentage: 0});
     fileUploadApi(file, index)
@@ -59,8 +61,52 @@ function UploadDocumentModal({ closeDocumentModal, saveDocument, files, setFiles
         }
         
     );
-    return data; 
+    if ("success" in data.data && data.data.id) {
+      files[index].id = data.data.id;
+    }
   }
+
+
+  const saveDocument = () => {
+    console.log(files);
+    const data = files.map(p => {
+      return {id: p.id, title: p.title};
+    })
+    saveDocuments({items: data}).then(p => {
+      if (p.success) {
+        setFiles([]);
+        setRenderkey(new Date().valueOf())
+        closeDocumentModal();
+      } else {
+        alert(p.message)
+      }
+    })
+  }
+
+  const removeFile = (index) => {
+    files.splice(index, 1);
+    setFiles([...files]);
+    setRenderkey(new Date().valueOf())
+  };
+
+  const setEdit = (i) => {
+    console.log(i, "klkl")
+    setEditIndex(i);
+    setRenderkey(new Date().valueOf())
+  }
+
+  const setFileTitle = (e) => {
+    const value = e.target.value;
+    if (value) {
+      files[editIndex].title = e.target.value;
+      setEditIndex(null);
+      setRenderkey(new Date().valueOf())
+    } else {
+      alert("File name can not be empty")
+    }
+  }
+
+
 
   return (
     <>
@@ -86,13 +132,25 @@ function UploadDocumentModal({ closeDocumentModal, saveDocument, files, setFiles
             </div>
           </FileUploader>
 
-          <h6 className="h6 text-xs mt-6 mb-2">3 of 3 files uploaded</h6>
+          <h6 className="h6 text-xs mt-6 mb-2">{files && files.filter(p => !p.uploading).length } of {files && files.length} files uploaded</h6>
           
-          {files && files.map(p => (<div className="flex relative">
-            <div className={"uploaded-document w-full text-xs " + (p.uploading ? "uploading" : "")}>{p.file.name}</div>
-            <div className="percentage" style={{ width: p.percentage + '%'}}></div>
-            <img src="/img/close.svg" className="absolute close-document" alt="" />
-          </div>))}
+          {files && files.map((p, i) => (
+          <>
+          {editIndex != i && (<div className="flex relative">
+            <div onClick={() => setEdit(i)} className={"uploaded-document w-full text-xs " + (p.uploading ? "uploading" : "")}>
+              {p.title ? p.title : p.file.name}
+            </div>
+            <div onClick={() => setEdit(i)} className="percentage" style={{ width: p.percentage + '%'}}></div>
+            <img onClick={() => removeFile(i)} src="/img/closeblack.svg" className="absolute close-document" alt="" />
+          </div>)}
+          {editIndex == i && (<div className="flex relative">
+             <input type="text"
+             onBlur={setFileTitle}
+             className={"uploaded-document-edit w-full"} />
+             <img onClick={() => removeFile(i)} src="/img/closeblack.svg" className="absolute close-document" alt="" />
+          </div>)}
+          </>
+          ))}
           <h5 className="h5 mt-12 font-normal upload-title">After upload click to add a title to your documents</h5>
           <h6 className="h6 mt-1 text-xs font-grey text-center">Title will help to clarify the purpose of the document</h6>
           <button

@@ -7,7 +7,7 @@ import React, {useEffect, useState} from "react";
 import Admin from "layouts/Admin.js";
 
 import { loadAllQrBatch, generateNewQRBatch } from "../../services/SupplierService";
-
+import { baseapiurl } from "services/config";
 export default function Generatecode({color}) {
   const [qrbatch, setQrBatch] = useState([])
   const [inputValue, setInputValue] = useState({
@@ -38,7 +38,7 @@ export default function Generatecode({color}) {
     const data = await generateNewQRBatch(inputValue)
     if (data.id) {
       loadData();
-      window.open("http://localhost:5100/it-20y/us-central1/api/download-zip?id=" + data.id, "_blank")
+      window.open(baseapiurl + "download-zip?id=" + data.id, "_blank")
     }
     console.log(data);
   };

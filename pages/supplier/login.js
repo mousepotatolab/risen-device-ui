@@ -3,7 +3,7 @@ import Router, { withRouter, useRouter } from 'next/router'
 
 // layout for page
 
-import Auth from "layouts/Auth.js";
+import SupplierAuth from "layouts/SupplierAuth.js";
 
 export default function Login() {
   const [loginValue, setLoginValue] = useState({username: "", password: ""})
@@ -100,4 +100,4 @@ export default function Login() {
   );
 }
 
-Login.layout = Auth;
+Login.layout = SupplierAuth;
