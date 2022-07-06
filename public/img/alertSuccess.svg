@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="64px" height="64px" viewBox="0 0 64 64" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>icon/alert@2x</title>
+    <g id="Landing---Add-Another-Profile" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Landing-Page---Dependant-Profile---Settings---Delete-Profile" transform="translate(-688.000000, -104.000000)">
+            <g id="alert" transform="translate(509.000000, 64.000000)">
+                <g id="icon/alert" transform="translate(179.000000, 40.000000)">
+                    <circle id="Oval" fill="#34C759" cx="32" cy="32" r="32"></circle>
+                    <g id="Icons/Universal-Icon-Set/Medicine/Solid/Medical-Chart" transform="translate(16.000000, 16.000000)">
+                        <rect id="bounding-box" x="0" y="0" width="32" height="32"></rect>
+                        <path d="M2.66666667,16 C2.66666667,8.6362 8.6362,2.66666667 16,2.66666667 C23.3637333,2.66666667 29.3333333,8.6362 29.3333333,16 C29.3333333,23.3637333 23.3637333,29.3333333 16,29.3333333 C8.6362,29.3333333 2.66666667,23.3637333 2.66666667,16 Z M20.9428,14.2761333 C21.4634667,13.7554667 21.4634667,12.9112267 20.9428,12.39052 C20.4221333,11.8698267 19.5778667,11.8698267 19.0572,12.39052 L14.6666667,16.7810667 L12.9428133,15.0572 C12.4221067,14.5365333 11.5778933,14.5365333 11.0571867,15.0572 C10.5364933,15.5778667 10.5364933,16.4221333 11.0571867,16.9428 L13.7238667,19.6094667 C14.2445333,20.1301333 15.0888,20.1301333 15.6094667,19.6094667 L20.9428,14.2761333 Z" id="Shape" fill="#FFFFFF"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

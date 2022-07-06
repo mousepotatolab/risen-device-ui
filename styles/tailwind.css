@@ -2156,6 +2156,10 @@ select {
   font-size: 0.75rem;
   line-height: 1rem;
 }
+.text-xsm {
+  font-size: 0.6rem;
+  line-height: 1rem;
+}
 
 .text-sm {
   font-size: 0.875rem;
@@ -2425,6 +2429,9 @@ select {
 .mb-8 {
   margin-bottom: 2rem;
 }
+.mb-10 {
+  margin-bottom: 2.5rem;
+}
 
 .mt-10 {
   margin-top: 2.5rem;
@@ -2510,6 +2517,9 @@ select {
 }
 .mw-343 {
   max-width: 343px;
+}
+.mw-232 {
+  max-width: 232px;
 }
 .fb-487 {
   flex-basis: 487px;
@@ -2709,6 +2719,9 @@ select {
   overscroll-behavior-x: none;
 }
 
+.p-0 {
+  padding: 0rem;
+}
 .p-1 {
   padding: 0.25rem;
 }
@@ -2746,6 +2759,9 @@ select {
 }
 .p-dash {
   padding: 24px;
+}
+.p-40 {
+  padding: 40px;
 }
 
 .px-0 {
@@ -4345,6 +4361,21 @@ CUSTOM CLASSES DASHBOARD
   height: 48px;
   border: 1px solid rgb(255, 59, 48);
 }
+
+.connected-device-button {
+  background-color: rgb(52,199, 89);
+  border-radius: 8px;
+  padding: 16px;
+  height: 48px;
+}
+.add-connected-device-button {
+  background-color: rgba(52, 199, 89, 0.1);
+  border-radius: 8px;
+  padding: 16px;
+  color: rgb(52, 199, 89);
+  height: 48px;
+  border: 1px solid rgb(52, 199, 89);
+}
 .change-button {
   background-color: transparent;
   padding: 0px;
@@ -4405,6 +4436,22 @@ CUSTOM CLASSES DASHBOARD
   padding: 10px 0px;
   color: #fff;
 }
+.delete-button {
+  background-color: rgb(12, 140, 135);
+  border-radius: 4px;
+  /* width: 236px; */
+  padding: 10px 40px;
+  color: #fff;
+  box-shadow: 0 15px 30px -12px rgba(26, 26, 68, 0.35);
+}
+.cancel-button {
+  background-color: rgb(255, 255, 255);
+  border-radius: 4px;
+  /* width: 236px; */
+  padding: 10px 40px;
+  color: #0c9c87;
+  border: 1px solid #0c9c87;
+}
 .image-button {
   background-color: rgb(12, 140, 135);
   border-radius: 4px;
@@ -4457,6 +4504,19 @@ CUSTOM CLASSES DASHBOARD
 
 .w-60 {
   width: 60px;
+}
+.w-60-p {
+  width: 60%;
+}
+.w-64-px {
+  width: 64px;
+}
+
+.w-422 {
+  width: 422px;
+}
+.w-570 {
+  width: 570px;
 }
 
 .uploaded-document {
@@ -4609,6 +4669,10 @@ CUSTOM CLASSES DASHBOARD
   margin-bottom: 16px;
 }
 
+.p-0 {
+  padding: 0rem;
+}
+
 /*
 Mobile view styles
 */
@@ -4675,6 +4739,9 @@ Fonts CSS
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-light:before {
+  content: "\e918";
+}
 .icon-edit:before {
   content: "\e916";
 }

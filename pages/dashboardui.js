@@ -1350,7 +1350,8 @@ export default function DashboardLanding() {
                                     <button className="edit-card">
                                       <i className="icon-edit text-green-secondary text-xxs mr-1"></i>
                                     </button>
-                                    <button className="delete-card">
+                                    <button className="delete-card"
+                                    onc>
                                       <i className="icon-delete text-red-secondary text-xxs"></i>
                                     </button>
                                   </div>
