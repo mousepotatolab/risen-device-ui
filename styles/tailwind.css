@@ -11,6 +11,8 @@ Document
 Use a better box model (opinionated).
 */
 
+
+
 *,
 ::before,
 ::after {
@@ -4567,7 +4569,7 @@ CUSTOM CLASSES DASHBOARD
 }
 
 .Toastify__toast-theme--colored.Toastify__toast--success {
-  background-color: rgb(12, 140, 135);
+  background-color: rgb(12, 140, 135) !important;
   color: #fff;
 }
 
@@ -4587,11 +4589,21 @@ CUSTOM CLASSES DASHBOARD
   background-color: rgb(12, 140, 135);
   color: #fff;
 }
+.Toastify__toast-icon {
+  background-color: rgb(12, 140, 135);
+  color: #fff;
+  position: absolute;
+  right: 40px;
+}
+.Toastify__toast-icon-color-success {
+  color: #fff;
+}
 
 
 .Toastify__toast-body {
   background-color: rgb(12, 140, 135);
   color: #fff;
+  padding-left: 40px !important;
 }
 
 .fixed-bottom {
@@ -4860,5 +4872,20 @@ Animations
   to {
     opacity: 1;
   }
+}
   
+.fade-in-icons {
+  animation: fade-in-icons 0.3s ease-in-out forwards;
+  opacity: 0;
+}
+
+@keyframes fade-in-icons {
+
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }

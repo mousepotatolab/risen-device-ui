@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Router, { withRouter, useRouter } from 'next/router'
 
-function MedicationView({ item, onEditCard, toggleActiveMedication, activeMedication }) {
+function MedicationView({ item, onEditCard, toggleActiveMedication, activeMedication, medicationHover}) {
     return (
         <>
             {item && (<div className="card card-medical mt-4">
@@ -9,12 +9,17 @@ function MedicationView({ item, onEditCard, toggleActiveMedication, activeMedica
                     <label className="block text-gray-primary text-xs font-normal mb-3">
                         Medicaiton Name
                     </label>
-                    <div className="icon-wrapper">
+
+                        <div className="icon-wrapper">
                         <button className="edit-card" onClick={() => onEditCard("medication", item)}>
-                            <i className="icon-edit text-green-secondary text-base mr-1"></i>
+                    {medicationHover && (
+                            <i className="icon-edit fade-in-icons text-green-secondary text-base mr-1"></i>
+                        )}
                         </button>
                         <button className="delete-card">
-                            <i className="icon-delete text-red-secondary text-base"></i>
+                        {medicationHover && (
+                            <i className="icon-delete fade-in-icons text-red-secondary text-base"></i>
+                            )}
                         </button>
                     </div>
                 </div>
