@@ -285,7 +285,7 @@ export default function DashboardLanding() {
   const saved = () =>
     toast.success("Information auto saved", {
       position: "top-center",
-      autoClose: false,
+      autoClose: 5000,
       hideProgressBar: true,
       closeOnClick: true,
       pauseOnHover: true,
@@ -297,7 +297,7 @@ export default function DashboardLanding() {
   const error = () =>
     toast.error("Successfully deleted", {
       position: "top-center",
-      autoClose: false,
+      autoClose: 5000,
       hideProgressBar: true,
       closeOnClick: true,
       pauseOnHover: true,
