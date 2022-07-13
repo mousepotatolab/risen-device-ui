@@ -40,6 +40,9 @@ import {
 
 import Dashboard from "layouts/Dashboard.js";
 import { compose } from "redux";
+import DeleteModal from "components/modal/Delete";
+import DeleteSuccessModal from "components/modal/DeleteSuccess";
+import ConnectedDeviceModal from "components/modal/ConnectedDevices";
 // import { isToastIdValid } from "react-toastify/dist/utils";
 
 export default function DashboardLanding() {
@@ -64,6 +67,7 @@ export default function DashboardLanding() {
   Modal.setAppElement("#__next");
 
   const [modalIsOpen, setIsOpen] = React.useState(false);
+  const [DeviceModalIsOpen, setDeviceIsOpen] = React.useState(false);
 
   function openModal() {
     setIsOpen(true);
@@ -72,8 +76,15 @@ export default function DashboardLanding() {
   function closeModal() {
     setIsOpen(false);
   }
+  function openDeviceModal() {
+    setDeviceIsOpen(true);
+  }
+
+  function closeDeviceModal() {
+    setDeviceIsOpen(false);
+  }
   function closeModalDependent() {
-    setIsOpen(false);
+    setDeviceIsOpen(false);
   }
   function openSettings() {
     setOpenTab(3);
@@ -280,6 +291,32 @@ export default function DashboardLanding() {
 
   const [DocumentUploadIsOpen, setDocumentOpen] = React.useState(false);
 
+  // Delete Item Modal
+
+  function closeDeleteModal() {
+    setDeleteOpen(false);
+  }
+  function openDeleteModal() {
+    setDeleteOpen(false);
+  }
+
+  const handleDeleteFunction = () => {
+    //delete functioin
+  }
+
+  const [DeleteModalIsOpen, setDeleteOpen] = React.useState(true);
+  
+  // Delete Item Modal
+
+  function closeSuccessModal() {
+    setDeleteSuccessOpen(false);
+  }
+  function openSuccessModal() {
+    setDeleteSuccessOpen(false);
+  }
+
+
+  const [DeleteSuccessModalIsOpen, setDeleteSuccessOpen] = React.useState(true);
 
   // Toast
   const saved = () =>
@@ -316,6 +353,16 @@ export default function DashboardLanding() {
     }
     if (!activeButton) {
       isActiveButton(true);
+    }
+  };
+  let [activeDeviceButton, isActiveDeviceButton] = useState(true);
+
+  const toggleActiveDeviceButton = () => {
+    if (activeDeviceButton) {
+      isActiveDeviceButton(false);
+    }
+    if (!activeDeviceButton) {
+      isActiveDeviceButton(true);
     }
   };
 
@@ -674,6 +721,47 @@ export default function DashboardLanding() {
         files={files}
         />
       </Modal>
+      <Modal
+        isOpen={DeleteModalIsOpen}
+        // onAfterOpen={afterOpenModal}
+        onRequestClose={closeDeleteModal}
+        style={customStyles}
+        contentLabel="Delete Item Modal"
+        // className="Modal"
+        // overlayClassName="Overlay"
+      >
+        <DeleteModal
+        closeDeleteModal={closeDeleteModal}
+        saveDocument={saveDocument}
+        />
+      </Modal>
+      <Modal
+        isOpen={DeviceModalIsOpen}
+        // onAfterOpen={afterOpenModal}
+        onRequestClose={closeDeviceModal}
+        style={customStyles}
+        contentLabel="Connected Devices Modal"
+        // className="Modal"
+        // overlayClassName="Overlay"
+      >
+        <ConnectedDeviceModal
+        closeDeviceModal={closeDeviceModal}
+        toggleActiveDeviceButton={toggleActiveDeviceButton}
+        />
+      </Modal>
+      <Modal
+        isOpen={DeleteSuccessModalIsOpen}
+        // onAfterOpen={afterOpenModal}
+        onRequestClose={closeSuccessModal}
+        style={customStyles}
+        contentLabel="Delete Item Modal"
+        // className="Modal"
+        // overlayClassName="Overlay"
+      >
+        <DeleteModal
+        closeDeleteModal={closeSuccessModal}
+        />
+      </Modal>
       <div className="flex h-full">
         <section className="profile-section min-w-239-px pr-4">
           <ToastContainer
@@ -734,6 +822,25 @@ export default function DashboardLanding() {
                     Connect a device
                     <i className="icon-Plus2x icon-md relative text-red-primary ml-2"></i>
                   </button>
+                )}
+                {!connectButton && (
+                  <div className="flex">
+                  
+                  <button
+                    className="connected-device-button text-white flex items-center font-medium mr-4"
+                    onClick={openDeviceModal}
+                  >
+                    Device Connected
+                    <i className="icon-light icon-md relative text-white ml-2"></i>
+                  </button>
+                  <button
+                    className="add-connected-device-button flex items-center font-medium"
+                    onClick={openModal}
+                  >
+                    Add More Devices
+                    <i className="icon-Plus2x icon-md relative text-green-active ml-2"></i>
+                  </button>
+                  </div>
                 )}
               </div>
               <div className="relative flex flex-col min-w-0 break-word w-full mb-6">
@@ -985,25 +1092,42 @@ export default function DashboardLanding() {
                             </button>
                           </div>
                           <div className="card card-medical mt-2">
-                            {activeuserInfo && activeuserInfo.documents && activeuserInfo.documents.map(p => 
-                              <><h6 className="block text-gray-primary text-xs font-normal mb-2 ml-4">
-                                Title
-                              </h6>
-                              <div className="flex justify-between">
-                                <div className="flex">
-                                  {/* <img src="/img/allergies.svg" alt="" /> */}
-                                  <a target="_blank" href={baseapiurl + 'uploads/' + p.filename}><h4 className="h4 text-green-primary mb-4">{p.title}</h4></a>
-                                </div>
-                                <div className="icon-wrapper">
-                                  <button className="edit-card">
-                                    <i className="icon-edit text-green-secondary text-xs mr-1"></i>
-                                  </button>
-                                  <button className="delete-card">
-                                    <i className="icon-delete text-red-secondary text-xs"></i>
-                                  </button>
-                                </div>
-                              </div></>
-                            )}
+                            <h6 className="block text-gray-primary text-xs font-normal mb-2 ml-4">
+                              Title
+                            </h6>
+                            <div className="flex justify-between">
+                              <div className="flex">
+                                {/* <img src="/img/allergies.svg" alt="" /> */}
+                                <h4 className="h4 text-green-primary mb-4">Recent ECG</h4>
+                              </div>
+                              <div className="icon-wrapper">
+                                <button className="edit-card">
+                                  <i className="icon-edit text-green-secondary text-xs mr-1"></i>
+                                </button>
+                                <button className="delete-card"
+                                onClick={openDeleteModal}>
+                                  <i className="icon-delete text-red-secondary text-xs"></i>
+                                </button>
+                              </div>
+                            </div>
+                            <h6 className="block text-gray-primary text-xs font-normal mb-2 ml-4">
+                              Title
+                            </h6>
+                            <div className="flex justify-between">
+                              <div className="flex">
+                                {/* <img src="/img/allergies.svg" alt="" /> */}
+                                <h4 className="h4 text-green-primary mb-4">this_is_a_document_title_02.png</h4>
+                              </div>
+                              <div className="icon-wrapper">
+                                <button className="edit-card">
+                                  <i className="icon-edit text-green-secondary text-xs mr-1"></i>
+                                </button>
+                                <button className="delete-card"
+                                onClick={openDeleteModal}>
+                                  <i className="icon-delete text-red-secondary text-xs"></i>
+                                </button>
+                              </div>
+                            </div>
                           </div>
                         </div>
                         </div>

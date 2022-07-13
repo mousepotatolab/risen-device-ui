@@ -19,7 +19,7 @@ export default function Auth({ children }) {
       <main className="bg-secondary flex justify-center">
         <div className="flex h-full min-h-auth p-auth bg-secondary shadow-auth container">
 
-        <section className="relative w-60 h-auto bg-primary flex items-center br-8-left overflow-hidden">
+        <section className="relative w-60-p h-auto bg-primary flex items-center br-8-left overflow-hidden">
           <div className="auth-wrapper">
             <div className="hr-icon-wrapper mb-6">
             <img className="hr-icon" src="/img/heart-rate.svg" alt="" />
@@ -32,7 +32,7 @@ export default function Auth({ children }) {
             <img src="/img/Wave04.svg" alt="" className="left-bottom" />
           </div>
         </section>
-        <section className="relative w-40 h-auto bg-white br-8-right overflow-hidden">
+        <section className="relative w-40-p h-auto bg-white br-8-right overflow-hidden">
           <div className="right-waves-container h-full">
             <img src="/img/Wave01.svg" alt="" className="right-top" />
             <img src="/img/Wave02.svg" alt="" className="right-right" />
