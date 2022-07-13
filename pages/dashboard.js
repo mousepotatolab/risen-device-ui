@@ -323,18 +323,19 @@ export default function DashboardLanding() {
     toast.success("Information auto saved", {
       position: "top-center",
       autoClose: 5000,
-      hideProgressBar: false,
+      hideProgressBar: true,
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
+      theme: "colored",
     });
 
-  const error = (msg) =>
-    toast.error(msg, {
+  const error = () =>
+    toast.error("Successfully deleted", {
       position: "top-center",
       autoClose: 5000,
-      hideProgressBar: false,
+      hideProgressBar: true,
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
@@ -648,6 +649,58 @@ export default function DashboardLanding() {
   //   };
   // }, []);
 
+  // Card Hovers for Edit
+  const [medicationHover, setHoverMedication] = useState(false);
+  const [conditionHover, setHoverCondition] = useState(false);
+  const [allergiesHover, setHoverAllergies] = useState(false);
+  const [contactHover, setHoverContact] = useState(false);
+  const [insuranceHover, setHoverInsurance] = useState(false);
+  const [caregiverHover, setHoverCaregiver] = useState(false);
+  // const [medicationHover, setHoverMedication] = useState(false);
+  
+  const handleMouseMedication = () => {
+    setHoverMedication(true)
+  }
+
+  const handleMouseOutMedication = () => {
+    setHoverMedication(false)
+  }
+  const handleMouseCondition = () => {
+    setHoverCondition(true)
+  }
+
+  const handleMouseOutCondition = () => {
+    setHoverCondition(false)
+  }
+  const handleMouseAllergies = () => {
+    setHoverAllergies(true)
+  }
+
+  const handleMouseOutAllergies = () => {
+    setHoverAllergies(false)
+  }
+  const handleMouseContact = () => {
+    setHoverContact(true)
+  }
+
+  const handleMouseOutContact = () => {
+    setHoverContact(false)
+  }
+  const handleMouseInsurance = () => {
+    setHoverInsurance(true)
+  }
+
+  const handleMouseOutInsurance = () => {
+    setHoverInsurance(false)
+  }
+  const handleMouseCaregiver = () => {
+    setHoverCaregiver(true)
+  }
+
+  const handleMouseOutCaregiver = () => {
+    setHoverCaregiver(false)
+  }
+
   const dosageUnit = ["Pills", "Drops", "Pieces", "cc", "ml", "mg"];
   const frequencyUnit = ["Hourly", "Daily", "Weekly", "Every 2 Week", "Monthly", "Every 3 Month", "Every 6 Month"];
   return (
@@ -767,6 +820,7 @@ export default function DashboardLanding() {
           <ToastContainer
             position="top-center"
             autoClose={5000}
+            closeButton={false}
             hideProgressBar={false}
             newestOnTop={false}
             closeOnClick
@@ -853,7 +907,7 @@ export default function DashboardLanding() {
                       <div className="container flex">
                         
                           <div className="w-full pr-4 md:w-4/12 lg:4/12">
-                            <div className="card-wrapper">
+                            <div className="card-wrapper" onMouseEnter={handleMouseCondition} onMouseLeave={handleMouseOutCondition}>
                               <div className="title-wrapper flex justify-between items-center">
                                 <div className="flex items-center">
                                   <img
@@ -880,13 +934,16 @@ export default function DashboardLanding() {
                                 {p.edit == false && <MedicalConditionView 
                                 item={p}
                                 onEditCard={onEditCard}
+                                conditionHover={conditionHover}
+                                handleMouseMedication={handleMouseCondition}
+                                  handleMouseOutMedication={handleMouseOutCondition}
                                 />}</>
                               ))}
                             </div>
                           </div>
 
                         <div className="w-full pr-4 md:w-4/12 lg:4/12">
-                          <div className="card-wrapper">
+                          <div className="card-wrapper" onMouseEnter={handleMouseAllergies} onMouseLeave={handleMouseOutAllergies}>
                             <div className="title-wrapper flex justify-between items-center">
                               <div className="flex items-center">
                                 <img src="/img/allergies.svg" alt="" />
@@ -912,13 +969,14 @@ export default function DashboardLanding() {
                                 handleOutsideClick={handleOutsideClick}
                                 handleFormInput={handleFormInput}
                                 onEditCard={onEditCard}
+                                allergiesHover={allergiesHover}
                             />}
                             </>
                             )}
                           </div>
                         </div>
                         <div className="w-full pr-4 md:w-4/12 lg:4/12">
-                          <div className="card-wrapper">
+                          <div className="card-wrapper" onMouseEnter={handleMouseMedication} onMouseLeave={handleMouseOutMedication}>
                             <div className="title-wrapper flex justify-between items-center">
                               <div className="flex items-center">
                                 <img src="/img/medication.svg" alt="" />
@@ -946,6 +1004,8 @@ export default function DashboardLanding() {
                                   activeDoseUnit={activeDoseUnit}
                                   dosageUnit={dosageUnit}
                                   frequencyUnit={frequencyUnit}
+                                  handleMouseMedication={handleMouseMedication}
+                                  handleMouseOutMedication={handleMouseOutMedication}
                                 />}
                                   {p.edit == false && <MedicationView
                                   item={p}
@@ -954,13 +1014,16 @@ export default function DashboardLanding() {
                                   activeMedication={activeMedication}
                                   onEditCard={onEditCard}
                                   toggleActiveMedication={toggleActiveMedication}
+                                  handleMouseMedication={handleMouseMedication}
+                                  handleMouseOutMedication={handleMouseOutMedication}
+                                  medicationHover={medicationHover}
                                 />}
                               </>
                             )}
                           </div>
                         </div>
                         <div className="w-full  md:w-4/12 lg:4/12">
-                          <div className="card-wrapper">
+                          <div className="card-wrapper" onMouseEnter={handleMouseContact} onMouseLeave={handleMouseOutContact}>
                             <div className="title-wrapper flex justify-between items-center">
                               <div className="flex items-center">
                                 <img src="/img/contact.svg" alt="" />
@@ -986,11 +1049,12 @@ export default function DashboardLanding() {
                               {p.edit == false && <EmergencyView 
                                 item={p}
                                 onEditCard={onEditCard}
+                                contactHover={contactHover}
                               />}
                             </>
                             ))}
                           </div>
-                          <div className="card-wrapper">
+                          <div className="card-wrapper" onMouseEnter={handleMouseInsurance} onMouseLeave={handleMouseOutInsurance}>
                             <div className="title-wrapper flex justify-between items-center">
                               <div className="flex items-center">
                                 <img src="/img/insurance.svg" alt="" />
@@ -1016,12 +1080,13 @@ export default function DashboardLanding() {
                                   <InsuranceView 
                                     item={p}
                                     onEditCard={onEditCard}
+                                    insuranceHover={insuranceHover}
                                   />
                                 )}
                               </>
                             )}
                           </div>
-                          <div className="card-wrapper">
+                          <div className="card-wrapper" onMouseEnter={handleMouseCaregiver} onMouseLeave={handleMouseOutCaregiver}>
                             <div className="title-wrapper flex justify-between items-center">
                               <div className="flex items-center">
                                 <img src="/img/care-giver.svg" alt="" />
@@ -1048,6 +1113,7 @@ export default function DashboardLanding() {
                                   <PrimaryCaregiverView 
                                     item={p}
                                     onEditCard={onEditCard}
+                                    caregiverHover={caregiverHover}
                                   />
                                 )}
                               </>

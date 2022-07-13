@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Router, { withRouter, useRouter } from 'next/router'
 
-function InsuranceView({ item, onEditCard }) {
+function InsuranceView({ item, onEditCard, insuranceHover }) {
     return (
         <>
             {item && (<div className="card card-medical mt-4">
@@ -11,10 +11,14 @@ function InsuranceView({ item, onEditCard }) {
                     </label>
                     <div className="icon-wrapper">
                         <button className="edit-card" onClick={() => onEditCard("insurance", item)}>
-                            <i className="icon-edit text-green-secondary text-base mr-1"></i>
+                            {insuranceHover && (
+                                <i className="icon-edit fade-in-icons text-green-secondary text-base mr-1"></i>
+                            )}
                         </button>
                         <button className="delete-card">
-                            <i className="icon-delete text-red-secondary text-base"></i>
+                            {insuranceHover && (
+                                <i className="icon-delete fade-in-icons text-red-secondary text-base"></i>
+                            )}
                         </button>
                     </div>
                 </div>

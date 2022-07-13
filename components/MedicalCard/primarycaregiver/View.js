@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Router, { withRouter, useRouter } from 'next/router'
 
-function PrimaryCaregiverView({ item, onEditCard }) {
+function PrimaryCaregiverView({ item, onEditCard, caregiverHover }) {
     return (
         <>
             {item && (
@@ -12,10 +12,14 @@ function PrimaryCaregiverView({ item, onEditCard }) {
                         </label>
                         <div className="icon-wrapper">
                             <button className="edit-card" onClick={() => onEditCard("caregiver", item)}>
-                                <i className="icon-edit text-green-secondary text-base mr-1"></i>
+                                {caregiverHover && (
+                                    <i className="icon-edit fade-in-icons text-green-secondary text-base mr-1"></i>
+                                )}
                             </button>
                             <button className="delete-card">
-                                <i className="icon-delete text-red-secondary text-base"></i>
+                                {caregiverHover && (
+                                    <i className="icon-delete fade-in-icons text-red-secondary text-base"></i>
+                                )}
                             </button>
                         </div>
                     </div>
