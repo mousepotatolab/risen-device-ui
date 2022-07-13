@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Router, { withRouter, useRouter } from 'next/router'
 
-function PrimaryCaregiverView({ item, onEditCard, caregiverHover }) {
+function PrimaryCaregiverView({ item, onEditCard, caregiverHover, openDeleteModalItem }) {
     return (
         <>
             {item && (
@@ -16,7 +16,7 @@ function PrimaryCaregiverView({ item, onEditCard, caregiverHover }) {
                                     <i className="icon-edit fade-in-icons text-green-secondary text-base mr-1"></i>
                                 )}
                             </button>
-                            <button className="delete-card">
+                            <button onClick={() => openDeleteModalItem(item, "caregiver")} className="delete-card">
                                 {caregiverHover && (
                                     <i className="icon-delete fade-in-icons text-red-secondary text-base"></i>
                                 )}

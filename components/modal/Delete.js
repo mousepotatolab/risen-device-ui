@@ -18,7 +18,7 @@ function DeleteModal({closeDeleteModal, handleDelete}) {
             <button className="delete-button mr-4 font-semibold"
             onClick={handleDelete}
             >Yes, Delete</button>
-            <button className="cancel-button font-semibold">No, Cancel</button>
+            <button onClick={closeDeleteModal} className="cancel-button font-semibold">No, Cancel</button>
         </div>
 
     </div>

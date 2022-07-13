@@ -1,5 +1,5 @@
-// const baseurl = 'http://localhost:5100/risen-devices/us-central1/api/';
-const baseurl = 'https://us-central1-risen-devices.cloudfunctions.net/api/';
+const baseurl = 'http://localhost:5100/risen-devices/us-central1/api/';
+// const baseurl = 'https://us-central1-risen-devices.cloudfunctions.net/api/';
 import { getToken } from "./UserService";
 
 export const makeApiCall = async (url, option) => {

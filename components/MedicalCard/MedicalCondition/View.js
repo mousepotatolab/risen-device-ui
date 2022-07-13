@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Router, { withRouter, useRouter } from 'next/router'
 
-function MedicalConditionView({ item, onEditCard, conditionHover }) {
+function MedicalConditionView({ item, onEditCard, conditionHover, openDeleteModalItem }) {
     return (
         <>
             {item && (<div className="card card-medical mt-4">
@@ -16,7 +16,7 @@ function MedicalConditionView({ item, onEditCard, conditionHover }) {
                             <i className="icon-edit fade-in-icons text-green-secondary text-base mr-1"></i>
                         )}
                         </button>
-                        <button className="delete-card">
+                        <button className="delete-card" onClick={() => openDeleteModalItem(item, 'medicalcondition')}>
                         {conditionHover && (
                             <i className="icon-delete fade-in-icons text-red-secondary text-base"></i>
                         )}

@@ -113,3 +113,12 @@ export async function saveDocuments (data) {
     })
     return response;
 }
+
+export async function deleteMedicalItem(data) {
+    const response = await makeApiCall(`user/delete-medical-item`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(data)
+    })
+    return response;
+}

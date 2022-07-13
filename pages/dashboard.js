@@ -35,7 +35,7 @@ const phoneUtil = require('google-libphonenumber').PhoneNumberUtil.getInstance()
 
 import {
   getUserInfo, createMedicalProfile, updateMedicalProfile, createEmptyField, getUserInfoById,
-  updateProfileInfo, createDependentProfile
+  updateProfileInfo, createDependentProfile, deleteMedicalItem
 } from "../services/UserService";
 
 import Dashboard from "layouts/Dashboard.js";
@@ -297,15 +297,11 @@ export default function DashboardLanding() {
     setDeleteOpen(false);
   }
   function openDeleteModal() {
-    setDeleteOpen(false);
+    setDeleteOpen(true);
   }
 
-  const handleDeleteFunction = () => {
-    //delete functioin
-  }
-
-  const [DeleteModalIsOpen, setDeleteOpen] = React.useState(true);
-  
+  const [DeleteModalIsOpen, setDeleteOpen] = React.useState(false);
+   
   // Delete Item Modal
 
   function closeSuccessModal() {
@@ -316,7 +312,31 @@ export default function DashboardLanding() {
   }
 
 
-  const [DeleteSuccessModalIsOpen, setDeleteSuccessOpen] = React.useState(true);
+  const handleMedicalDelete = () => {
+    if (deleteItem && deleteItem.id && deleteItem.type) {
+      const obj = {
+        type: deleteItem.type,
+        id: deleteItem.id
+      };
+      if (activeuserInfo.medicalProfiles[deleteItem.type].length == 1) {
+        error("Sorry You can not delete this card");
+        closeDeleteModal()
+        return false;
+      }
+
+      setClientSide(deleteItem.type, null, deleteItem, null, true);
+      closeDeleteModal()
+      deleteMedicalItem(obj).then(
+        (result) => {
+          saved();
+        }
+      )
+    }
+    console.log(deleteItem, "ll")
+  }
+
+
+  const [DeleteSuccessModalIsOpen, setDeleteSuccessOpen] = React.useState(false);
 
   // Toast
   const saved = () =>
@@ -331,8 +351,8 @@ export default function DashboardLanding() {
       theme: "colored",
     });
 
-  const error = () =>
-    toast.error("Successfully deleted", {
+  const error = (msg) =>
+    toast.error(msg, {
       position: "top-center",
       autoClose: 5000,
       hideProgressBar: true,
@@ -391,6 +411,7 @@ export default function DashboardLanding() {
   const [activeuser, setActiveuser] = useState(null)
   const [activeCardInput, setActiveCardInput] = useState(null);
   const [files, setFiles] = useState([]);
+  const [deleteItem, setDeleteItem] = useState(null);
 
   const validatePhoneNumber = (value) => {
     if (!value) {
@@ -461,11 +482,15 @@ export default function DashboardLanding() {
     loadData();
   }, [])
 
-  const setClientSide = (profiletype, property, item, value) => {
+  const setClientSide = (profiletype, property, item, value, deleteItem = false) => {
     const found = activeuserInfo.medicalProfiles[profiletype].find(p => p.id == item.id);
     const index = found ? activeuserInfo.medicalProfiles[profiletype].indexOf(found) : -1;
     if (index > -1) {
-      activeuserInfo.medicalProfiles[profiletype][index][property] = value;
+      if (deleteItem) {
+        activeuserInfo.medicalProfiles[profiletype].splice(index, 1);
+      } else {
+        activeuserInfo.medicalProfiles[profiletype][index][property] = value;
+      }
       user.key = new Date().getMilliseconds()
       setUser({ ...user });
     }
@@ -631,24 +656,6 @@ export default function DashboardLanding() {
       
   };
 
-  // useEffect(() => {
-  //   const keyUpHandler = event => {
-  //     console.log('User pressed: ', event.key);
-
-  //     if (event.key == 'Enter') {
-  //       event.preventDefault();
-  //       console.log(activeCardInput, "klm")
-  //       setEditFalse();
-  //     }
-  //   };
-
-  //   document.addEventListener('keyup', keyUpHandler);
-
-  //   return () => {
-  //     document.removeEventListener('keyup', keyUpHandler);
-  //   };
-  // }, []);
-
   // Card Hovers for Edit
   const [medicationHover, setHoverMedication] = useState(false);
   const [conditionHover, setHoverCondition] = useState(false);
@@ -701,6 +708,12 @@ export default function DashboardLanding() {
     setHoverCaregiver(false)
   }
 
+  const openDeleteModalItem = (item, type) => {
+    openDeleteModal();
+    setDeleteItem({...item, type});
+    console.log(deleteItem, "ppp")
+  };
+
   const dosageUnit = ["Pills", "Drops", "Pieces", "cc", "ml", "mg"];
   const frequencyUnit = ["Hourly", "Daily", "Weekly", "Every 2 Week", "Monthly", "Every 3 Month", "Every 6 Month"];
   return (
@@ -740,23 +753,23 @@ export default function DashboardLanding() {
          createDependent={createdDependent}
          closeDependentModal={closeDependentModal}
          inputIDDependent={inputIDDependent}
-        inputPinDependent={inputPinDependent}
-        handleFirstDependent={handleFirstDependent}
-        inputDobDependent={inputDobDependent}
-        handleLastDependent={handleLastDependent}
-        handleGenderDependent={handleGenderDependent}
-        handlePhoneDependent={handlePhoneDependent}
-        handleEmailDependent={handleEmailDependent}
-        dependentSuccess={dependentSuccess}
-        firstNameDependent={firstNameDependent}
-        lastNameDependent={lastNameDependent}
-        dobDependent={dobDependent}
-        genderDependent={genderDependent}
-        emailDependent={emailDependent}
-        phoneDependent={phoneDependent}
-        idDependent={idDependent}
-        pinDependent={pinDependent}
-        dependentProfileValid={dependentProfileValid}
+          inputPinDependent={inputPinDependent}
+          handleFirstDependent={handleFirstDependent}
+          inputDobDependent={inputDobDependent}
+          handleLastDependent={handleLastDependent}
+          handleGenderDependent={handleGenderDependent}
+          handlePhoneDependent={handlePhoneDependent}
+          handleEmailDependent={handleEmailDependent}
+          dependentSuccess={dependentSuccess}
+          firstNameDependent={firstNameDependent}
+          lastNameDependent={lastNameDependent}
+          dobDependent={dobDependent}
+          genderDependent={genderDependent}
+          emailDependent={emailDependent}
+          phoneDependent={phoneDependent}
+          idDependent={idDependent}
+          pinDependent={pinDependent}
+          dependentProfileValid={dependentProfileValid}
         />
       </Modal>
       <Modal
@@ -784,8 +797,8 @@ export default function DashboardLanding() {
         // overlayClassName="Overlay"
       >
         <DeleteModal
-        closeDeleteModal={closeDeleteModal}
-        saveDocument={saveDocument}
+          closeDeleteModal={closeDeleteModal}
+          handleDelete={handleMedicalDelete}
         />
       </Modal>
       <Modal
@@ -798,8 +811,8 @@ export default function DashboardLanding() {
         // overlayClassName="Overlay"
       >
         <ConnectedDeviceModal
-        closeDeviceModal={closeDeviceModal}
-        toggleActiveDeviceButton={toggleActiveDeviceButton}
+          closeDeviceModal={closeDeviceModal}
+          toggleActiveDeviceButton={toggleActiveDeviceButton}
         />
       </Modal>
       <Modal
@@ -812,7 +825,7 @@ export default function DashboardLanding() {
         // overlayClassName="Overlay"
       >
         <DeleteModal
-        closeDeleteModal={closeSuccessModal}
+          closeDeleteModal={closeSuccessModal}
         />
       </Modal>
       <div className="flex h-full">
@@ -932,11 +945,12 @@ export default function DashboardLanding() {
                                   handleFormInput={handleFormInput}
                               />}
                                 {p.edit == false && <MedicalConditionView 
-                                item={p}
-                                onEditCard={onEditCard}
-                                conditionHover={conditionHover}
-                                handleMouseMedication={handleMouseCondition}
+                                  item={p}
+                                  onEditCard={onEditCard}
+                                  conditionHover={conditionHover}
+                                  handleMouseMedication={handleMouseCondition}
                                   handleMouseOutMedication={handleMouseOutCondition}
+                                  openDeleteModalItem={openDeleteModalItem}
                                 />}</>
                               ))}
                             </div>
@@ -970,6 +984,7 @@ export default function DashboardLanding() {
                                 handleFormInput={handleFormInput}
                                 onEditCard={onEditCard}
                                 allergiesHover={allergiesHover}
+                                openDeleteModalItem={openDeleteModalItem}
                             />}
                             </>
                             )}
@@ -1017,6 +1032,7 @@ export default function DashboardLanding() {
                                   handleMouseMedication={handleMouseMedication}
                                   handleMouseOutMedication={handleMouseOutMedication}
                                   medicationHover={medicationHover}
+                                  openDeleteModalItem={openDeleteModalItem}
                                 />}
                               </>
                             )}
@@ -1050,6 +1066,7 @@ export default function DashboardLanding() {
                                 item={p}
                                 onEditCard={onEditCard}
                                 contactHover={contactHover}
+                                openDeleteModalItem={openDeleteModalItem}
                               />}
                             </>
                             ))}
@@ -1081,6 +1098,7 @@ export default function DashboardLanding() {
                                     item={p}
                                     onEditCard={onEditCard}
                                     insuranceHover={insuranceHover}
+                                    openDeleteModalItem={openDeleteModalItem}
                                   />
                                 )}
                               </>
@@ -1114,6 +1132,7 @@ export default function DashboardLanding() {
                                     item={p}
                                     onEditCard={onEditCard}
                                     caregiverHover={caregiverHover}
+                                    openDeleteModalItem={openDeleteModalItem}
                                   />
                                 )}
                               </>
