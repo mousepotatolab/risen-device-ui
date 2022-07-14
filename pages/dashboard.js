@@ -35,7 +35,9 @@ const phoneUtil = require('google-libphonenumber').PhoneNumberUtil.getInstance()
 
 import {
   getUserInfo, createMedicalProfile, updateMedicalProfile, createEmptyField, getUserInfoById,
-  updateProfileInfo, createDependentProfile, deleteMedicalItem
+  updateProfileInfo, createDependentProfile, deleteMedicalItem,
+  deleteDocumentItem, updateEditedDocument, connectDeviceByUser,
+  updateDeviceTemporaryActivity
 } from "../services/UserService";
 
 import Dashboard from "layouts/Dashboard.js";
@@ -66,15 +68,18 @@ export default function DashboardLanding() {
   };
   Modal.setAppElement("#__next");
 
-  const [modalIsOpen, setIsOpen] = React.useState(false);
+  const [connectModalIsOpen, setConnectModalIsOpen] = React.useState(false);
   const [DeviceModalIsOpen, setDeviceIsOpen] = React.useState(false);
 
-  function openModal() {
-    setIsOpen(true);
+  function openConnectModal() {
+    setID(null);
+    setPin(null);
+    isConnected(false)
+    setConnectModalIsOpen(true);
   }
 
-  function closeModal() {
-    setIsOpen(false);
+  function closeConnectModal() {
+    setConnectModalIsOpen(false);
   }
   function openDeviceModal() {
     setDeviceIsOpen(true);
@@ -105,31 +110,50 @@ export default function DashboardLanding() {
   const [validID, isIDValid] = React.useState(false);
   const [validPin, isPinValid] = React.useState(false);
 
+  useEffect(() => {
+    isConnectFormValidCheck();
+  }, [id]);
+  useEffect(() => {
+    isConnectFormValidCheck();
+  }, [pin]);
+
+  const isConnectFormValidCheck = () => {
+    isConnectFormValid(false);
+    if (id && id.length == 8 && pin && pin.length == 6) {
+      isConnectFormValid(true);
+    }
+  }
   const inputPin = (event) => {
     setPin(event.target.value);
-    console.log(pin.length);
-    if (event.target.value.length === 6) {
-      isPinValid(true);
-      if (validID) {
-        isConnectFormValid(true);
-      }
-    }
   };
   const inputID = (event) => {
     setID(event.target.value);
-    console.log(id.length);
-    if (event.target.value.length === 8) {
-      isIDValid(true);
-      if (validPin) {
-        isConnectFormValid(true);
-      }
-    }
   };
 
-  const connectDevice = () => {
-    isConnected(true);
-    isDeviceConnected(false);
-    setConnect(false);
+  const connectDevice = (e) => {
+    e.preventDefault();
+    console.log(id, pin, "ll");
+    if (!(id && pin)) {
+      return false;
+    }
+    const obj = {
+      deviceid: id,
+      devicepin: pin,
+      userid: activeuser
+    }
+    connectDeviceByUser(obj).then(
+      (result) => {
+        if ("success" in result && result.success) {
+          loadInfoByUser(activeuser);
+          isConnected(true);
+        } else if ("message" in result) {
+          error(result.message);
+        }
+      }
+    )
+    // isConnected(true);
+    // isDeviceConnected(false);
+    // setConnect(false);
   };
 
   const setConnectFalse = () => {
@@ -287,6 +311,7 @@ export default function DashboardLanding() {
 
   function closeDocumentModal() {
     setDocumentOpen(false);
+    loadInfoByUser(activeuser);
   }
 
   const [DocumentUploadIsOpen, setDocumentOpen] = React.useState(false);
@@ -316,7 +341,8 @@ export default function DashboardLanding() {
     if (deleteItem && deleteItem.id && deleteItem.type) {
       const obj = {
         type: deleteItem.type,
-        id: deleteItem.id
+        id: deleteItem.id,
+        userid: activeuser
       };
       if (activeuserInfo.medicalProfiles[deleteItem.type].length == 1) {
         error("Sorry You can not delete this card");
@@ -332,7 +358,6 @@ export default function DashboardLanding() {
         }
       )
     }
-    console.log(deleteItem, "ll")
   }
 
 
@@ -378,13 +403,15 @@ export default function DashboardLanding() {
   };
   let [activeDeviceButton, isActiveDeviceButton] = useState(true);
 
-  const toggleActiveDeviceButton = () => {
-    if (activeDeviceButton) {
-      isActiveDeviceButton(false);
-    }
-    if (!activeDeviceButton) {
-      isActiveDeviceButton(true);
-    }
+  const toggleActiveDeviceButton = (item) => {
+    item.isdisable = item.isdisable ? false : true;
+    user.key = new Date().getMilliseconds()
+    setUser({ ...user });
+    updateDeviceTemporaryActivity({deviceid: item.deviceID, devicepin: item.devicePin, userid: activeuser}).then(
+      (result) => {
+        saved();
+      }
+    )
   };
 
   const handleDelete = (event) => {
@@ -664,7 +691,8 @@ export default function DashboardLanding() {
   const [insuranceHover, setHoverInsurance] = useState(false);
   const [caregiverHover, setHoverCaregiver] = useState(false);
   // const [medicationHover, setHoverMedication] = useState(false);
-  
+  const [documentEditItem, setDocumentEditItem] = useState(null);
+
   const handleMouseMedication = () => {
     setHoverMedication(true)
   }
@@ -710,18 +738,73 @@ export default function DashboardLanding() {
 
   const openDeleteModalItem = (item, type) => {
     openDeleteModal();
-    setDeleteItem({...item, type});
-    console.log(deleteItem, "ppp")
+    setDeleteItem({...item, type, action: 1});
   };
+
+  const openDocumentDeleteModal = (item) => {
+    openDeleteModal();
+    setDeleteItem({...item, type: "document", action: 2});
+  }
+
+  const handleDocumentDelete = () => {
+    if (deleteItem && deleteItem.id && deleteItem.type) {
+      const obj = {
+        id: deleteItem.id,
+        userid: activeuser
+      };
+
+      const found = activeuserInfo.documents.find(p => p.id == deleteItem.id);
+      const index = activeuserInfo.documents.indexOf(found);
+      activeuserInfo.documents.splice(index, 1);
+      user.key = new Date().getMilliseconds()
+      setUser({ ...user });
+
+      closeDeleteModal()
+      deleteDocumentItem(obj).then(
+        (result) => {
+          saved();
+        }
+      )
+    }
+  }
+
+  const setDocumentEdit = (item) => {
+    setDocumentEditItem(item);
+    user.key = new Date().getMilliseconds()
+    setUser({ ...user });
+  }
+
+  const updateDocument = (e) => {
+    console.log(e.target.value)
+    const value = e.target.value;
+
+    if (!value) {
+      error("You can not set empty name");
+      return false;
+    }
+
+    const found = user.documents.find(p => p.id == documentEditItem.id);
+    const index = user.documents.indexOf(found);
+    user.documents[index].title = value;
+    user.key = new Date().getMilliseconds()
+    setUser({ ...user });
+    setDocumentEdit(null);
+
+    updateEditedDocument({id: documentEditItem.id, value, userid: activeuser}).then(
+      (result) => {
+        saved();
+      }
+    )
+  }
 
   const dosageUnit = ["Pills", "Drops", "Pieces", "cc", "ml", "mg"];
   const frequencyUnit = ["Hourly", "Daily", "Weekly", "Every 2 Week", "Monthly", "Every 3 Month", "Every 6 Month"];
   return (
     <>
       <Modal
-        isOpen={modalIsOpen}
+        isOpen={connectModalIsOpen}
         // onAfterOpen={afterOpenModal}
-        onRequestClose={closeModal}
+        onRequestClose={closeConnectModal}
         style={customStyles}
         contentLabel="Device Connect Modal"
         // className="Modal"
@@ -729,7 +812,7 @@ export default function DashboardLanding() {
       >
         <ConnectDeviceModal
           notConnected={notConnected}
-          closeModal={closeModal}
+          closeModal={closeConnectModal}
           inputID={inputID}
           id={id}
           inputPin={inputPin}
@@ -785,6 +868,7 @@ export default function DashboardLanding() {
         closeDocumentModal={closeDocumentModal}
         setFiles={setFiles}
         files={files}
+        error={error}
         />
       </Modal>
       <Modal
@@ -798,7 +882,7 @@ export default function DashboardLanding() {
       >
         <DeleteModal
           closeDeleteModal={closeDeleteModal}
-          handleDelete={handleMedicalDelete}
+          handleDelete={deleteItem && deleteItem.action == 1 ? handleMedicalDelete : handleDocumentDelete}
         />
       </Modal>
       <Modal
@@ -813,6 +897,7 @@ export default function DashboardLanding() {
         <ConnectedDeviceModal
           closeDeviceModal={closeDeviceModal}
           toggleActiveDeviceButton={toggleActiveDeviceButton}
+          activeuserInfo={activeuserInfo}
         />
       </Modal>
       <Modal
@@ -881,16 +966,16 @@ export default function DashboardLanding() {
                     openTab={openTab}
                   ></DashboardTabs>
                 </div>
-                {connectButton && (
+                {activeuserInfo && activeuserInfo.devices.length == 0 && (
                   <button
                     className="connect-device-button text-red-primary flex items-center font-medium"
-                    onClick={openModal}
+                    onClick={openConnectModal}
                   >
                     Connect a device
                     <i className="icon-Plus2x icon-md relative text-red-primary ml-2"></i>
                   </button>
                 )}
-                {!connectButton && (
+                {activeuserInfo && activeuserInfo.devices.length > 0 && (
                   <div className="flex">
                   
                   <button
@@ -902,7 +987,7 @@ export default function DashboardLanding() {
                   </button>
                   <button
                     className="add-connected-device-button flex items-center font-medium"
-                    onClick={openModal}
+                    onClick={openConnectModal}
                   >
                     Add More Devices
                     <i className="icon-Plus2x icon-md relative text-green-active ml-2"></i>
@@ -1177,42 +1262,30 @@ export default function DashboardLanding() {
                             </button>
                           </div>
                           <div className="card card-medical mt-2">
-                            <h6 className="block text-gray-primary text-xs font-normal mb-2 ml-4">
+                            {activeuserInfo && activeuserInfo.documents && activeuserInfo.documents.map(p => (
+                            <><h6 className="block text-gray-primary text-xs font-normal mb-2 ml-4">
                               Title
                             </h6>
                             <div className="flex justify-between">
                               <div className="flex">
                                 {/* <img src="/img/allergies.svg" alt="" /> */}
-                                <h4 className="h4 text-green-primary mb-4">Recent ECG</h4>
+                                {(!documentEditItem || documentEditItem.id != p.id) && (<h4 className="h4 text-green-primary mb-4">{p.title}</h4>)}
+                                {(documentEditItem && documentEditItem.id == p.id) && (<input className="document-input" 
+                                onBlur={updateDocument}
+                                defaultValue={p.title} type="text" />)}
                               </div>
                               <div className="icon-wrapper">
-                                <button className="edit-card">
-                                  <i className="icon-edit text-green-secondary text-xs mr-1"></i>
+                                <button
+                                onClick={() => setDocumentEdit(p)}
+                                className="edit-card">
+                                  <i className="icon-edit text-green-secondary text-md mr-1"></i>
                                 </button>
                                 <button className="delete-card"
-                                onClick={openDeleteModal}>
-                                  <i className="icon-delete text-red-secondary text-xs"></i>
+                                onClick={() => openDocumentDeleteModal(p)}>
+                                  <i className="icon-delete text-red-secondary text-md"></i>
                                 </button>
                               </div>
-                            </div>
-                            <h6 className="block text-gray-primary text-xs font-normal mb-2 ml-4">
-                              Title
-                            </h6>
-                            <div className="flex justify-between">
-                              <div className="flex">
-                                {/* <img src="/img/allergies.svg" alt="" /> */}
-                                <h4 className="h4 text-green-primary mb-4">this_is_a_document_title_02.png</h4>
-                              </div>
-                              <div className="icon-wrapper">
-                                <button className="edit-card">
-                                  <i className="icon-edit text-green-secondary text-xs mr-1"></i>
-                                </button>
-                                <button className="delete-card"
-                                onClick={openDeleteModal}>
-                                  <i className="icon-delete text-red-secondary text-xs"></i>
-                                </button>
-                              </div>
-                            </div>
+                            </div></>))}
                           </div>
                         </div>
                         </div>

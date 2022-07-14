@@ -122,3 +122,39 @@ export async function deleteMedicalItem(data) {
     })
     return response;
 }
+
+export async function deleteDocumentItem(data) {
+    const response = await makeApiCall(`user/delete-document-item`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(data)
+    })
+    return response;
+}
+
+export async function updateEditedDocument(data) {
+    const response = await makeApiCall(`user/update-document`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(data)
+    })
+    return response;
+}
+
+export async function connectDeviceByUser(data) {
+    const response = await makeApiCall(`user/connect-device`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(data)
+    })
+    return response;
+}
+
+export async function updateDeviceTemporaryActivity(data) {
+    const response = await makeApiCall(`user/update-temporary-device-activity`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(data)
+    })
+    return response;
+}

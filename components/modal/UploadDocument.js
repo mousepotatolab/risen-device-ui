@@ -6,7 +6,7 @@ const axios = require("axios");
 
 const fileTypes = ["JPG", "PNG", "PDF"];
 
-function UploadDocumentModal({ closeDocumentModal, files, setFiles }) {
+function UploadDocumentModal({ closeDocumentModal, files, setFiles, error }) {
   const [renderkey, setRenderkey] = useState("1");
   const [editIndex, setEditIndex] = useState(null)
   const handleChange = (file) => {
@@ -14,14 +14,14 @@ function UploadDocumentModal({ closeDocumentModal, files, setFiles }) {
     let type = file.type.split("/");
     type = type[1];
     if (!fileTypes.includes(String(type).toUpperCase())) {
-      alert("File type is not supported");
+      error("File type is not supported");
       return;
     }
 
     const size = file.size / (1024 * 1024);
     console.log(size, "klkl")
     if (size > 25) {
-      alert("File size exceeded limit 25mb");
+      error("File size exceeded limit 25mb");
       return;
     }
     files = files ? files : []
@@ -78,7 +78,7 @@ function UploadDocumentModal({ closeDocumentModal, files, setFiles }) {
         setRenderkey(new Date().valueOf())
         closeDocumentModal();
       } else {
-        alert(p.message)
+        error(p.message)
       }
     })
   }

@@ -4,7 +4,7 @@ function ConnectDeviceModal({notConnected, closeModal, inputID,
     id, inputPin, pin, connectDevice, deviceConnected, connectSuccess}) {
   return (
     <>
-      {notConnected &&
+      {!connectSuccess &&
         <div className="flex w-full justify-between connect-modal relative">
         <button className="absolute close-modal-button"
         onClick={closeModal}
