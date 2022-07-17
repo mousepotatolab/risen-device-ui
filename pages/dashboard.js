@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 // import Repeat from 'react-repeat-component';
 import ReactDOM from "react-dom";
 import Modal from "react-modal";
@@ -37,7 +37,7 @@ import {
   getUserInfo, createMedicalProfile, updateMedicalProfile, createEmptyField, getUserInfoById,
   updateProfileInfo, createDependentProfile, deleteMedicalItem,
   deleteDocumentItem, updateEditedDocument, connectDeviceByUser,
-  updateDeviceTemporaryActivity
+  updateDeviceTemporaryActivity, deleteConnectedDevice
 } from "../services/UserService";
 
 import Dashboard from "layouts/Dashboard.js";
@@ -577,6 +577,31 @@ export default function DashboardLanding() {
         if (type == "profile") {
           if (activeCardInput.items.length > 0) {
             // setEditFalse(activeCardInput.items);
+            console.log(activeCardInput)
+            if (!(activeCardInput.items.every(p => p.value))) {
+              error("You can not update empty information");
+              return false;
+            }
+
+            const foundDob = activeCardInput.items.find(p => p.field == "dob");
+            if(foundDob && !isDate(foundDob.value, {format: "MM/DD/YYYY"})) {
+              error("Invalid Birth Date");
+              return false;
+            }
+
+            const foundEmail = activeCardInput.items.find(p => p.field == "email");
+            if(foundEmail && !isEmail(foundEmail.value)) {
+              error("Invalid Email Address");
+              return false;
+            }
+
+            const foundPhone = activeCardInput.items.find(p => p.field == "phone");
+            if (foundPhone && !(validatePhoneNumber(foundPhone.value))) {
+              error("Invalid Phone Number")
+              return false;
+            }
+
+
             updateProfileInfo({items: activeCardInput.items, userid: activeuserInfo.id}).then(
               (result) => {
                 if ("success" in result) {
@@ -632,18 +657,7 @@ export default function DashboardLanding() {
       handleOutsideClick(profiletype, item);
       return false;
     }
-    // console.log(isEnterKey, "[[")
-    if (property == "email") {
-      if (!(isEmail(value))) {
-        return false;
-      }
-    }
 
-    if (property == "phone") {
-      if(!(validatePhoneNumber(e.target.value))) {
-        return false;
-      }
-    }
     if (!activeCardInput) {
       setActiveCardInput({
         profiletype,
@@ -797,6 +811,26 @@ export default function DashboardLanding() {
     )
   }
 
+  const [deleteDeviceModalIsOpen, setDeleteDeviceModalIsOpen] = useState(false);
+  const [deleteDeviceItem, setDeleteDeviceItem] = useState(null);
+  const deleteDevice = () => {
+    if (deleteDeviceItem) {
+      const found = activeuserInfo.devices.find(p => p.id == deleteDeviceItem.id);
+      const index = activeuserInfo.devices.indexOf(found);
+      activeuserInfo.devices.splice(index, 1);
+      setActiveuserInfo({...activeuserInfo});
+      user.key = new Date().getMilliseconds()
+      setUser({ ...user });
+
+      deleteConnectedDevice({id: deleteDeviceItem.id, userid: activeuser}).then(
+        (result) => {
+            setDeleteDeviceModalIsOpen(false);
+            // saved();
+        }
+      )
+    }
+  };
+
   const dosageUnit = ["Pills", "Drops", "Pieces", "cc", "ml", "mg"];
   const frequencyUnit = ["Hourly", "Daily", "Weekly", "Every 2 Week", "Monthly", "Every 3 Month", "Every 6 Month"];
   return (
@@ -898,6 +932,10 @@ export default function DashboardLanding() {
           closeDeviceModal={closeDeviceModal}
           toggleActiveDeviceButton={toggleActiveDeviceButton}
           activeuserInfo={activeuserInfo}
+          deleteDevice={deleteDevice}
+          setDeleteDeviceItem={setDeleteDeviceItem}
+          deleteDeviceModalIsOpen={deleteDeviceModalIsOpen}
+          setDeleteDeviceModalIsOpen={setDeleteDeviceModalIsOpen}
         />
       </Modal>
       <Modal
@@ -1272,6 +1310,8 @@ export default function DashboardLanding() {
                                 {(!documentEditItem || documentEditItem.id != p.id) && (<h4 className="h4 text-green-primary mb-4">{p.title}</h4>)}
                                 {(documentEditItem && documentEditItem.id == p.id) && (<input className="document-input" 
                                 onBlur={updateDocument}
+                                id={"document-" + p.id}
+                                autoFocus={true}
                                 defaultValue={p.title} type="text" />)}
                               </div>
                               <div className="icon-wrapper">
@@ -1304,6 +1344,8 @@ export default function DashboardLanding() {
                             disabledPhone={disabledPhone} 
                             enablePhone={enablePhone}
                             activeuser={activeuser}
+                            setActiveuserInfo={setActiveuserInfo}
+                            setUser={setUser}
                           />
                           <div className="fb-576">
                           <div className="card-wrapper w-full ml-4">

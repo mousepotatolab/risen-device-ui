@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import Router, { withRouter, useRouter } from 'next/router'
+import { baseapiurl } from "services/config";
 
 function Sidebar({openSettings, user, activeuser, setActiveuser, loadInfoByUser, newProfile}) {
   const router = useRouter();
@@ -22,7 +23,7 @@ function Sidebar({openSettings, user, activeuser, setActiveuser, loadInfoByUser,
                     <img src="/img/primaryFull.svg" alt="" className="logo mb-8" />
                     <div className="flex mb-6">
                         <div className="profile-photo mr-2">
-                            <img src="/img/dwight.jpeg" alt="" className="profile" />
+                            <img src={baseapiurl + 'uploads/' + user.profile.image} alt="" className="profile" />
                         </div>
                         <div className="profile-info">
                             <h3 className="h3 font-medium">{(user.profile && user.profile.firstName) + ' ' + (user && user.profile && user.profile.lastName)}</h3>
@@ -37,7 +38,7 @@ function Sidebar({openSettings, user, activeuser, setActiveuser, loadInfoByUser,
                     onClick={()=> handleActiveUser(user.id)}
                     >
                       <button className={"flex w-full mb-2 " + (activeuser == user.id ? "active-profile" : "inactive-profile")}>
-                        <img src="/img/dwight.jpeg" alt="proflie" className="profile-sm mr-2" />
+                        <img src={baseapiurl + 'uploads/' + user.profile.image} alt="proflie" className="profile-sm mr-2" />
                         <h5 className="h5 profile-name text-sm">{(user && user.profile && user.profile.firstName) + ' ' + (user && user.profile && user.profile.lastName)}</h5>
                       </button>
                     </div>
@@ -46,7 +47,7 @@ function Sidebar({openSettings, user, activeuser, setActiveuser, loadInfoByUser,
                     onClick={() => handleActiveUser(p.id)}
                     key={p.id} className="wrapper profile-tab-last">
                       <button className={"flex w-full " + (activeuser == p.id ? "active-profile" : "inactive-profile")}>
-                        <img src="/img/angela.jpeg" alt="proflie" className="profile-sm mr-2" />
+                        <img src={baseapiurl + 'uploads/' + p.image} alt="proflie" className="profile-sm mr-2" />
                         <h5 className="h5 profile-name text-sm">{p.firstName + ' ' + p.lastName}</h5>
                       </button>
                     </div>))}

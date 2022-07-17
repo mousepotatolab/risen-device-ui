@@ -1,4 +1,6 @@
 import { makeApiCall } from "./config";
+import { baseapiurl } from "services/config";
+const axios = require("axios");
 
 export async function userSignup(data) {
     const response = await makeApiCall(`user/signup`, {
@@ -158,3 +160,39 @@ export async function updateDeviceTemporaryActivity(data) {
     })
     return response;
 }
+
+export async function updateProfileImage (formData) {
+    const headers = {};
+    const url = baseapiurl + `user/update-profile-image`;
+    const token = await getToken();
+    if (token) {
+        headers["risen-access-token"] = token;
+        headers["Content-Type"] = "multipart/form-data";
+    }
+    const data = await axios.post(
+        url,
+        formData,
+        {
+          headers
+        }
+        
+    );
+    return data;
+  }
+
+  export async function deleteProfileImageData(userid) {
+    const response = await makeApiCall(`user/delete-profile-image?userid=${userid}`, {
+        method: 'GET',
+        headers: {'Content-Type': 'application/json'}
+    })
+    return response;
+  }
+
+  export async function deleteConnectedDevice(data) {
+    const response = await makeApiCall(`user/delete-connected-device`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(data)
+    })
+    return response;
+  }

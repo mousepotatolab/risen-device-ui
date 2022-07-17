@@ -1,8 +1,55 @@
-import React from "react";
+import React, { useState } from "react";
+import Modal from "react-modal";
+import DeleteModal from "./Delete";
 
-function ConnectedDevicesModal({ closeDeviceModal, toggleActiveDeviceButton, activeuserInfo }) {
+function ConnectedDevicesModal({ closeDeviceModal, toggleActiveDeviceButton, activeuserInfo,
+    deleteDevice, setDeleteDeviceItem, deleteDeviceModalIsOpen,
+    setDeleteDeviceModalIsOpen }) {
+    const customStyles = {
+        content: {
+          top: "66px",
+          left: "50%",
+          right: "auto",
+          bottom: "auto",
+          marginRight: "-50%",
+          transform: "translateX(-50%)",
+          backgroundColor: "rgb(247, 247, 247)",
+          padding: "0",
+          overflow: "visible",
+          maxWidth: "843px",
+        },
+        overlay: {
+          backgroundColor: "rgba(0,0,0,.5)",
+        },
+    };
+    Modal.setAppElement("#__next");
+
+    const closeSuccessModal = () => {
+        setDeleteDeviceModalIsOpen(false)
+    }
+
+    const openDeleteModal = (item) => {
+        setDeleteDeviceItem(item);
+        setDeleteDeviceModalIsOpen(true)
+    }
+
+
     return (
         <>
+        <Modal
+            isOpen={deleteDeviceModalIsOpen}
+            // onAfterOpen={afterOpenModal}
+            onRequestClose={closeSuccessModal}
+            style={customStyles}
+            contentLabel="Delete Item Modal"
+            // className="Modal"
+            // overlayClassName="Overlay"
+        >
+            <DeleteModal
+                closeDeleteModal={closeSuccessModal}
+                handleDelete={deleteDevice}
+            />
+        </Modal>
             <div className="flex flex-col w-570 p-40">
                 <button className="absolute close-modal-button"
                     onClick={closeDeviceModal}
@@ -23,7 +70,7 @@ function ConnectedDevicesModal({ closeDeviceModal, toggleActiveDeviceButton, act
                                 </label>
                                 <div className="icon-wrapper">
 
-                                    <button className="delete-card">
+                                    <button onClick={() => openDeleteModal(p)} className="delete-card">
                                         <i className="icon-delete text-red-secondary text-md"></i>
                                     </button>
                                 </div>

@@ -4964,3 +4964,47 @@ Animations
   background-color: rgba(239,250,248, 1);
   height: 35px;
 }
+
+/* .image-crop {
+  margin-bottom: 150px;
+} */
+
+.image-crop .crop-container {
+  position: relative;
+  width: 564px;
+  height: 564px;
+  background-color: #FFFFFF;
+}
+
+.crop-container .btn-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+}
+
+.crop-container .btn-container .delete-image-button {
+  margin-right: 5px;
+}
+
+.crop-container .btn-container .next {
+  background-color: #0C4643;
+}
+
+.reactEasyCrop_Container{
+  height: 464px;
+  border: 1px dashed;
+}
+.preview-container .btn-container {
+  margin-bottom: 10px;
+}
+.preview-container .btn-container .delete-image-button {
+  margin-right: 5px;
+}
+
+.preview-container img {
+  height: 465px;
+}
+
+.preview-container .btn-container .next {
+  background-color: #0C4643;
+}
