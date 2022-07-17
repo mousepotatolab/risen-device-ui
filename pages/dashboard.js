@@ -37,7 +37,8 @@ import {
   getUserInfo, createMedicalProfile, updateMedicalProfile, createEmptyField, getUserInfoById,
   updateProfileInfo, createDependentProfile, deleteMedicalItem,
   deleteDocumentItem, updateEditedDocument, connectDeviceByUser,
-  updateDeviceTemporaryActivity, deleteConnectedDevice
+  updateDeviceTemporaryActivity, deleteConnectedDevice,
+  toggleDeactivateUser, deleteUser
 } from "../services/UserService";
 
 import Dashboard from "layouts/Dashboard.js";
@@ -390,18 +391,19 @@ export default function DashboardLanding() {
   const [openTab, setOpenTab] = React.useState(1);
 
   //Settings
-  let [activeButton, isActiveButton] = useState(true);
   let [deleteValid, setDelete] = useState("");
+  let [validProfileText, setValidProfileText] = useState("");
 
   const toggleActiveButton = () => {
-    if (activeButton) {
-      isActiveButton(false);
-    }
-    if (!activeButton) {
-      isActiveButton(true);
-    }
+    activeuserInfo.deactivated = !activeuserInfo.deactivated;
+    user.key = new Date().getMilliseconds()
+    setUser({ ...user });
+    toggleDeactivateUser({userid: activeuser}).then(
+      (result) => {
+
+      }
+    )    
   };
-  let [activeDeviceButton, isActiveDeviceButton] = useState(true);
 
   const toggleActiveDeviceButton = (item) => {
     item.isdisable = item.isdisable ? false : true;
@@ -414,12 +416,25 @@ export default function DashboardLanding() {
     )
   };
 
-  const handleDelete = (event) => {
-    if (event.target.value === firstName + " " + lastName) {
+  const handleDeleteProfileValid = (event) => {
+    setDelete(false);
+    setValidProfileText(event.target.value)
+    if (event.target.value === (activeuserInfo.profile.firstName + ' ' + activeuserInfo.profile.lastName)) {
       setDelete(true);
     }
+  };
 
-    console.log(firstName + lastName);
+  const handleDeleteProfile = () => {
+    deleteUser({userid: activeuser}).then(
+      (result) => {
+        if (user.id == activeuser) {
+          localStorage.clear();
+          Router.push({
+            pathname: '/login'
+          })
+        } 
+      }
+    )
   };
 
   let [connectButton, setConnect] = useState(true);
@@ -972,6 +987,7 @@ export default function DashboardLanding() {
             setActiveuser={setActiveuser}
             loadInfoByUser={loadInfoByUser}
             newProfile={addDependentProfile}
+            setValidProfileText={setValidProfileText}
           // signOut={signOut}
           ></Sidebar>
         </section>
@@ -1356,12 +1372,12 @@ export default function DashboardLanding() {
                                     <h2 className="h2 text-2xl font-regular">
                                       Deactivate Profile
                                     </h2>
-                                    {activeButton && (
+                                    {!activeuser.deactivated && (
                                       <button className="active-button ml-4">
                                         Active
                                       </button>
                                     )}
-                                    {!activeButton && (
+                                    {activeuser.deactivated && (
                                       <button className="inactive-button ml-4">
                                         Deactivated
                                       </button>
@@ -1371,6 +1387,7 @@ export default function DashboardLanding() {
                                     className="react-switch-checkbox"
                                     id={`react-switch-new-settings`}
                                     type="checkbox"
+                                    checked={activeuserInfo.deactivated}
                                     onClick={toggleActiveButton}
                                   />
                                   <label
@@ -1467,13 +1484,14 @@ export default function DashboardLanding() {
                                     type="text"
                                     className="w-full input-primary pl-2 py-13 mw-343 focus:outline-none ph-text-sm"
                                     placeholder="Type full name to delete this account"
-                                    onChange={handleDelete}
+                                    onChange={handleDeleteProfileValid}
+                                    value={validProfileText}
                                   />
                                 </div>
                                 <button
                                   className="settings-button active:bg-primary disabled:bg-inactive font-semibold"
                                   disabled={!deleteValid}
-                                // onClick={handleDelete}
+                                  onClick={handleDeleteProfile}
                                 >
                                   Permanently Delete Account
                                 </button>

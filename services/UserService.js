@@ -196,3 +196,21 @@ export async function updateProfileImage (formData) {
     })
     return response;
   }
+
+  export async function toggleDeactivateUser(data) {
+    const response = await makeApiCall(`user/toggle-deactivate-user`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(data)
+    })
+    return response;
+  }
+
+  export async function deleteUser(data) {
+    const response = await makeApiCall(`user/delete-user`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(data)
+    })
+    return response;
+  }

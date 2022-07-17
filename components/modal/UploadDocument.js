@@ -3,10 +3,30 @@ import { FileUploader } from "react-drag-drop-files";
 import { getToken, saveDocuments } from "../../services/UserService";
 import { baseapiurl } from "services/config";
 const axios = require("axios");
+import Modal from "react-modal";
+import DeleteModal from "./Delete";
 
 const fileTypes = ["JPG", "PNG", "PDF"];
 
 function UploadDocumentModal({ closeDocumentModal, files, setFiles, error }) {
+  const customStyles = {
+      content: {
+        top: "66px",
+        left: "50%",
+        right: "auto",
+        bottom: "auto",
+        marginRight: "-50%",
+        transform: "translateX(-50%)",
+        backgroundColor: "rgb(247, 247, 247)",
+        padding: "0",
+        overflow: "visible",
+        maxWidth: "843px",
+      },
+      overlay: {
+        backgroundColor: "rgba(0,0,0,.5)",
+      },
+  };
+  Modal.setAppElement("#__next");
   const [renderkey, setRenderkey] = useState("1");
   const [editIndex, setEditIndex] = useState(null)
   const handleChange = (file) => {
@@ -69,6 +89,10 @@ function UploadDocumentModal({ closeDocumentModal, files, setFiles, error }) {
 
   const saveDocument = () => {
     console.log(files);
+    if (files.length == 0) {
+      error("No File Found");
+      return false;
+    }
     const data = files.map(p => {
       return {id: p.id, title: p.title};
     })
@@ -83,10 +107,12 @@ function UploadDocumentModal({ closeDocumentModal, files, setFiles, error }) {
     })
   }
 
-  const removeFile = (index) => {
-    files.splice(index, 1);
+  const removeFile = () => {
+    files.splice(deleteIndex, 1);
     setFiles([...files]);
     setRenderkey(new Date().valueOf())
+    closeModal();
+    setDeleteIndex(null);
   };
 
   const setEdit = (i) => {
@@ -102,14 +128,38 @@ function UploadDocumentModal({ closeDocumentModal, files, setFiles, error }) {
       setEditIndex(null);
       setRenderkey(new Date().valueOf())
     } else {
-      alert("File name can not be empty")
+      error("File name can not be empty")
     }
   }
 
+  const [deleteDocumentModal, setDeleteDocumentModal] = useState(false);
+  const [deleteIndex, setDeleteIndex] = useState(null);
+  const closeModal = () => {
+    setDeleteDocumentModal(false);
+  }
+
+  const openModal = (index) => {
+    setDeleteIndex(index)
+    setDeleteDocumentModal(true);
+  }
 
 
   return (
     <>
+      <Modal
+            isOpen={deleteDocumentModal}
+            // onAfterOpen={afterOpenModal}
+            onRequestClose={closeModal}
+            style={customStyles}
+            contentLabel="Delete Item Modal"
+            // className="Modal"
+            // overlayClassName="Overlay"
+        >
+            <DeleteModal
+                closeDeleteModal={closeModal}
+                handleDelete={removeFile}
+            />
+        </Modal>
       <div key={renderkey} className="flex w-full justify-between connect-modal relative">
         <button className="absolute close-modal-button"
           onClick={closeDocumentModal}
@@ -141,13 +191,13 @@ function UploadDocumentModal({ closeDocumentModal, files, setFiles, error }) {
               {p.title ? p.title : p.file.name}
             </div>
             <div onClick={() => setEdit(i)} className="percentage" style={{ width: p.percentage + '%'}}></div>
-            <img onClick={() => removeFile(i)} src="/img/closeblack.svg" className="absolute close-document" alt="" />
+            <img onClick={() => openModal(i)} src="/img/closeblack.svg" className="absolute close-document" alt="" />
           </div>)}
           {editIndex == i && (<div className="flex relative">
              <input type="text"
              onBlur={setFileTitle}
              className={"uploaded-document-edit w-full"} />
-             <img onClick={() => removeFile(i)} src="/img/closeblack.svg" className="absolute close-document" alt="" />
+             <img onClick={() => openModal(i)} src="/img/closeblack.svg" className="absolute close-document" alt="" />
           </div>)}
           </>
           ))}
