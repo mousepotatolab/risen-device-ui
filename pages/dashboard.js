@@ -26,7 +26,7 @@ import InsuranceView from "../components/MedicalCard/insurance/View";
 import PrimaryCaregiverForm from "../components/MedicalCard/primarycaregiver/Form";
 import PrimaryCaregiverView from "../components/MedicalCard/primarycaregiver/View";
 import Profile from "../components/Profile";
-
+import Router, { withRouter, useRouter } from 'next/router';
 import { baseapiurl } from "services/config";
 
 const phoneUtil = require('google-libphonenumber').PhoneNumberUtil.getInstance();
@@ -181,6 +181,7 @@ export default function DashboardLanding() {
     isDependentDobValid(false);
     isDependentPhoneValid(false);
     setDependentOpen(true);
+    startDependent(true)
   }
 
   const [dependentModalIsOpen, setDependentOpen] = React.useState(false);
@@ -432,7 +433,15 @@ export default function DashboardLanding() {
           Router.push({
             pathname: '/login'
           })
-        } 
+        } else {
+          const found = user.child.find(p => p.id == activeuser);
+          const index = user.child.indexOf(found);
+          user.child.splice(index, 1);
+          setActiveuserInfo({...user});
+          setActiveuser(user.id);
+          user.key = new Date().getMilliseconds()
+          setUser({ ...user });
+        }
       }
     )
   };
@@ -549,7 +558,7 @@ export default function DashboardLanding() {
            if ("success" in p && p.success) {
             p.data.edit = false;
             onEditCard(profiletype, p.data);
-            activeuserInfo.medicalProfiles[profiletype].push({...p.data});
+            activeuserInfo.medicalProfiles[profiletype].unshift({...p.data});
             setActiveuserInfo({...activeuserInfo})
            }
         })
@@ -992,7 +1001,7 @@ export default function DashboardLanding() {
           ></Sidebar>
         </section>
         <section className="information-section w-full h-full">
-          {(!activeuserInfo || !activeuserInfo.medicalProfiles) && (
+          {(activeuserInfo && !activeuserInfo.medicalProfiles) && (
             <div className="flex flex-col justify-center max-w-340-px items-center mx-auto mt-10 h-full pb-38-vh">
               <img src="/img/girl.svg" alt="" />
               <h2 className="h2 text-2xl font-medium font-dark">

@@ -127,7 +127,7 @@ function Profile({ activeuserInfo, user, handleOutsideClick, handleFormInput, di
                             handleOutsideClick("profile", activeuserInfo)
                         }}
                     >
-                        <div className="card p-24">
+                        <div className="card p-24" key={user.key}>
                             <div className="relative flex flex-wrap items-stretch w-full mb-3">
                                 <div className="profile-wrapper flex items-center">
                                     <img
