@@ -214,3 +214,12 @@ export async function updateProfileImage (formData) {
     })
     return response;
   }
+
+  export async function lookupDevice(data) {
+    const response = await makeApiCall(`user/lookup-device-info`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(data)
+    })
+    return response;
+  }

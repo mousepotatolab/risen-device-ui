@@ -1,4 +1,6 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
+import { useRouter } from 'next/router'
+import { lookupDevice } from "../services/UserService";
 // import ReactDOM from "react-dom";
 // import Modal from "react-modal";
 // layout for page
@@ -6,11 +8,13 @@ import React, {useState} from "react";
 
 
 import Mobile from "layouts/Mobile.js";
+import { baseapiurl } from "services/config";
 // import { isToastIdValid } from "react-toastify/dist/utils";
 
 export default function MobileLanding() {
 
     const [isShowing, setIsShowing] = useState(false);
+    const [key, setKey] = useState(1);
 
     const [condition, conditionFilter] = useState(true)
     const [isCondition, conditionBool] = useState(false)
@@ -39,27 +43,44 @@ export default function MobileLanding() {
     
     const [enterPin ,isPinValid] = useState(false)
     let [pin, setPIN] = useState("")
+    let [id, setID] = useState("")
     let mockPIN = "123456"
     let [valid, isValid] = useState("")
+    let [data, setData] = useState(null)
 
-
+    const router = useRouter();
+    
+    useEffect(() => {
+      if (router.query.deviceID) {
+        setID(router.query.deviceID);
+      }
+    }, [router.isReady])
+    
     const validatePIN = (event) => {
       setPIN(event.target.value)
 
       if (event.target.value.length === 6) {
-        console.log("yes")
         isValid(true)
-      }
-      if (event.target.value === mockPIN) {
-        // isPinValid(true)
       }
     }
     const clearModal = () => {
-      window.scrollTo({
-          top: 0,
-          behavior: "smooth",
-        });
-        isPinValid(true)
+      if (!(id && pin)) {
+        return false;
+      }
+
+      lookupDevice({id, pin}).then(
+        (result) => {
+          if ("data" in result) {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth",
+            });
+            isPinValid(true)
+            setData({...result.data});
+          }
+        }
+      )
+     
     }
 
     let [isFiltered, filtered] = useState(false)
@@ -328,8 +349,9 @@ export default function MobileLanding() {
       }
     }
 
-    const toggle = () => {
-        setIsShowing(!isShowing);
+    const toggle = (p) => {
+         p.isShowing = !p.isShowing
+         setKey(new Date().valueOf())
       };
     
       return (
@@ -380,8 +402,8 @@ export default function MobileLanding() {
           
         </div>
       )}
-      {enterPin && (
-         <div className="fade-in-dashboard">
+      {enterPin && data && (
+         <div key={key} className="fade-in-dashboard">
 
       
          <div className="container flex flex-col">
@@ -391,15 +413,15 @@ export default function MobileLanding() {
                <div className="profile-info">
                  <img src="/img/primaryFull.svg" alt="" className="small-logo"/>
                  <h6 className="h6 text-xs text-gray-primary mt-4 mb-1">Name</h6>
-                 <h1 className="h1 text-md font-bold text-black">Dwight Schrute</h1>
+                 <h1 className="h1 text-md font-bold text-black">{data.profile.firstName + ' ' + data.profile.lastName}</h1>
                  <div className="flex w-full mb-6">
                    <div className="flex flex-col mr-6">
                    <h6 className="h6 text-xs text-gray-primary mt-4 mb-1">Age</h6>
-                   <h2 className="h2 text-md font-bold text-black">52</h2>
+                   <h2 className="h2 text-md font-bold text-black">{data.profile.age}</h2>
                    </div>
                    <div className="flex flex-col ml-40">
                    <h6 className="h6 text-xs text-gray-primary mt-4 mb-1">DOB</h6>
-                   <h2 className="h2 text-md font-bold text-black">11/11/1970</h2>
+                   <h2 className="h2 text-md font-bold text-black">{data.profile.dob}</h2>
                    </div>
                  </div>
                  {!isFiltered && (
@@ -411,7 +433,7 @@ export default function MobileLanding() {
              
                </div>
                <div className="profile-mobile">
-                 <img src="/img/dwight.jpeg" alt="" className="profile-mobile mt-2" />
+                 <img src={baseapiurl + "/uploads/" + data.profile.image} alt="" className="profile-mobile mt-2" />
                </div>
              </div>
              <div className="filter-wrapper flex w-full justify-between mb-6">
@@ -584,6 +606,7 @@ export default function MobileLanding() {
                  </h3>
                </div>
              </div>
+             {data.medicalProfiles && data.medicalProfiles.medicalcondition.map(p => (
              <div className="card card-medical mt-2">
                <div className="flex justify-between">
                  <label className="block text-gray-primary text-xs font-normal mb-3">
@@ -591,13 +614,13 @@ export default function MobileLanding() {
                  </label>
                </div>
                <h5 className="h5 text-green-tertiary font-medium">
-                 Diabetes
+                 {p.condition_name}
                </h5>
                <label className="block text-gray-primary text-xs font-normal my-3">
                  Special Note
                </label>
-               <p className="p text-sm text-black-primary">Type II diabetes</p>
-             </div>
+               <p className="p text-sm text-black-primary">{p.special_note || '.'}</p>
+             </div>))}
            </div>
            )}
            
@@ -613,6 +636,7 @@ export default function MobileLanding() {
                  </h3>
                </div>
              </div>
+             {data.medicalProfiles && data.medicalProfiles.allergies.map(p => (
              <div className="card card-medical mt-2">
                <div className="flex justify-between">
                  <label className="block text-gray-primary text-xs font-normal mb-3">
@@ -620,13 +644,13 @@ export default function MobileLanding() {
                  </label>
                </div>
                <h5 className="h5 text-green-tertiary font-medium">
-                 Peanut
+                 {p.name}
                </h5>
                <label className="block text-gray-primary text-xs font-normal my-3">
                  Special Note
                </label>
-               <p className="p text-sm text-black-primary">Allergic to Peanuts</p>
-             </div>
+               <p className="p text-sm text-black-primary">{p.special_note || '.'}</p>
+             </div>))}
            </div>
            )}
            
@@ -643,6 +667,7 @@ export default function MobileLanding() {
                </div>
                
              </div>
+             {data.medicalProfiles && data.medicalProfiles.medication.map(p => (
              <div className="card card-medical mt-2">
                <div className="flex justify-between">
                  <label className="block text-gray-primary text-xs font-normal mb-3">
@@ -650,80 +675,80 @@ export default function MobileLanding() {
                  </label>
                </div>
                <h5 className="h5 text-green-tertiary font-medium">
-                 Amoxycillan
+                 {p.name}
                </h5>
                <label className="block text-gray-primary text-xs font-normal my-3">
                  Special Note
                </label>
                <p className="p text-sm text-black-primary">
-                 This is a special note
+                 {p.special_note || '.'}
                </p>
-               <div className="flex items-center justify-between mt-3">
+               {p.is_taking && (<div className="flex items-center justify-between mt-3">
                  <h3 className="text-xs text-gray-primary">
                    Currently Taking
                  </h3>
-               </div>
+               </div>)}
                <button
                  style={{
-                   display: !isShowing ? "block" : "none",
+                   display: !p.isShowing ? "block" : "none",
                  }}
                  className="add-medication text-green-primary text-xs mt-4"
-                 onClick={toggle}
+                 onClick={() => toggle(p)}
                >
                  Show More Details
                  <i className="icon-Plus2x relative top-1 ml-1 icon-xs text-green-primary"></i>
                </button>
                <button
                  style={{
-                   display: isShowing ? "block" : "none",
+                   display: p.isShowing ? "block" : "none",
                  }}
                  className="add-medication text-green-primary text-xs mt-4"
-                 onClick={toggle}
+                 onClick={() => toggle(p)}
                >
                  Show Less
                  <i className="icon-Plus2x relative top-1 ml-1 icon-xs text-green-primary"></i>
                </button>
                <div
                  style={{
-                   display: isShowing ? "block" : "none",
+                   display: p.isShowing ? "block" : "none",
                  }}
                >
                  <div className="container">
                    <div className="flex flex-wrap">
-                     <div className="w-1/2 pr-2">
-                       <label className="block text-gray-primary text-xs font-normal my-3">
-                         Ammount
-                       </label>
-                       <h6 className=" text-black-primary text-sm">200</h6>
-                     </div>
-     
-                     <div className="w-1/2 pl-2">
+                   <div className="w-1/2 pr-2">
                        <label className="block text-gray-primary text-xs font-normal my-3">
                          Dosage
                        </label>
-                       <h6 className=" text-black-primary text-sm">mg</h6>
+                       <h6 className=" text-black-primary text-sm">{p.dosage}</h6>
                      </div>
+                     <div className="w-1/2 pl-2">
+                       <label className="block text-gray-primary text-xs font-normal my-3">
+                         Amount
+                       </label>
+                       <h6 className=" text-black-primary text-sm">{p.amount}</h6>
+                     </div>
+     
+                    
                    </div>
                  </div>
                  <div className="container">
                    <div className="flex flex-wrap">
-                     <div className="w-1/2 pr-2">
-                       <label className="block text-gray-primary text-xs font-normal my-3">
-                         Times
-                       </label>
-                       <h6 className=" text-black-primary text-sm">Twice</h6>
-                     </div>
-     
-                     <div className="w-1/2 pl-2">
+                   <div className="w-1/2 pr-2">
                        <label className="block text-gray-primary text-xs font-normal my-3">
                          Frequency
                        </label>
-                       <h6 className=" text-black-primary text-sm">Daily</h6>
+                       <h6 className=" text-black-primary text-sm">{p.frequency}</h6>
                      </div>
+                     <div className="w-1/2 pl-2">
+                       <label className="block text-gray-primary text-xs font-normal my-3">
+                         Times
+                       </label>
+                       <h6 className=" text-black-primary text-sm">{p.times}</h6>
+                     </div>                
                    </div>
                  </div>
                </div>
-             </div>
+             </div>))}
            </div>
            )}
            
@@ -739,6 +764,7 @@ export default function MobileLanding() {
                  </h3>
                </div>
              </div>
+             {data.medicalProfiles && data.medicalProfiles.emergency.map(p => (
              <div className="card card-medical mt-2">
                <div className="flex justify-between">
                  <label className="block text-gray-primary text-xs font-normal mb-3">
@@ -746,21 +772,21 @@ export default function MobileLanding() {
                  </label>
                </div>
                <h5 className="h5 text-green-tertiary font-medium">
-                 Michael Scott
+                 {p.name}
                </h5>
                <label className="block text-gray-primary text-xs font-normal my-3">
                  Email Adddress
                </label>
                <h5 className="h5 text-green-tertiary font-medium">
-                 michael@dunder.com
+                 {p.email}
                </h5>
                <label className="block text-gray-primary text-xs font-normal my-3">
                  Phone
                </label>
                <h5 className="h5 text-green-tertiary font-medium">
-                 (123) 456-7890
+                 {p.phone}
                </h5>
-             </div>
+             </div>))}
            </div>
            )}
            {insurance && (
@@ -774,6 +800,7 @@ export default function MobileLanding() {
                </div>
                
              </div>
+             {data.medicalProfiles && data.medicalProfiles.insurance.map(p => (
              <div className="card card-medical mt-2">
                <div className="flex justify-between">
                  <label className="block text-gray-primary text-xs font-normal mb-3">
@@ -781,33 +808,33 @@ export default function MobileLanding() {
                  </label>
                </div>
                <h5 className="h5 text-green-tertiary font-medium">
-                 Dunder Mifflin
+                 {p.carrier}
                </h5>
                <label className="block text-gray-primary text-xs font-normal my-3">
                  Insurance Company Name
                </label>
                <h5 className="h5 text-green-tertiary font-medium">
-                 The Office
+                 {p.company}
                </h5>
                <label className="block text-gray-primary text-xs font-normal my-3">
                  Plan No.
                </label>
                <h5 className="h5 text-green-tertiary font-medium">
-                 XXXXXXXX
+                 {p.plan}
                </h5>
                <label className="block text-gray-primary text-xs font-normal my-3">
                  Policy No.
                </label>
                <h5 className="h5 text-green-tertiary font-medium">
-                 XXXXXXXX
+                 {p.policy}
                </h5>
                <label className="block text-gray-primary text-xs font-normal my-3">
                  Group No.
                </label>
                <h5 className="h5 text-green-tertiary font-medium">
-                 XXXXXXXX
+                 {p.group}
                </h5>
-             </div>
+             </div>))}
            </div>
            )}
            {hospital && (
@@ -820,6 +847,7 @@ export default function MobileLanding() {
                  </h3>
                </div>
              </div>
+             {data.medicalProfiles && data.medicalProfiles.hospital.map(p => (
              <div className="card card-medical mt-2">
                <div className="flex justify-between">
                  <label className="block text-gray-primary text-xs font-normal mb-3">
@@ -827,21 +855,21 @@ export default function MobileLanding() {
                  </label>
                </div>
                <h5 className="h5 text-green-tertiary font-medium">
-                 Dunder Mifflin Hospital
+                 {p.name}
                </h5>
                <label className="block text-gray-primary text-xs font-normal my-3">
                  Address
                </label>
                <h5 className="h5 text-green-tertiary font-medium">
-                 1725 Slough Avenue, Scranton, PA.
+                 {p.address}
                </h5>
                <label className="block text-gray-primary text-xs font-normal my-3">
                  Phone
                </label>
                <h5 className="h5 text-green-tertiary font-medium">
-                 (911) 867-5309
+                 {p.phone}
                </h5>
-             </div>
+             </div>))}
            </div>
            )}
            {caregiver && (
@@ -854,6 +882,7 @@ export default function MobileLanding() {
                   </h3>
                 </div>
               </div>
+              {data.medicalProfiles && data.medicalProfiles.caregiver.map(p => (
               <div className="card card-medical mt-2">
                 <div className="flex justify-between">
                   <label className="block text-gray-primary text-xs font-normal mb-3">
@@ -861,23 +890,23 @@ export default function MobileLanding() {
                   </label>
                 </div>
                 <h5 className="h5 text-green-tertiary font-medium">
-                  Michael Scott
+                  {p.name}
                 </h5>
       
                 <label className="block text-gray-primary text-xs font-normal my-3">
                   Email Address
                 </label>
                 <h5 className="h5 text-green-tertiary font-medium">
-                  michael@dunder.com
+                  {p.email}
                 </h5>
       
                 <label className="block text-gray-primary text-xs font-normal my-3">
                   Phone
                 </label>
                 <h5 className="h5 text-green-tertiary font-medium">
-                  (123) 456-7890
+                   {p.phone}
                 </h5>
-              </div>
+              </div>))}
             </div>
            )}
           
