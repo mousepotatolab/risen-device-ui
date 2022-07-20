@@ -755,7 +755,7 @@ export default function DashboardLanding() {
         <section className="information-section w-full h-full">
           {(!activeuserInfo || !activeuserInfo.medicalProfiles) && (
             <div className="flex flex-col justify-center max-w-340-px items-center mx-auto mt-10 h-full pb-38-vh">
-              <img src="/img/girl.svg" alt="" />
+              <img src="/img/empty-state.svg" alt="" />
               <h2 className="h2 text-2xl font-medium font-dark">
                 Let's create your medical profile
               </h2>

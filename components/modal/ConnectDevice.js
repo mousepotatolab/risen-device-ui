@@ -11,7 +11,7 @@ function ConnectDeviceModal({notConnected, closeModal, inputID,
         >
             <img src="/img/close.svg" alt="" />
         </button>
-          <img src="./img/connectDevice.png" className="w-200 mt-72 ml-12" alt="" />
+          <img src="./img/connect-device.svg" className="w-200 mt-72 ml-12" alt="" />
           <div className="card w-full ml-12 p-connect fb-407 relative">
             <h6 className="text-sm font-medium text-green-primary mb-1">Connect Device</h6>
             <h6 className="text-sm font-regular mb-4">Device ID and PIN can be found behind your device</h6>
