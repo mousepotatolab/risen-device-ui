@@ -199,7 +199,7 @@ export default function Generatecode({color}) {
                           : "bg-blueGray-600 text-blueGray-200 border-blueGray-500")
                       }
                     >
-                       <a target="_blank" href={"http://localhost:5100/it-20y/us-central1/api/download-zip?id=" + p.id} style={{background: 'green'}} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded">
+                       <a target="_blank" href={baseapiurl + "/download-zip?id=" + p.id} style={{background: 'green'}} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded">
                         Download
                       </a>
                     </td>
