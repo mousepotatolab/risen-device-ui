@@ -26,7 +26,7 @@ function MedicationView({ item, onEditCard, toggleActiveMedication, activeMedica
                 <h5 className="h5 text-green-tertiary font-medium">
                     {item.name}
                 </h5>
-                <label className="block text-gray-primary text-xs font-normal my-3">
+                <label className="block text-gray-primary text-xs font-normal my-3 mt-4">
                     Special Note
                 </label>
                 <p className="p text-sm">
@@ -78,7 +78,7 @@ function MedicationView({ item, onEditCard, toggleActiveMedication, activeMedica
                     <div className="container">
                         <div className="flex flex-wrap">
                         <div className="w-1/2 pr-2">
-                                <label className="block text-gray-primary text-xs font-normal my-3">
+                                <label className="block text-gray-primary text-xs font-normal my-3 mt-4">
                                     Dosage
                                 </label>
                                 <h5 className="h5 text-green-tertiary font-medium">
@@ -86,7 +86,7 @@ function MedicationView({ item, onEditCard, toggleActiveMedication, activeMedica
                                 </h5>
                             </div>
                             <div className="w-1/2 pl-2">
-                                <label className="block text-gray-primary text-xs font-normal my-3">
+                                <label className="block text-gray-primary text-xs font-normal my-3 mt-4">
                                     Amount
                                 </label>
                                 <h5 className="h5 text-green-tertiary font-medium">
@@ -100,7 +100,7 @@ function MedicationView({ item, onEditCard, toggleActiveMedication, activeMedica
                     <div className="container">
                         <div className="flex flex-wrap">
                             <div className="w-1/2 pr-2">
-                                <label className="block text-gray-primary text-xs font-normal my-3">
+                                <label className="block text-gray-primary text-xs font-normal my-3 mt-4">
                                     Frequency
                                 </label>
                                 <h5 className="h5 text-green-tertiary font-medium">
@@ -108,7 +108,7 @@ function MedicationView({ item, onEditCard, toggleActiveMedication, activeMedica
                                 </h5>
                             </div>
                             <div className="w-1/2 pl-2">
-                                <label className="block text-gray-primary text-xs font-normal my-3">
+                                <label className="block text-gray-primary text-xs font-normal my-3 mt-4">
                                     Times
                                 </label>
                                 <h5 className="h5 text-green-tertiary font-medium">

@@ -26,7 +26,7 @@ function MedicalConditionView({ item, onEditCard, conditionHover }) {
                 <h5 className="h5 text-green-tertiary font-medium">
                     {item.condition_name}
                 </h5>
-                <label className="block text-gray-primary text-xs font-normal my-3">
+                <label className="block text-gray-primary text-xs font-normal my-3 mt-4">
                     Special Note
                 </label>
                 <p className="p text-sm">{item.special_note || '.'}</p>

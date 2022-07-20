@@ -880,7 +880,48 @@ export default function MobileLanding() {
               </div>
             </div>
            )}
-          
+            {document && (
+               <div className="card-wrapper">
+               <div className="title-wrapper flex justify-between items-center">
+                 <div className="flex items-center">
+                   <img
+                     src="/img/medical-condition.svg"
+                     alt=""
+                   />
+                   <h3 className="h3 font-medium ml-2 text-black-primary">
+                     Documents
+                   </h3>
+                 </div>
+                 {/* <button className="add-card-button" onClick={uploadDocument}>
+                   <i className="icon-Plus2x icon-md text-green-primary"></i>
+                 </button> */}
+               </div>
+               <div className="card card-medical mt-2">
+                 {/* {activeuserInfo && activeuserInfo.documents && activeuserInfo.documents.map(p =>  */}
+                   <>
+                   <h6 className="block text-gray-primary text-xs font-normal mb-2">
+                     Title
+                   </h6>
+                   <div className="flex justify-between">
+                     <div className="flex items-start">
+                       <img className="relative top-4px mr-2" src="/img/attachmentmobile.svg" alt="" />
+                     <h4 className="h4 text-green-primary mb-4">Recent ECG</h4>
+                     </div>
+                   </div>
+                   <h6 className="block text-gray-primary text-xs font-normal mb-2">
+                     Title
+                   </h6>
+                   <div className="flex justify-between">
+                     <div className="flex items-start">
+                       <img className="relative top-4px mr-2" src="/img/attachmentmobile.svg" alt="" />
+                     <h4 className="h4 text-green-primary mb-4">Recent ECG</h4>
+                     </div>
+                   </div>
+                   </>
+                
+               </div>
+             </div>
+            )}
          </div>
        </div>
        </div>

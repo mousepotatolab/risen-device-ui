@@ -303,6 +303,7 @@ export default function DashboardLanding() {
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
+      theme: "colored",
     });
 
   const [openTab, setOpenTab] = React.useState(1);
@@ -1022,11 +1023,11 @@ export default function DashboardLanding() {
                         {!activeuserInfo.documents && (
                           <div className="flex flex-col justify-center max-w-370-px items-center mx-auto mt-10 h-full pb-38-vh">
                             <img src="/img/girl.svg" alt="" />
-                            <h2 className="h2 text-2xl font-medium font-dark">
+                            <h2 className="h2 text-2xl font-normal font-dark">
                               You don't have any documents yet
                             </h2>
                             <button
-                              className="button-dark-green px-10 text-md font-bold mt-6"
+                              className="button-dark-green-p px-4 text-md font-bold mt-6"
                               onClick={uploadDocument}
                             >
                              Upload Document

@@ -2764,6 +2764,10 @@ select {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
 }
+.py-11px {
+  padding-top: 11px;
+  padding-bottom: 11px;
+}
 
 .px-2 {
   padding-left: 0.5rem;
@@ -2891,7 +2895,7 @@ select {
 }
 
 .card.p-24 {
-  padding: 1.75rem;
+  padding: 1.5rem;
 }
 
 .pr-4 {
@@ -4413,7 +4417,7 @@ CUSTOM CLASSES DASHBOARD
   font-weight: 500;
   font-size: 16px;
   width: 164px;
-  padding: 10px 0px;
+  padding: 8px 0px;
   color: #fff;
 }
 .delete-image-button {
@@ -4422,7 +4426,7 @@ CUSTOM CLASSES DASHBOARD
   font-weight: 500;
   font-size: 16px;
   width: 78px;
-  padding: 10px 0px;
+  padding: 8px 0px;
   color: #fff;
 }
 .settings-button-cancel {
@@ -4434,17 +4438,25 @@ CUSTOM CLASSES DASHBOARD
 }
 .active-button {
   background-color: rgb(52, 199, 89);
-  height: 32px;
   border-radius: 16px;
-  padding: 0px 15px;
+  padding: 8px 24px;
+  font-size: 14px;
   color: #fff;
 }
 .inactive-button {
   background-color: rgb(255, 59, 48);
-  height: 32px;
   border-radius: 16px;
-  padding: 0px 15px;
+  padding: 8px 24px;
+  font-size: 14px;
   color: #fff;
+}
+
+.top-4px {
+  top: 4px;
+}
+
+.height-52-px {
+  height: 52px;
 }
 
 .center {
@@ -4457,7 +4469,7 @@ CUSTOM CLASSES DASHBOARD
   border-radius: 8px;
 }
 
-.w-60 {
+.w-60px {
   width: 60px;
 }
 
@@ -4501,7 +4513,7 @@ CUSTOM CLASSES DASHBOARD
 
 .close-document {
   right: 8px;
-  top: 2px;
+  top: 5px;
 }
 
 
@@ -4560,6 +4572,17 @@ CUSTOM CLASSES DASHBOARD
   padding: 16px 118px;
   color: #fff;
 }
+.button-dark-green-p {
+  background-color: rgb(12, 140, 135);
+  box-shadow: 0 15px 30px -12px rgba(26,26,68,0.35);
+  border-radius: 4px;
+  padding: 16px 108px;
+  color: #fff;
+}
+
+.button-shadow {
+  box-shadow: 0 15px 30px -12px rgba(26, 26, 68, 0.35);
+}
 
 .add-profile-button {
   background-color: #fff;
@@ -4573,12 +4596,18 @@ CUSTOM CLASSES DASHBOARD
   color: #fff;
 }
 
+.Toastify__toast-theme--colored.Toastify__toast--error {
+  background-color:  rgb(255, 59, 48) !important;
+  color: #fff;
+}
+
 .Toastify__toast {
   background-color: rgb(12, 140, 135);
   color: #fff;
   border-radius: 20px !important;
   height: 50px !important;
   min-height: 50px !important;
+  box-shadow: 0px 150x 30px -12px rgba(26, 26, 68, 0.35);
 }
 
 .Toastify__toast-theme--light {

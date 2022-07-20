@@ -153,7 +153,7 @@ export default function Login() {
                     </span>
                     <input
                       type="tel"
-                      className="w-full input-primary pl-8 px-8 py-13 focus:outline-none"
+                      className="w-full input-primary pl-8 px-8 py-16-px focus:outline-none"
                       onKeyUp={setPhoneNum}
                       placeholder="123 456 7890"
                     />
@@ -428,7 +428,7 @@ export default function Login() {
                     </label>
                     <input
                       type="text"
-                      className="w-full input-primary pl-2 py-13 focus:outline-none"
+                      className="w-full input-primary pl-2 py-16-px focus:outline-none"
                       onChange={handleFirstValid}
                       onKeyDown={isFormValid}
                       value={firstName}
@@ -446,7 +446,7 @@ export default function Login() {
                     </label>
                     <input
                       type="text"
-                      className="w-full input-primary pl-2 py-13 focus:outline-none"
+                      className="w-full input-primary pl-2 py-16-px focus:outline-none"
                       onChange={handleLastValid}
                       onKeyDown={isFormValid}
                       value={lastName}
@@ -464,7 +464,7 @@ export default function Login() {
                     </label>
                     <input
                       type="text"
-                      className="w-full input-primary pl-2 py-13 focus:outline-none"
+                      className="w-full input-primary pl-2 py-16-px focus:outline-none"
                       onChange={handleDOBValid}
                       onKeyDown={isFormValid}
                       value={dob}
@@ -515,7 +515,7 @@ export default function Login() {
                     </label>
                     <input
                       type="text"
-                      className="w-full input-primary pl-2 py-13 focus:outline-none mb-6"
+                      className="w-full input-primary pl-2 py-16-px focus:outline-none mb-6"
                       onChange={handleEmail}
                       onKeyDown={isFormValid}
                       value={email}

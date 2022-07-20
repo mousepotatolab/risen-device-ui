@@ -196,7 +196,7 @@ export default function Signup() {
         <h6 className="text-md font-medium mr-3">Don't have an account?</h6>
         <Link href="signup">
         <button 
-        className="bg-primary font-medium text-white text-md px-4 py-2 rounded"
+        className="bg-primary font-medium text-white text-md px-4 py-11px rounded"
         >
         Sign Up</button>
         </Link>
@@ -213,35 +213,35 @@ export default function Signup() {
                 <h5 className="text-2xl font-bold mb-1">Sign In</h5>
                 <h3 className="text-4xl font-bold mb-12">Welcome Back</h3>
                 <form>
-                  <div className="relative flex flex-wrap items-stretch w-full mb-3">
+                  <div className="relative flex flex-wrap items-stretch w-full mb-4">
                     <label
                       className="block text-blueGray-600 text-xs font-bold mb-2"
                       htmlFor="grid-password"
                     >
                       Enter phone number
                     </label>
-                    <span style={{top: '34px', left: '9px'}} className="z-10 h-full leading-snug font-normal absolute text-center text-blueGray-300 bg-transparent rounded text-base items-center justify-center w-8 pl-2 py-1">
-                      <i className="icon-phone-lg text-green-primary disabled:text-green-secondary" disabled={!valid}></i>
+                    <span style={{top: '36px', left: '9px'}} className="z-10 h-full leading-snug font-normal absolute text-center text-blueGray-300 bg-transparent rounded text-base items-center justify-center w-8 pl-2 py-1">
+                      <i className="icon-phone-lg text-green-primary text-xl disabled:text-green-secondary" disabled={!valid}></i>
                     </span>
                     <input
                       type="tel"
-                      className="w-full input-primary pl-8 px-8 py-13 focus:outline-none"
+                      className="w-full input-primary pl-8 px-8 py-16-px focus:outline-none"
                       onKeyUp={setPhoneNum}
                       placeholder="123 456 7890"
                     />
                     {!valid && (<span style={{fontSize: '14px', color: '#FF3B30'}}>Please enter a valid phone number</span>)}
                     {phoneError && (<span style={{fontSize: '14px', color: '#FF3B30'}}>The phone number is already exist</span>)}
                     {valid &&
-                    <span style={{top: '32px', right: '9px'}} className="z-10 h-full leading-snug font-normal absolute text-center text-blueGray-300 bg-transparent rounded text-base items-center justify-center w-8 pl-2 py-1">
-                      <i className="icon-check text-green-active disabled:display-none"></i>
+                    <span style={{top: '34px', right: '9px'}} className="z-10 h-full leading-snug font-normal absolute text-center text-blueGray-300 bg-transparent rounded text-base items-center justify-center w-8 pl-2 py-1">
+                      <i className="icon-check text-green-active disabled:display-none text-2xl"></i>
                     </span>
                     }
                   </div>
 
 
-                  <div className="text-center mt-6">
+                  <div className="text-center mt-8">
                     <button
-                      className="bg-primary text-white active:bg-tertiary disabled:bg-secondary text-sm font-bold px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
+                      className="bg-primary text-white active:bg-tertiary disabled:bg-secondary text-sm font-bold px-6 py-4 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150"
                       type="button"
                       disabled={!valid}
                       onClick={handleOTPUp}

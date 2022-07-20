@@ -25,7 +25,7 @@ function AllergiesView({ item, onEditCard, allergiesHover }) {
                 <h5 className="h5 text-green-tertiary font-medium">
                     {item.name}
                 </h5>
-                <label className="block text-gray-primary text-xs font-normal my-3">
+                <label className="block text-gray-primary text-xs font-normal my-3 mt-4">
                     Special Note
                 </label>
                 <p className="p text-sm">{item.special_note || '.'}</p>

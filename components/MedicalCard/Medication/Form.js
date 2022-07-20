@@ -26,7 +26,7 @@ function MedicationForm({ item, handleOutsideClick, handleFormInput,
                         onChange={handleFormInput('medication', 'name', item)}
                         onKeyUp={handleFormInput('medication', 'name', item)}
                     />
-                    <label className="block text-gray-primary text-xs font-normal my-3">
+                    <label className="block text-gray-primary text-xs font-normal my-3 mt-4">
                         Special Note
                     </label>
                     <input
@@ -83,7 +83,7 @@ function MedicationForm({ item, handleOutsideClick, handleFormInput,
                         <div className="container">
                             <div className="flex flex-wrap">
                                 <div className="w-1/2 pr-2">
-                                    <label className="block text-gray-primary text-xs font-normal my-3">
+                                    <label className="block text-gray-primary text-xs font-normal my-3 mt-4">
                                         Dosage
                                     </label>
                                     <input

@@ -24,7 +24,7 @@ function ConnectDeviceModal({notConnected, closeModal, inputID,
             </label>
             <input
             type="text"
-            className="w-full input-primary pl-2 focus:outline-none ph-text-sm"
+            className="w-full input-primary pl-2 focus:outline-none ph-text-sm py-4"
             placeholder="Enter 8 digit ID"
             onChange={inputID}
             value={id}
@@ -36,7 +36,7 @@ function ConnectDeviceModal({notConnected, closeModal, inputID,
             </label>
             <input
             type="text"
-            className="w-full input-primary pl-2 focus:outline-none ph-text-sm"
+            className="w-full input-primary pl-2 focus:outline-none ph-text-sm py-4"
             placeholder="Enter 6 digit PIN"
             onChange={inputPin}
             value={pin}

@@ -25,25 +25,25 @@ function InsuranceView({ item, onEditCard, insuranceHover }) {
                 <h5 className="h5 text-green-tertiary font-medium">
                     {item.carrier}
                 </h5>
-                <label className="block text-gray-primary text-xs font-normal my-3">
+                <label className="block text-gray-primary text-xs font-normal my-3 mt-4">
                     Insurance Company Name
                 </label>
                 <h5 className="h5 text-green-tertiary font-medium">
                     {item.company}
                 </h5>
-                <label className="block text-gray-primary text-xs font-normal my-3">
+                <label className="block text-gray-primary text-xs font-normal my-3 mt-4">
                     Plan No.
                 </label>
                 <h5 className="h5 text-green-tertiary font-medium">
                     {item.plan}
                 </h5>
-                <label className="block text-gray-primary text-xs font-normal my-3">
+                <label className="block text-gray-primary text-xs font-normal my-3 mt-4">
                     Policy No.
                 </label>
                 <h5 className="h5 text-green-tertiary font-medium">
                     {item.policy}
                 </h5>
-                <label className="block text-gray-primary text-xs font-normal my-3">
+                <label className="block text-gray-primary text-xs font-normal my-3 mt-4">
                     Group No.
                 </label>
                 <h5 className="h5 text-green-tertiary font-medium">
