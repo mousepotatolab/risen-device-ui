@@ -1022,7 +1022,7 @@ export default function DashboardLanding() {
                       >
                         {!activeuserInfo.documents && (
                           <div className="flex flex-col justify-center max-w-370-px items-center mx-auto mt-10 h-full pb-38-vh">
-                            <img src="/img/girl.svg" alt="" />
+                            <img src="/img/empty-state.svg" alt="" />
                             <h2 className="h2 text-2xl font-normal font-dark">
                               You don't have any documents yet
                             </h2>

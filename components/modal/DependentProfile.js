@@ -189,7 +189,7 @@ firstNameDependent, lastNameDependent, dobDependent, genderDependent, emailDepen
           }
         {dependentSuccess && 
           <div className="flex flex-col mw-423 w-full items-center connect-modal relative">
-            <img src="/img/connectSuccess.png" className="w-200 mx-12 mb-2" alt="" />
+            <img src="/img/success.svg" className="w-200 mx-12 mb-2" alt="" />
             <h5 className="text-md font-semibold text-green-primary mb-2">Success!</h5>
             <p className="text-sm text-center px-4">Your medical profile has been successfully created!</p>
             <button 
