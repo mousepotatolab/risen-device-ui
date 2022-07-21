@@ -68,6 +68,8 @@ function Profile({ activeuserInfo, user, handleOutsideClick, handleFormInput, di
                         const found = user.child.find(p => p.id == activeuser);
                         const index = user.child.indexOf(found);
                         user.child[index].image = result.data.filename;
+                    } else {
+                        user.profile.image = result.data.filename;
                     }
                     activeuserInfo.profile.image = result.data.filename;
                     setActiveuserInfo({...activeuserInfo})
