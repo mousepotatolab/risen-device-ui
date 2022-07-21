@@ -926,7 +926,7 @@ export default function MobileLanding() {
                  </button> */}
                </div>
                <div className="card card-medical mt-2">
-                 {/* {activeuserInfo && activeuserInfo.documents && activeuserInfo.documents.map(p =>  */}
+                 {activeuserInfo && activeuserInfo.documents && activeuserInfo.documents.map(p => 
                    <>
                    <h6 className="block text-gray-primary text-xs font-normal mb-2">
                      Title
@@ -934,19 +934,10 @@ export default function MobileLanding() {
                    <div className="flex justify-between">
                      <div className="flex items-start">
                        <img className="relative top-4px mr-2" src="/img/attachmentmobile.svg" alt="" />
-                     <h4 className="h4 text-green-primary mb-4">Recent ECG</h4>
+                     <h4 className="h4 text-green-primary mb-4">{p.title}</h4>
                      </div>
                    </div>
-                   <h6 className="block text-gray-primary text-xs font-normal mb-2">
-                     Title
-                   </h6>
-                   <div className="flex justify-between">
-                     <div className="flex items-start">
-                       <img className="relative top-4px mr-2" src="/img/attachmentmobile.svg" alt="" />
-                     <h4 className="h4 text-green-primary mb-4">Recent ECG</h4>
-                     </div>
-                   </div>
-                   </>
+                   </>)}
                 
                </div>
              </div>
