@@ -17,7 +17,7 @@ export default function Auth({ children }) {
   return (
     <>
       <main className="bg-secondary flex justify-center">
-        <div className="flex h-full min-h-auth p-auth bg-secondary shadow-auth container">
+        <div className="flex h-full min-h-auth p-auth bg-white shadow-auth container justify-between">
 
         <section className="relative w-60-p h-auto bg-primary flex items-center br-8-left overflow-hidden">
           <div className="auth-wrapper">
