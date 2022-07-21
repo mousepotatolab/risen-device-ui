@@ -4532,6 +4532,9 @@ CUSTOM CLASSES DASHBOARD
 .w-570 {
   width: 570px;
 }
+.w-590 {
+  width: 590px;
+}
 
 .uploaded-document {
   background-color: rgba(12, 140, 135, 0.5);
@@ -4751,6 +4754,10 @@ CUSTOM CLASSES DASHBOARD
 
 .ml-24 {
   margin-left: 24px;
+}
+
+.fb-237 {
+  flex-basis: 237px;
 }
 
 /*

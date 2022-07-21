@@ -50,7 +50,7 @@ function ConnectedDevicesModal({ closeDeviceModal, toggleActiveDeviceButton, act
                 handleDelete={deleteDevice}
             />
         </Modal>
-            <div className="flex flex-col w-570 p-40">
+            <div className="flex flex-col w-590 p-40">
                 <button className="absolute close-modal-button"
                     onClick={closeDeviceModal}
                 >
@@ -63,7 +63,7 @@ function ConnectedDevicesModal({ closeDeviceModal, toggleActiveDeviceButton, act
                         <div className="title-wrapper flex justify-between items-center">
 
                         </div>
-                        {activeuserInfo && activeuserInfo.devices.map(p => (<div className="card mw-232 mr-4 card-medical mt-2">
+                        {activeuserInfo && activeuserInfo.devices.map(p => (<div className="card mr-4 fb-237 card-medical mt-2">
                             <div className="flex justify-between">
                                 <label className="block text-gray-primary text-xs font-normal mb-3">
                                     Device ID
