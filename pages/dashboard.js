@@ -396,7 +396,7 @@ export default function DashboardLanding() {
   let [validProfileText, setValidProfileText] = useState("");
 
   const toggleActiveButton = () => {
-    activeuserInfo.deactivated = !activeuserInfo.deactivated;
+    activeuserInfo.deactivate = !activeuserInfo.deactivate;
     user.key = new Date().getMilliseconds()
     setUser({ ...user });
     toggleDeactivateUser({userid: activeuser}).then(
@@ -1293,7 +1293,7 @@ export default function DashboardLanding() {
                         className={openTab === 2 ? "block" : "hidden"}
                         id="link2"
                       >
-                        {!activeuserInfo.documents && (
+                        {!activeuserInfo.documents || activeuserInfo.documents.length == 0 && (
                           <div className="flex flex-col justify-center max-w-370-px items-center mx-auto mt-10 h-full pb-38-vh">
                             <img src="/img/girl.svg" alt="" />
                             <h2 className="h2 text-2xl font-medium font-dark">
@@ -1307,7 +1307,7 @@ export default function DashboardLanding() {
                             </button>
                           </div>
                         )}
-                        {activeuserInfo.documents && (
+                        {activeuserInfo.documents && activeuserInfo.documents.length > 0 && (
                           <div className="flex mx-auto mt-10 h-full pb-100-vh">
                           <div className="card-wrapper fb-487">
                           <div className="title-wrapper flex justify-between items-center">
@@ -1381,12 +1381,12 @@ export default function DashboardLanding() {
                                     <h2 className="h2 text-2xl font-regular">
                                       Deactivate Profile
                                     </h2>
-                                    {!activeuser.deactivated && (
+                                    {!activeuserInfo.deactivate && (
                                       <button className="active-button ml-4">
                                         Active
                                       </button>
                                     )}
-                                    {activeuser.deactivated && (
+                                    {activeuserInfo.deactivate && (
                                       <button className="inactive-button ml-4">
                                         Deactivated
                                       </button>
@@ -1396,7 +1396,7 @@ export default function DashboardLanding() {
                                     className="react-switch-checkbox"
                                     id={`react-switch-new-settings`}
                                     type="checkbox"
-                                    checked={activeuserInfo.deactivated}
+                                    checked={activeuserInfo.deactivate}
                                     onClick={toggleActiveButton}
                                   />
                                   <label
