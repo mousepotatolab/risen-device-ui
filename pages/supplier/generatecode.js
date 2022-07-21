@@ -6,7 +6,7 @@ import React, {useEffect, useState} from "react";
 
 import Admin from "layouts/Admin.js";
 
-import { loadAllQrBatch, generateNewQRBatch } from "../../services/SupplierService";
+import { loadAllQrBatch, generateNewQRBatch, downloadZip } from "../../services/SupplierService";
 import { baseapiurl } from "services/config";
 export default function Generatecode({color}) {
   const [qrbatch, setQrBatch] = useState([])
@@ -38,10 +38,26 @@ export default function Generatecode({color}) {
     const data = await generateNewQRBatch(inputValue)
     if (data.id) {
       loadData();
-      window.open(baseapiurl + "download-zip?id=" + data.id, "_blank")
+      setInputValue({
+        batch_name: "",
+        number_of_records: ""
+      })
+      setTimeout(() => {
+        downloadZipFile({id: data.id})
+      }, 5000)
     }
     console.log(data);
   };
+
+  const downloadZipFile = (p) => {
+    downloadZip(p.id).then(
+      (result) => {
+        if (result["url"]) {
+          window.open(result["url"], "_blank")
+        }
+      }
+    )
+  }
   return (
     <>
      <div
@@ -192,6 +208,7 @@ export default function Generatecode({color}) {
                       {p.numberOfRecords}
                     </td>
                     <td
+                      onClick={() => downloadZipFile(p)}
                       className={
                         "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
                         (color === "light"
@@ -199,7 +216,7 @@ export default function Generatecode({color}) {
                           : "bg-blueGray-600 text-blueGray-200 border-blueGray-500")
                       }
                     >
-                       <a target="_blank" href={baseapiurl + "/download-zip?id=" + p.id} style={{background: 'green'}} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded">
+                       <a style={{background: 'green'}} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded">
                         Download
                       </a>
                     </td>

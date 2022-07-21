@@ -17,5 +17,12 @@ export async function loadAllQrBatch() {
     return response;
 };
 
+export async function downloadZip(docId) {
+    const response = await makeApiCall(`download-zip?id=${docId}`, {
+        method: 'GET',
+        headers: {'Content-Type': 'application/json'}
+    })
+    return response;
+}
 
 
