@@ -4741,6 +4741,18 @@ CUSTOM CLASSES DASHBOARD
   padding: 0rem;
 }
 
+.w-300 {
+  width: 300px;
+}
+
+.mt-48 {
+  margin-top: 48px;
+}
+
+.ml-24 {
+  margin-left: 24px;
+}
+
 /*
 Mobile view styles
 */
