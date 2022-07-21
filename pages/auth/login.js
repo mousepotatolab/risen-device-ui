@@ -96,7 +96,7 @@ export default function Login() {
                     </span>
                     <input
                       type="tel"
-                      className="w-full input-primary pl-8 px-8 py-13 focus:outline-none"
+                      className="w-full input-primary pl-8 px-8 py-16-px focus:outline-none"
                       // onChange={setPhoneNum}
                       onKeyUp={setPhoneNum}
                       // onChange={() => {}}
@@ -105,7 +105,7 @@ export default function Login() {
                     />
                     {valid &&
                     <span style={{top: '32px', right: '9px'}} className="z-10 h-full leading-snug font-normal absolute text-center text-blueGray-300 bg-transparent rounded text-base items-center justify-center w-8 pl-2 py-1">
-                      <i className="icon-check text-green-active disabled:display-none"></i>
+                      <i className="icon-check text-green-active disabled:display-none text-xxl"></i>
                     </span>
                     }
                   </div>

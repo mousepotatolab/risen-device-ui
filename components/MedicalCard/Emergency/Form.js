@@ -23,7 +23,7 @@ function EmergencyForm({ item, handleOutsideClick, handleFormInput, checkValidEm
                         onChange={handleFormInput('emergency', 'name', item)}
                         onKeyUp={handleFormInput('emergency', 'name', item)}
                     />
-                    <label className="block text-gray-primary text-xs font-normal my-3">
+                    <label className="block text-gray-primary text-xs font-normal my-3 mt-4">
                         Email Address
                     </label>
                     <input
@@ -35,7 +35,7 @@ function EmergencyForm({ item, handleOutsideClick, handleFormInput, checkValidEm
                         onChange={handleFormInput('emergency', 'email', item)}
                         onKeyUp={handleFormInput('emergency', 'email', item)}
                     />
-                    <label className="block text-gray-primary text-xs font-normal my-3">
+                    <label className="block text-gray-primary text-xs font-normal my-3 mt-4">
                         Phone
                     </label>
                     <input

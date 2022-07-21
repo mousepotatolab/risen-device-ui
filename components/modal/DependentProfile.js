@@ -60,7 +60,7 @@ firstNameDependent, lastNameDependent, dobDependent, genderDependent, emailDepen
             </label>
             <input
             type="text"
-            className="w-343 input-primary pl-2 focus:outline-none ph-text-sm"
+            className="w-343 input-primary pl-2 py-16-px focus:outline-none ph-text-sm"
             placeholder="e.g. Dwight"
             onChange={handleFirstDependent}
             value={firstNameDependent}
@@ -72,7 +72,7 @@ firstNameDependent, lastNameDependent, dobDependent, genderDependent, emailDepen
             </label>
             <input
             type="text"
-            className="w-343 input-primary pl-2 focus:outline-none ph-text-sm"
+            className="w-343 input-primary pl-2 py-16-px focus:outline-none ph-text-sm"
             placeholder="11/12/1980"
             onChange={inputDobDependent}
             value={dobDependent}
@@ -84,7 +84,7 @@ firstNameDependent, lastNameDependent, dobDependent, genderDependent, emailDepen
             </label>
             <input
             type="text"
-            className="w-343 input-primary pl-2 focus:outline-none ph-text-sm"
+            className="w-343 input-primary pl-2 py-16-px focus:outline-none ph-text-sm"
             placeholder="e.g. dwight@dundermifflin.com"
             onChange={handleEmailDependent}
             value={emailDependent}
@@ -98,7 +98,7 @@ firstNameDependent, lastNameDependent, dobDependent, genderDependent, emailDepen
             </label>
             <input
             type="text"
-            className="w-343 input-primary pl-2 focus:outline-none ph-text-sm"
+            className="w-343 input-primary pl-2 py-16-px focus:outline-none ph-text-sm"
             placeholder="e.g. Schrute"
             onChange={handleLastDependent}
             value={lastNameDependent}
@@ -110,7 +110,7 @@ firstNameDependent, lastNameDependent, dobDependent, genderDependent, emailDepen
             </label>
             <select
               type="text"
-              className="w-full input-primary pl-2 py-16-px focus:outline-none"
+              className="w-full input-primary pl-2 py-16-px height-52-px py-16-px focus:outline-none"
               onChange={handleGenderDependent}
               value={genderDependent}
               placeholder="e.g."
@@ -127,7 +127,7 @@ firstNameDependent, lastNameDependent, dobDependent, genderDependent, emailDepen
             </label>
             <input
             type="text"
-            className="w-343 input-primary pl-2 focus:outline-none ph-text-sm"
+            className="w-343 input-primary pl-2 py-16-px focus:outline-none ph-text-sm"
             placeholder="e.g. 123 456 7890"
             onChange={handlePhoneDependent}
             value={phoneDependent}
@@ -152,7 +152,7 @@ firstNameDependent, lastNameDependent, dobDependent, genderDependent, emailDepen
               </label>
               <input
               type="text"
-              className="w-343 input-primary pl-2 focus:outline-none ph-text-sm"
+              className="w-343 input-primary pl-2 py-16-px focus:outline-none ph-text-sm"
               placeholder="Enter 8 digit ID"
               onChange={inputIDDependent}
               value={idDependent}
@@ -167,7 +167,7 @@ firstNameDependent, lastNameDependent, dobDependent, genderDependent, emailDepen
               </label>
               <input
               type="text"
-              className="w-343 input-primary pl-2 focus:outline-none ph-text-sm"
+              className="w-343 input-primary py-16-px pl-2 focus:outline-none ph-text-sm"
               placeholder="Enter 6 digit PIN"
               onChange={inputPinDependent}
               value={pinDependent}
@@ -189,7 +189,7 @@ firstNameDependent, lastNameDependent, dobDependent, genderDependent, emailDepen
           }
         {dependentSuccess && 
           <div className="flex flex-col mw-423 w-full items-center connect-modal relative">
-            <img src="/img/connectSuccess.png" className="w-200 mx-12 mb-2" alt="" />
+            <img src="/img/success.svg" className="w-200 mx-12 mb-2" alt="" />
             <h5 className="text-md font-semibold text-green-primary mb-2">Success!</h5>
             <p className="text-sm text-center px-4">Your medical profile has been successfully created!</p>
             <button 

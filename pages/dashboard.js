@@ -387,6 +387,7 @@ export default function DashboardLanding() {
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
+      theme: "colored",
     });
 
   const [openTab, setOpenTab] = React.useState(1);
@@ -1003,7 +1004,7 @@ export default function DashboardLanding() {
         <section className="information-section w-full h-full">
           {(activeuserInfo && !activeuserInfo.medicalProfiles) && (
             <div className="flex flex-col justify-center max-w-340-px items-center mx-auto mt-10 h-full pb-38-vh">
-              <img src="/img/girl.svg" alt="" />
+              <img src="/img/empty-state.svg" alt="" />
               <h2 className="h2 text-2xl font-medium font-dark">
                 Let's create your medical profile
               </h2>
@@ -1295,12 +1296,12 @@ export default function DashboardLanding() {
                       >
                         {!activeuserInfo.documents || activeuserInfo.documents.length == 0 && (
                           <div className="flex flex-col justify-center max-w-370-px items-center mx-auto mt-10 h-full pb-38-vh">
-                            <img src="/img/girl.svg" alt="" />
-                            <h2 className="h2 text-2xl font-medium font-dark">
+                            <img src="/img/empty-state.svg" alt="" />
+                            <h2 className="h2 text-2xl font-normal font-dark">
                               You don't have any documents yet
                             </h2>
                             <button
-                              className="button-dark-green px-10 text-md font-bold mt-6"
+                              className="button-dark-green-p px-4 text-md font-bold mt-6"
                               onClick={uploadDocument}
                             >
                              Upload Document

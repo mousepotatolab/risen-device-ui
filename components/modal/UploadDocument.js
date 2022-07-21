@@ -166,7 +166,7 @@ function UploadDocumentModal({ closeDocumentModal, files, setFiles, error }) {
         >
           <img src="/img/close.svg" alt="" />
         </button>
-        <div className="card w-full  p-connect fb-407 relative">
+        <div className="card w-full  p-connect fb-423 relative">
           <h6 className="text-md font-medium text-green-primary mb-1">Upload Documents</h6>
           <h6 className="text-sm font-regular mb-4">png, jpeg and pdf files are allowed</h6>
           <FileUploader handleChange={handleChange} name="file" types={fileTypes}>
@@ -175,7 +175,7 @@ function UploadDocumentModal({ closeDocumentModal, files, setFiles, error }) {
               <label for="document">
 
                 <input id="document" type="file" style={{ "display": "none" }} />
-                <img src="/img/upload.svg" className="mt-6 w-60 cursor-pointer" alt="" />
+                <img src="/img/upload.svg" className="mt-6 w-60px cursor-pointer" alt="" />
               </label>
               <h6 className="h6 text-xs mt-4">Drag and drop or browse to upload</h6>
               <h6 className="h6 text-xs mt-2 mb-8 text-green-primary">Max file size 25MB</h6>
@@ -191,20 +191,20 @@ function UploadDocumentModal({ closeDocumentModal, files, setFiles, error }) {
               {p.title ? p.title : p.file.name}
             </div>
             <div onClick={() => setEdit(i)} className="percentage" style={{ width: p.percentage + '%'}}></div>
-            <img onClick={() => openModal(i)} src="/img/closeblack.svg" className="absolute close-document" alt="" />
+            <img onClick={() => openModal(i)} src="/img/closeSolidBlack.svg" className="absolute close-document" alt="" />
           </div>)}
           {editIndex == i && (<div className="flex relative">
              <input type="text"
              onBlur={setFileTitle}
              className={"uploaded-document-edit w-full"} />
-             <img onClick={() => openModal(i)} src="/img/closeblack.svg" className="absolute close-document" alt="" />
+             <img onClick={() => openModal(i)} src="/img/closeSolidBlack.svg" className="absolute close-document" alt="" />
           </div>)}
           </>
           ))}
           <h5 className="h5 mt-12 font-normal upload-title">After upload click to add a title to your documents</h5>
           <h6 className="h6 mt-1 text-xs font-grey text-center">Title will help to clarify the purpose of the document</h6>
           <button
-            className="py-4  w-343 text-md font-bold mt-8 bg-primary disabled:bg-inactive relative center border-r-4"
+            className="py-4  w-343 text-md font-bold mt-8 bg-primary button-shadow disabled:bg-inactive relative center border-r-4"
             onClick={saveDocument}
           >Save</button>
         </div>

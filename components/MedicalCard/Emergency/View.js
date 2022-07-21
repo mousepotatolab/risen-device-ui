@@ -25,13 +25,13 @@ function EmergencyView({ item, onEditCard, contactHover,  openDeleteModalItem })
                 <h5 className="h5 text-green-tertiary font-medium">
                     {item.name}
                 </h5>
-                <label className="block text-gray-primary text-xs font-normal my-3">
+                <label className="block text-gray-primary text-xs font-normal my-3 mt-4">
                     Email Adddress
                 </label>
                 <h5 className="h5 text-green-tertiary font-medium">
                    {item.email}
                 </h5>
-                <label className="block text-gray-primary text-xs font-normal my-3">
+                <label className="block text-gray-primary text-xs font-normal my-3 mt-4">
                     Phone
                 </label>
                 <h5 className="h5 text-green-tertiary font-medium">

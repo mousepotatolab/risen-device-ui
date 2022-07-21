@@ -92,7 +92,7 @@ export default function ConnectDeviceModal() {
         >
             <img src="/img/close.svg" alt="" />
         </button>
-          <img src="./img/connectDevice.png" className="w-200 mt-72 ml-12" alt="" />
+          <img src="./img/connect-device.svg" className="w-200 mt-72 ml-12" alt="" />
           <div className="card w-full ml-12 p-connect fb-407 relative">
             <h6 className="text-sm font-medium text-green-primary mb-1">Connect Device</h6>
             <h6 className="text-sm font-regular mb-4">Device ID and PIN can be found behind your device</h6>
@@ -134,7 +134,7 @@ export default function ConnectDeviceModal() {
           }
         {connectSuccess && 
           <div className="flex flex-col mw-423 w-full items-center connect-modal relative">
-            <img src="/img/connectSuccess.png" className="w-200 mx-12 mb-2" alt="" />
+            <img src="/img/success.svg" className="w-200 mx-12 mb-2" alt="" />
             <h5 className="text-md font-semibold text-green-primary mb-2">Success!</h5>
             <p className="text-sm text-center px-4">Your medical device has been successfully connected to your profile!</p>
             <button 

@@ -149,7 +149,7 @@ function Profile({ activeuserInfo, user, handleOutsideClick, handleFormInput, di
                                 </label>
                                 <input
                                     type="text"
-                                    className="w-full input-primary pl-2 py-13 focus:outline-none"
+                                    className="w-full input-primary pl-2 py-16-px focus:outline-none"
                                     defaultValue={activeuserInfo.profile.firstName}
                                     placeholder="e.g. Dwight"
                                     onChange={handleFormInput("profile", "firstName", activeuserInfo)}
@@ -159,7 +159,7 @@ function Profile({ activeuserInfo, user, handleOutsideClick, handleFormInput, di
                                 </label>
                                 <input
                                     type="text"
-                                    className="w-full input-primary pl-2 py-13 focus:outline-none"
+                                    className="w-full input-primary pl-2 py-16-px focus:outline-none"
                                     defaultValue={activeuserInfo.profile.lastName}
                                     placeholder="e.g. Schrute"
                                     onChange={handleFormInput("profile", "lastName", activeuserInfo)}
@@ -169,7 +169,7 @@ function Profile({ activeuserInfo, user, handleOutsideClick, handleFormInput, di
                                 </label>
                                 <input
                                     type="text"
-                                    className="w-full input-primary pl-2 py-13 focus:outline-none"
+                                    className="w-full input-primary pl-2   py-16-px focus:outline-none"
                                     defaultValue={activeuserInfo.profile.dob}
                                     placeholder="e.g. 11/11/1990"
                                     onChange={handleFormInput("profile", "dob", activeuserInfo)}
@@ -179,7 +179,7 @@ function Profile({ activeuserInfo, user, handleOutsideClick, handleFormInput, di
                                 </label>
                                 <select
                                     type="text"
-                                    className="w-full input-primary pl-2 py-16-px focus:outline-none"
+                                    className="w-full input-primary pl-2 height-52-px py-16-px focus:outline-none"
                                     defaultValue={activeuserInfo.profile.gender}
                                     placeholder="e.g."
                                     onChange={handleFormInput("profile", "gender", activeuserInfo)}
@@ -195,7 +195,7 @@ function Profile({ activeuserInfo, user, handleOutsideClick, handleFormInput, di
                                 </label>
                                 <input
                                     type="text"
-                                    className="w-full input-primary pl-2 py-13 focus:outline-none"
+                                    className="w-full input-primary pl-2 py-16-px focus:outline-none"
                                     onChange={handleFormInput("profile", "email", activeuserInfo)}
                                     defaultValue={activeuserInfo.profile.email}
                                     placeholder="e.g. dwight@dundermifflin.com"
@@ -214,7 +214,7 @@ function Profile({ activeuserInfo, user, handleOutsideClick, handleFormInput, di
                                     </div>
                                     <input
                                         type="text"
-                                        className="w-full input-primary pl-2 py-13 focus:outline-none"
+                                        className="w-full input-primary pl-2 py-16-px focus:outline-none"
                                         onChange={handleFormInput("profile", "phone", activeuserInfo)}
                                         defaultValue={activeuserInfo.phone}
                                         disabled={disabledPhone}
