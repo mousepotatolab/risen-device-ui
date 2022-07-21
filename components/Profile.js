@@ -59,13 +59,13 @@ function Profile({ activeuserInfo, user, handleOutsideClick, handleFormInput, di
         let file = new File([blob], "file.jpg", metadata);
         const formdata = new FormData();
         formdata.append("image", file);
-        formdata.append("userid", activeuserInfo.id);
+        formdata.append("userid", activeuser);
         updateProfileImage(formdata).then(
             result => {
                 if ("filename" in result.data && result.data.filename) {
                     setCropModal(false);
                     if (user.id != activeuserInfo.id) {
-                        const found = user.child.find(p => p.id == activeuserInfo.id);
+                        const found = user.child.find(p => p.id == activeuser);
                         const index = user.child.indexOf(found);
                         user.child[index].image = result.data.filename;
                     }
@@ -129,10 +129,10 @@ function Profile({ activeuserInfo, user, handleOutsideClick, handleFormInput, di
                     >
                         <div className="card p-24" key={user.key}>
                             <div className="relative flex flex-wrap items-stretch w-full mb-3">
-                                <div className="profile-wrapper flex items-center">
+                                <div className="profile-wrapper flex items-center w-full">
                                     <img
                                         className="profile-settings mr-4"
-                                        src={baseapiurl + 'uploads/' + activeuserInfo.profile.image}
+                                        src={baseapiurl + 'download/' + activeuserInfo.profile.image}
                                         alt=""
                                     />
                                     <button onClick={() => {

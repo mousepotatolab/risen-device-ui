@@ -433,7 +433,7 @@ export default function MobileLanding() {
              
                </div>
                <div className="profile-mobile">
-                 <img src={baseapiurl + "/uploads/" + data.profile.image} alt="" className="profile-mobile mt-2" />
+                 <img src={baseapiurl + "/download/" + data.profile.image} alt="" className="profile-mobile mt-2" />
                </div>
              </div>
              <div className="filter-wrapper flex w-full justify-between mb-6">

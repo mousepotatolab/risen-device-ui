@@ -822,9 +822,9 @@ export default function DashboardLanding() {
       return false;
     }
 
-    const found = user.documents.find(p => p.id == documentEditItem.id);
-    const index = user.documents.indexOf(found);
-    user.documents[index].title = value;
+    const found = activeuserInfo.documents.find(p => p.id == documentEditItem.id);
+    const index = activeuserInfo.documents.indexOf(found);
+    activeuserInfo.documents[index].title = value;
     user.key = new Date().getMilliseconds()
     setUser({ ...user });
     setDocumentEdit(null);
