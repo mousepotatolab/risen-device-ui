@@ -4516,6 +4516,9 @@ CUSTOM CLASSES DASHBOARD
   border-radius: 8px;
 }
 
+.t-8 {
+  top: -8px;
+}
 .w-60px {
   width: 60px;
 }
