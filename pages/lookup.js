@@ -926,7 +926,7 @@ export default function MobileLanding() {
                  </button> */}
                </div>
                <div className="card card-medical mt-2">
-                 {activeuserInfo && activeuserInfo.documents && activeuserInfo.documents.map(p => 
+                 {data && data.documents && data.documents.map(p => 
                    <>
                    <h6 className="block text-gray-primary text-xs font-normal mb-2">
                      Title
