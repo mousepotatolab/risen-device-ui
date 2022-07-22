@@ -50,7 +50,7 @@ function ConnectedDevicesModal({ closeDeviceModal, toggleActiveDeviceButton, act
                 handleDelete={deleteDevice}
             />
         </Modal>
-            <div className="flex flex-col w-570 p-40">
+            <div className="flex flex-col w-590 p-40">
                 <button className="absolute close-modal-button"
                     onClick={closeDeviceModal}
                 >
@@ -59,11 +59,11 @@ function ConnectedDevicesModal({ closeDeviceModal, toggleActiveDeviceButton, act
                 <h5 className="h5 text-green-primary font-semibold text-sm mb-2">All Connected Devices</h5>
                 <h6 className="h6 text-xs text-red-primary mb-6">If you temporarily disable a device, no information can be retrieved after QR scan. If you delete a device, it will be permanently deleted.</h6>
                 <div className="flex flex-wrap">
-                    <div className="card-wrapper p-0 w-full mw-232">
+                    <div className="card-wrapper flex p-0 w-full">
                         <div className="title-wrapper flex justify-between items-center">
 
                         </div>
-                        {activeuserInfo && activeuserInfo.devices.map(p => (<div className="card card-medical mt-2">
+                        {activeuserInfo && activeuserInfo.devices.map(p => (<div className="card mr-4 fb-237 card-medical mt-2">
                             <div className="flex justify-between">
                                 <label className="block text-gray-primary text-xs font-normal mb-3">
                                     Device ID

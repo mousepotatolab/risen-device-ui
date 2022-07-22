@@ -4516,6 +4516,9 @@ CUSTOM CLASSES DASHBOARD
   border-radius: 8px;
 }
 
+.t-8 {
+  top: -8px;
+}
 .w-60px {
   width: 60px;
 }
@@ -4531,6 +4534,9 @@ CUSTOM CLASSES DASHBOARD
 }
 .w-570 {
   width: 570px;
+}
+.w-590 {
+  width: 590px;
 }
 
 .uploaded-document {
@@ -4739,6 +4745,22 @@ CUSTOM CLASSES DASHBOARD
 
 .p-0 {
   padding: 0rem;
+}
+
+.w-300 {
+  width: 300px;
+}
+
+.mt-48 {
+  margin-top: 48px;
+}
+
+.ml-24 {
+  margin-left: 24px;
+}
+
+.fb-237 {
+  flex-basis: 237px;
 }
 
 /*

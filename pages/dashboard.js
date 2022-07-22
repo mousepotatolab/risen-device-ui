@@ -1327,12 +1327,12 @@ export default function DashboardLanding() {
                           </div>
                           <div className="card card-medical mt-2">
                             {activeuserInfo && activeuserInfo.documents && activeuserInfo.documents.map(p => (
-                            <><h6 className="block text-gray-primary text-xs font-normal mb-2 ml-4">
+                            <><h6 className="block text-gray-primary text-xs font-normal mb-2">
                               Title
                             </h6>
                             <div className="flex justify-between">
                               <div className="flex">
-                                {/* <img src="/img/allergies.svg" alt="" /> */}
+                                <img src="/img/attachmentmobile.svg" alt="" className="relative t-8 mr-2" />
                                 {(!documentEditItem || documentEditItem.id != p.id) && (<h4 className="h4 text-green-primary mb-4">{p.title}</h4>)}
                                 {(documentEditItem && documentEditItem.id == p.id) && (<input className="document-input" 
                                 onBlur={updateDocument}
