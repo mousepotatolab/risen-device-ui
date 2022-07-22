@@ -376,6 +376,7 @@ export default function DashboardLanding() {
       draggable: true,
       progress: undefined,
       theme: "colored",
+      icon: ({theme, type}) =>  <i className="icon-check text-2xl font-white"></i>
     });
 
   const error = (msg) =>
@@ -388,6 +389,7 @@ export default function DashboardLanding() {
       draggable: true,
       progress: undefined,
       theme: "colored",
+      icon: ({theme, type}) =>  <i className="icon-check text-2xl font-white"></i>
     });
 
   const [openTab, setOpenTab] = React.useState(1);
@@ -1019,8 +1021,8 @@ export default function DashboardLanding() {
 
           {activeuserInfo && activeuserInfo.medicalProfiles && (
             <div className="fade-in-dashboard">
-              <div className="flex container justify-between">
-                <div className="tab-wrapper w-full bg-dashboard mb-4">
+              <div className="flex container bg-white border-r-8 items-center p-24px justify-between">
+                <div className="tab-wrapper w-full bg-dashboard">
                   <DashboardTabs
                     openSettings={openSettings}
                     openUpload={openUpload}
@@ -1032,11 +1034,11 @@ export default function DashboardLanding() {
                 </div>
                 {activeuserInfo && activeuserInfo.devices.length == 0 && (
                   <button
-                    className="connect-device-button text-red-primary flex items-center font-medium"
+                    className="connect-device-button text-white flex items-center font-medium"
                     onClick={openConnectModal}
                   >
-                    Connect a device
-                    <i className="icon-Plus2x icon-md relative text-red-primary ml-2"></i>
+                    Connect A Device
+                    <i className="icon-Plus2x icon-md relative text-white ml-2"></i>
                   </button>
                 )}
                 {activeuserInfo && activeuserInfo.devices.length > 0 && (
@@ -1059,7 +1061,7 @@ export default function DashboardLanding() {
                   </div>
                 )}
               </div>
-              <div className="relative flex flex-col min-w-0 break-word w-full mb-6">
+              <div className="relative flex flex-col min-w-0 break-word w-full mb-6 p-24px mt-6 border-r-8 container bg-white">
                 <div className="flex-auto">
                   <div className="tab-content tab-space">
                     <div

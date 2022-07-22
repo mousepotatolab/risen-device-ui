@@ -54,6 +54,17 @@ function MedicationForm({ item, handleOutsideClick, handleFormInput,
                         >
                             <span className={`react-switch-button`} />
                         </label>
+                        {activeFrequency && (
+                            <input
+                            type="text"
+                            className="w-full input-primary pl-2 focus:outline-none ph-text-sm"
+                            placeholder="e.g. Taking for high blood pressure"
+                            defaultValue={item.special_note}
+                            onChange={handleFormInput('medication', 'special_note', item)}
+                            onKeyUp={handleFormInput('medication', 'special_note', item)}
+                        />
+                        )}
+                        
                     </div>
                     <button
                         style={{
