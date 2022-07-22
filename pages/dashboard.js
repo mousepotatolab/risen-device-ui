@@ -356,7 +356,7 @@ export default function DashboardLanding() {
       closeDeleteModal()
       deleteMedicalItem(obj).then(
         (result) => {
-          saved();
+          error("Successfully Deleted");
         }
       )
     }
