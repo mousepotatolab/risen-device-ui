@@ -296,8 +296,7 @@ export default function DashboardLanding() {
 
    const checkValidProfile = () => {
     isDependentValid(true)
-    if (firstNameDependent && lastNameDependent && dobDependent && genderDependent && dependentDobValid
-        && emailDependent && dependentEmaillValid && phoneDependent && dependentPhoneValid) {
+    if (firstNameDependent && lastNameDependent && genderDependent) {
       isDependentValid(false)
     }
   }
