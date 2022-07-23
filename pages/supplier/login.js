@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import Router, { withRouter, useRouter } from 'next/router'
-
+import { supplierLogin, storeSupplierToken, getSupplierToken } from "../../services/SupplierService";
 // layout for page
 
 import SupplierAuth from "layouts/SupplierAuth.js";
@@ -13,16 +13,25 @@ export default function Login() {
   }
 
   const onSubmit = () => {
-    console.log(loginValue)
     setErrorMessage("")
     const { username, password} = loginValue;
-    if (username == "supplier" && password == "abcd1234") {
-      Router.push({
-        pathname: '/supplier/dashboard'
-      })
-    } else {
+
+    if (!(username && password)) {
       setErrorMessage("Incorrect username or password")
     }
+
+    supplierLogin({username, password}).then(
+      (result) => {
+        if (result.token && result.user) {
+          storeSupplierToken(result);
+          Router.push({
+            pathname: '/supplier/dashboard'
+          })
+        } else {
+          setErrorMessage("Incorrect username or password")
+        }
+      }
+    )
   }
 
   return (

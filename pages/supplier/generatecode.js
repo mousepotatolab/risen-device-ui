@@ -4,15 +4,16 @@ import React, {useEffect, useState} from "react";
 
 // layout for page
 
-import Admin from "layouts/Admin.js";
+import Supplier from "layouts/Supplier";
 
 import { loadAllQrBatch, generateNewQRBatch, downloadZip } from "../../services/SupplierService";
 import { baseapiurl } from "services/config";
 export default function Generatecode({color}) {
   const [qrbatch, setQrBatch] = useState([])
+  const [generating, setGenerating] = useState(false)
   const [inputValue, setInputValue] = useState({
     batch_name: "",
-    number_of_records: ""
+    number_of_records: "10"
   })
 
   const loadData = async () => {
@@ -31,21 +32,26 @@ export default function Generatecode({color}) {
   }
 
   const onSubmit = async () => {
+    console.log(inputValue)
     if (!(inputValue.batch_name && inputValue.number_of_records)) {
       return false;
     }
-
+    if (generating) {
+      return false;
+    }
+    setGenerating(true);
     const data = await generateNewQRBatch(inputValue)
     if (data.id) {
       loadData();
       setInputValue({
         batch_name: "",
-        number_of_records: ""
+        number_of_records: "10"
       })
       setTimeout(() => {
         downloadZipFile({id: data.id})
       }, 5000)
     }
+    setGenerating(false);
     console.log(data);
   };
 
@@ -93,12 +99,13 @@ export default function Generatecode({color}) {
                       : "bg-blueGray-600 text-blueGray-200 border-blueGray-500")
                   }
                 >
-                  <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
+                  <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
                     Enter Batch Name
                   </label>
                   <input 
                   onChange={handleInput("batch_name")}
-                  class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" placeholder="Batch Name" />
+                  value={inputValue.batch_name}
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" placeholder="Batch Name" />
                 </th>
                 <th
                   className={
@@ -108,13 +115,19 @@ export default function Generatecode({color}) {
                       : "bg-blueGray-600 text-blueGray-200 border-blueGray-500")
                   }
                 >
-                 <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
+                 <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
                     Enter Number of Record <small>(Min: 10 - Max: 100)</small>
                   </label>
-                  <input 
-                  onChange={handleInput("number_of_records")}
-                  class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" placeholder="" />
-               
+                  <select className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                      onChange={handleInput("number_of_records")}
+                      value={inputValue.number_of_records}
+                    >
+                      <option value="10">10</option>
+                      <option value="20">20</option>
+                      <option value="30">30</option>
+                      <option value="50">50</option>
+                      <option value="100">100</option>
+                  </select>       
                 </th>
                 <th
                   className={
@@ -124,8 +137,10 @@ export default function Generatecode({color}) {
                       : "bg-blueGray-600 text-blueGray-200 border-blueGray-500")
                   }
                 >
-                <button onClick={onSubmit} className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded mt-6" style={{fontSize: '18px'}}>
-                  Generate
+                <button onClick={onSubmit} 
+                disabled={generating ? true : false}
+                className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded mt-6" style={{fontSize: '18px'}}>
+                  { generating ? "Processing..." : "Generate"}
                 </button>
                 </th>
               </tr>
@@ -229,4 +244,4 @@ export default function Generatecode({color}) {
   );
 }
 
-Generatecode.layout = Admin;
+Generatecode.layout = Supplier;
