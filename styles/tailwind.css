@@ -4379,6 +4379,7 @@ CUSTOM CLASSES DASHBOARD
   border-radius: 25px;
   padding: 16px 24px;
   height: 48px;
+  box-shadow: 0 15px 30px -12px rgb(12 140 135 / 51%);
 }
 
 .connected-device-button {
@@ -4532,7 +4533,6 @@ CUSTOM CLASSES DASHBOARD
   border-radius: 8px;
 }
 
-.
 .t-8 {
   top: -8px;
 }
@@ -5078,5 +5078,5 @@ Animations
 }
 
 .preview-container .btn-container .next {
-  background-color: #0C4643;
+  background-color: #0C8C87;
 }
