@@ -347,7 +347,7 @@ export default function Signup() {
                       onChange={handleDOBValid}
                       onKeyDown={handleDOBValid}
                       value={dob}
-                      placeholder="e.g. 11/30/1990"
+                      placeholder="MM/DD/YYYY"
                     />
                     {dobValid &&
                     <span style={{top: '236px', right: '9px'}} className="z-10  leading-snug font-normal absolute text-center text-blueGray-300 bg-transparent rounded text-base items-center justify-center w-8 pl-2 py-1">
