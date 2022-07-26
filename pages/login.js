@@ -33,6 +33,7 @@ export default function Signup() {
   let [otpUp, setOTPUp] = useState("")
 
   let [valid, isValid] = useState(true)
+  let [validNumber, setValidNumber] = useState(false)
   let [otpValid, isOtpValid] = useState("")
 
   let [firstName, setFirstName] = useState("")
@@ -53,6 +54,7 @@ export default function Signup() {
   const setPhoneNum = (event) => {
     setPhone(event.target.value)
     isValid(validatePhoneNumber(event.target.value))
+    setValidNumber(validatePhoneNumber(event.target.value))
   }
 
   const handleVerifyOtp = (event) => {
@@ -231,7 +233,7 @@ export default function Signup() {
                     />
                     {!valid && (<span style={{fontSize: '14px', color: '#FF3B30'}}>Please enter a valid phone number</span>)}
                     {phoneError && (<span style={{fontSize: '14px', color: '#FF3B30'}}>The phone number is already exist</span>)}
-                    {valid &&
+                    {validNumber &&
                     <span style={{top: '34px', right: '9px'}} className="z-10 h-full leading-snug font-normal absolute text-center text-blueGray-300 bg-transparent rounded text-base items-center justify-center w-8 pl-2 py-1">
                       <i className="icon-check text-green-active disabled:display-none text-2xl"></i>
                     </span>
