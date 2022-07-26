@@ -74,18 +74,18 @@ export default function Sidebar() {
             <hr className="my-4 md:min-w-full" />
             {/* Heading */}
             <h6 className="md:min-w-full text-blueGray-500 text-xs uppercase font-bold block pt-1 pb-4 no-underline">
-              Admin Layout Pages
+              Admin
             </h6>
             {/* Navigation */}
 
             <ul className="md:flex-col md:min-w-full flex flex-col list-none">
               <li className="items-center">
-                <Link href="/supplier/dashboard">
+                <Link href="/admin/dashboard">
                   <a
                     href="#pablo"
                     className={
                       "text-xs uppercase py-3 font-bold block " +
-                      (router.pathname.indexOf("/supplier/dashboard") !== -1
+                      (router.pathname.indexOf("/admin/dashboard") !== -1
                         ? "text-lightBlue-500 hover:text-lightBlue-600"
                         : "text-blueGray-700 hover:text-blueGray-500")
                     }
@@ -93,7 +93,7 @@ export default function Sidebar() {
                     <i
                       className={
                         "fas fa-tv mr-2 text-sm " +
-                        (router.pathname.indexOf("/supplier/dashboard") !== -1
+                        (router.pathname.indexOf("/admin/dashboard") !== -1
                           ? "opacity-75"
                           : "text-blueGray-300")
                       }
@@ -103,12 +103,12 @@ export default function Sidebar() {
                 </Link>
               </li>
               <li className="items-center">
-                <Link href="/supplier/generatecode">
+                <Link href="/admin/users">
                   <a
                     href="#pablo"
                     className={
                       "text-xs uppercase py-3 font-bold block " +
-                      (router.pathname.indexOf("/supplier/generatecode") !== -1
+                      (router.pathname.indexOf("/admin/users") !== -1
                         ? "text-lightBlue-500 hover:text-lightBlue-600"
                         : "text-blueGray-700 hover:text-blueGray-500")
                     }
@@ -116,12 +116,12 @@ export default function Sidebar() {
                     <i
                       className={
                         "fas fa-tv mr-2 text-sm " +
-                        (router.pathname.indexOf("/supplier/generatecode") !== -1
+                        (router.pathname.indexOf("/admin/users") !== -1
                           ? "opacity-75"
                           : "text-blueGray-300")
                       }
                     ></i>{" "}
-                    Generate QR Code
+                    Users
                   </a>
                 </Link>
               </li>

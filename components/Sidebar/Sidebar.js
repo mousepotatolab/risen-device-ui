@@ -16,7 +16,7 @@ function Sidebar({openSettings, user, activeuser, setActiveuser, loadInfoByUser,
   const handleActiveUser = (id) => {
     setValidProfileText("")
     setActiveuser(id);
-    loadInfoByUser(id);
+    loadInfoByUser(id, true);
   }
   return (
     <>
@@ -61,7 +61,7 @@ function Sidebar({openSettings, user, activeuser, setActiveuser, loadInfoByUser,
                 </div>
                 <div className="wrapper fixed-bottom">
                   <div className="flex mb-4"><img src="/img/settings.svg" alt="settings-icon"></img><button onClick={openSettings} className="h5 font-medium ml-2">Settings</button> </div>
-                  <div onClick={logout} className="flex"><img src="/img/logout.svg" alt="logout-icon"></img> <h5 className="h5 font-medium ml-2">Sign Out</h5> </div>
+                  <div onClick={logout} className="flex cursor-pointer"><img src="/img/logout.svg" alt="logout-icon"></img> <h5 className="h5 font-medium ml-2">Sign Out</h5> </div>
                 </div>
             </div>)}
     </>

@@ -34,6 +34,14 @@ export async function supplierLogin(data) {
     return response;
 }
 
+export async function getDashboardData() {
+    const response = await makeApiCall(`supplier/dashboard-data`, {
+        method: 'GET',
+        headers: {'Content-Type': 'application/json'},
+    }, true)
+    return response;
+}
+
 export async function storeSupplierToken(result) {
     localStorage.setItem("risen_device_supplier_token", result.token);
     localStorage.setItem("risen_device_supplier_user", result.user);

@@ -3,14 +3,14 @@ import React, { useEffect } from "react";
 // components
 import { getToken } from "../services/UserService";
 import Router, { withRouter, useRouter } from 'next/router'
-import { getSupplierToken } from "services/SupplierService";
+import { getAdminToken } from "services/AdminService";
 
-export default function SupplierAuth({ children }) {  
+export default function AdminAuth({ children }) {
   const router = useRouter();
-
+  
   useEffect(async () => {
-    if (await getSupplierToken()) {
-      Router.push({pathname: "/supplier/dashboard"})
+    if (await getAdminToken()) {
+      Router.push({pathname: "/admin/dashboard"})
       return null;
     }
   }, [router.isReady])

@@ -71,7 +71,7 @@ export default function DashboardLanding() {
 
   const [connectModalIsOpen, setConnectModalIsOpen] = React.useState(false);
   const [DeviceModalIsOpen, setDeviceIsOpen] = React.useState(false);
-
+  const [pageloading, setPageloading] = useState(true);
   function openConnectModal() {
     setID(null);
     setPin(null);
@@ -513,22 +513,44 @@ export default function DashboardLanding() {
   }
 
   const loadData = async () => {
-    const result = await getUserInfo();
-    if ("data" in result) {
-      result.data.key = new Date().getMilliseconds()
-      setUser(result.data);
-      setActiveuser(result.data.id);
-      setActiveuserInfo(result.data);
+    setPageloading(true);
+
+    try {
+      const result = await getUserInfo();
+      if ("data" in result) {
+        result.data.key = new Date().getMilliseconds()
+        setUser(result.data);
+        setActiveuser(result.data.id);
+        setActiveuserInfo(result.data);
+      }
+      setPageloading(false);
+    } catch (error) {
+      setPageloading(false);
     }
+    
   }
 
-  const loadInfoByUser = async (userid) => {
-    const result = await getUserInfoById(userid);
-    if ("data" in result) {
-      setActiveuserInfo({ ...result.data });
-      user.key = new Date().getMilliseconds()
-      setUser({ ...user });
+  const loadInfoByUser = async (userid, loading = false) => {
+    if (loading) {
+      setPageloading(true);
     }
+
+    try {
+      const result = await getUserInfoById(userid);
+      if ("data" in result) {
+        setActiveuserInfo({ ...result.data });
+        user.key = new Date().getMilliseconds()
+        setUser({ ...user });
+      }
+      if (loading) {
+        setPageloading(false);
+      }
+    } catch (error) {
+      if (loading) {
+        setPageloading(false);
+      }
+    }
+    
   };
 
   useEffect(() => {
@@ -857,6 +879,10 @@ export default function DashboardLanding() {
     }
   };
 
+  const viewDocument = (item) => {
+    window.open(baseapiurl + "download/" + item.filename, "_blank")
+  }
+
   const dosageUnit = ["Pills", "Drops", "Pieces", "cc", "ml", "mg"];
   const frequencyUnit = ["Hourly", "Daily", "Weekly", "Every 2 Week", "Monthly", "Every 3 Month", "Every 6 Month"];
   return (
@@ -929,6 +955,7 @@ export default function DashboardLanding() {
         setFiles={setFiles}
         files={files}
         error={error}
+        activeuser={activeuser}
         />
       </Modal>
       <Modal
@@ -1002,7 +1029,7 @@ export default function DashboardLanding() {
           // signOut={signOut}
           ></Sidebar>
         </section>
-        <section className="information-section w-full h-full">
+        {!pageloading && (<section className="information-section w-full h-full">
           {(activeuserInfo && !activeuserInfo.medicalProfiles) && (
             <div className="flex flex-col justify-center max-w-340-px items-center mx-auto mt-10 h-full pb-38-vh">
               <img src="/img/empty-state.svg" alt="" />
@@ -1334,7 +1361,7 @@ export default function DashboardLanding() {
                             <div className="flex justify-between">
                               <div className="flex">
                                 <img src="/img/attachmentmobile.svg" alt="" className="relative t-8 mr-2" />
-                                {(!documentEditItem || documentEditItem.id != p.id) && (<h4 className="h4 text-green-primary mb-4">{p.title}</h4>)}
+                                {(!documentEditItem || documentEditItem.id != p.id) && (<h4 onClick={() => viewDocument(p)} className="h4 text-green-primary mb-4 cursor-pointer">{p.title}</h4>)}
                                 {(documentEditItem && documentEditItem.id == p.id) && (<input className="document-input" 
                                 onBlur={updateDocument}
                                 id={"document-" + p.id}
@@ -1518,7 +1545,19 @@ export default function DashboardLanding() {
               </div>
             </div>
           )}
-        </section>
+        </section>)}
+        {pageloading && (<div>
+          <div
+            className="bg-cover fixed z-40 w-full min-h-screen min-w-screen h-full top-0 left-0"
+            style={{
+              backgroundImage: "url('/img/bgLoading.png')",
+            }}
+          ></div>
+          <div className="my-32 mx-auto max-w-sm text-center relative z-50 top-0">
+            
+          
+          </div>
+        </div>)}
       </div>
     </>
   );

@@ -1,6 +1,7 @@
 import React from "react";
 import { createPopper } from "@popperjs/core";
 import Router, { withRouter, useRouter } from 'next/router'
+import { baseapiurl } from "services/config";
 
 const UserDropdown = () => {
   // dropdown props
@@ -18,8 +19,9 @@ const UserDropdown = () => {
   };
 
   const logout = () => {
+    localStorage.clear();
     Router.push({
-      pathname: '/supplier/login'
+      pathname: '/admin/login'
     })
   }
   return (
@@ -38,7 +40,7 @@ const UserDropdown = () => {
             <img
               alt="..."
               className="w-full rounded-full align-middle border-none shadow-lg"
-              src="/img/team-1-800x800.jpg"
+              src={baseapiurl + 'download/noimage.png'}            
             />
           </span>
         </div>

@@ -19,6 +19,7 @@ const SupplierDropdown = () => {
   };
 
   const logout = () => {
+    localStorage.clear();
     Router.push({
       pathname: '/supplier/login'
     })

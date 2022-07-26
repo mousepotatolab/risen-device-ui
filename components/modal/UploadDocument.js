@@ -6,9 +6,9 @@ const axios = require("axios");
 import Modal from "react-modal";
 import DeleteModal from "./Delete";
 
-const fileTypes = ["JPG", "PNG", "PDF"];
+const fileTypes = ["JPG", "PNG", "PDF", "JPEG"];
 
-function UploadDocumentModal({ closeDocumentModal, files, setFiles, error }) {
+function UploadDocumentModal({ closeDocumentModal, files, setFiles, error, activeuser }) {
   const customStyles = {
       content: {
         top: "66px",
@@ -30,7 +30,6 @@ function UploadDocumentModal({ closeDocumentModal, files, setFiles, error }) {
   const [renderkey, setRenderkey] = useState("1");
   const [editIndex, setEditIndex] = useState(null)
   const handleChange = (file) => {
-    console.log(file, "qq")
     let type = file.type.split("/");
     type = type[1];
     if (!fileTypes.includes(String(type).toUpperCase())) {
@@ -58,6 +57,7 @@ function UploadDocumentModal({ closeDocumentModal, files, setFiles, error }) {
     const url = baseapiurl + `user/upload-medical-document`;
     const formData = new FormData();
     formData.append("image", file);
+    formData.append("userid", activeuser);
     const token = await getToken();
     console.log(token, "lll")
     if (token) {
@@ -96,7 +96,7 @@ function UploadDocumentModal({ closeDocumentModal, files, setFiles, error }) {
     const data = files.map(p => {
       return {id: p.id, title: p.title};
     })
-    saveDocuments({items: data}).then(p => {
+    saveDocuments({items: data, userid: activeuser}).then(p => {
       if (p.success) {
         setFiles([]);
         setRenderkey(new Date().valueOf())
