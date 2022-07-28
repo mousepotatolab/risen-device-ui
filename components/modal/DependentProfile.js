@@ -64,6 +64,7 @@ firstNameDependent, lastNameDependent, dobDependent, genderDependent, emailDepen
             placeholder="e.g. Dwight"
             onChange={handleFirstDependent}
             value={firstNameDependent}
+            tabIndex="1"
             />
           <label
             className="block text-gray-primary text-xs font-normal my-3"
@@ -76,6 +77,7 @@ firstNameDependent, lastNameDependent, dobDependent, genderDependent, emailDepen
             placeholder="11/12/1980"
             onChange={inputDobDependent}
             value={dobDependent}
+            tabIndex="3"
             />
           <label
             className="block text-gray-primary text-xs font-normal my-3"
@@ -88,6 +90,7 @@ firstNameDependent, lastNameDependent, dobDependent, genderDependent, emailDepen
             placeholder="e.g. dwight@dundermifflin.com"
             onChange={handleEmailDependent}
             value={emailDependent}
+            tabIndex="5"
             />
             </div>
             <div className="flex flex-col">
@@ -102,6 +105,7 @@ firstNameDependent, lastNameDependent, dobDependent, genderDependent, emailDepen
             placeholder="e.g. Schrute"
             onChange={handleLastDependent}
             value={lastNameDependent}
+            tabIndex="2"
             />
           <label
             className="block text-gray-primary text-xs font-normal my-3"
@@ -114,6 +118,7 @@ firstNameDependent, lastNameDependent, dobDependent, genderDependent, emailDepen
               onChange={handleGenderDependent}
               value={genderDependent}
               placeholder="e.g."
+              tabIndex="4"
             >
               <option value="Female">Female</option>
               <option value="Male">Male</option>
@@ -131,6 +136,7 @@ firstNameDependent, lastNameDependent, dobDependent, genderDependent, emailDepen
             placeholder="e.g. 123 456 7890"
             onChange={handlePhoneDependent}
             value={phoneDependent}
+            tabIndex="6"
             />
             </div>
             </div>

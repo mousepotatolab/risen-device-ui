@@ -189,6 +189,7 @@ export default function DashboardLanding() {
   function closeDependentModal() {
     setDependentSuccess(false);
     setDependentOpen(false);
+    loadInfoByUser(activeuser, true);
   }
 
    //Dependent Profile Details
@@ -220,9 +221,12 @@ export default function DashboardLanding() {
           if (res.message) {
             error(res.message);
           } else {
-            loadData();
+            loadData(false, false);
             setDependentSuccess(true)
             startDependent(false)
+            setValidProfileText("")
+            setActiveuser(res.userid);
+            openProfile();
           }
         }
       )
@@ -339,6 +343,7 @@ export default function DashboardLanding() {
 
 
   const handleMedicalDelete = () => {
+    console.log(deleteItem)
     if (deleteItem && deleteItem.id && deleteItem.type) {
       const obj = {
         type: deleteItem.type,
@@ -346,7 +351,29 @@ export default function DashboardLanding() {
         userid: activeuser
       };
       if (activeuserInfo.medicalProfiles[deleteItem.type].length == 1) {
-        error("Sorry You can not delete this card");
+        const {action, edit, id, type, ...restItem} = deleteItem;
+        const arr = [];
+        for (const r in restItem) {
+          activeuserInfo.medicalProfiles[deleteItem.type][0][r] = "";
+          arr.push({field: r, value: ""});
+        }
+        activeuserInfo.medicalProfiles[deleteItem.type][0].edit = true;
+        setActiveuserInfo({ ...activeuserInfo });
+        user.key = new Date().valueOf();
+        setUser({...user})
+        updateMedicalProfile({
+          profiletype: deleteItem.type,
+          id: deleteItem.id,
+          userid: activeuser,
+          items: arr
+        }).then(
+          (result) => {
+            if (result.success) {
+              saved();
+              // loadInfoByUser(activeuser);
+            }
+          }
+        )
         closeDeleteModal()
         return false;
       }
@@ -512,20 +539,29 @@ export default function DashboardLanding() {
     }
   }
 
-  const loadData = async () => {
-    setPageloading(true);
+  const loadData = async (loading = true, isactive = true) => {
+
+    if (loading) {
+      setPageloading(true);
+    }
 
     try {
       const result = await getUserInfo();
       if ("data" in result) {
         result.data.key = new Date().getMilliseconds()
         setUser(result.data);
-        setActiveuser(result.data.id);
-        setActiveuserInfo(result.data);
+        if (isactive) {
+          setActiveuser(result.data.id);
+          setActiveuserInfo(result.data);
+        }
       }
-      setPageloading(false);
+      if (loading) {
+        setPageloading(false);
+      }
     } catch (error) {
-      setPageloading(false);
+      if (loading) {
+        setPageloading(false);
+      }
     }
     
   }
@@ -918,10 +954,10 @@ export default function DashboardLanding() {
         // overlayClassName="Overlay"
       >
         <DependentProfileModal
-         notDependent={notDependent} 
-         createDependent={createdDependent}
-         closeDependentModal={closeDependentModal}
-         inputIDDependent={inputIDDependent}
+          notDependent={notDependent} 
+          createDependent={createdDependent}
+          closeDependentModal={closeDependentModal}
+          inputIDDependent={inputIDDependent}
           inputPinDependent={inputPinDependent}
           handleFirstDependent={handleFirstDependent}
           inputDobDependent={inputDobDependent}
@@ -1026,6 +1062,8 @@ export default function DashboardLanding() {
             loadInfoByUser={loadInfoByUser}
             newProfile={addDependentProfile}
             setValidProfileText={setValidProfileText}
+            openProfile={openProfile}
+            setDelete={setDelete}
           // signOut={signOut}
           ></Sidebar>
         </section>

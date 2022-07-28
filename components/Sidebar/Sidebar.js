@@ -3,7 +3,7 @@ import Router, { withRouter, useRouter } from 'next/router'
 import { baseapiurl } from "services/config";
 
 function Sidebar({openSettings, user, activeuser, setActiveuser, loadInfoByUser, newProfile,
-  setValidProfileText}) {
+  setValidProfileText, openProfile, setDelete}) {
   const router = useRouter();
   // const [openTab, setOpenTab] = React.useState(1);
   const logout = () => {
@@ -17,6 +17,8 @@ function Sidebar({openSettings, user, activeuser, setActiveuser, loadInfoByUser,
     setValidProfileText("")
     setActiveuser(id);
     loadInfoByUser(id, true);
+    openProfile();
+    setDelete(false);
   }
   return (
     <>
