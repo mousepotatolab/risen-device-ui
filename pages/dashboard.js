@@ -395,7 +395,7 @@ export default function DashboardLanding() {
   const saved = () =>
     toast.success("Information auto saved", {
       position: "top-center",
-      autoClose: 5000,
+      autoClose: false,
       hideProgressBar: true,
       closeOnClick: true,
       pauseOnHover: true,
