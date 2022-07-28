@@ -93,8 +93,11 @@ export default function DashboardLanding() {
     setDeviceIsOpen(false);
   }
   function openSettings() {
+    setValidProfileText("")
     setOpenTab(3);
     setConnectFalse();
+    user.key = new Date().valueOf();
+    setUser({...user})
   }
   function openUpload() {
     setOpenTab(2);
@@ -300,7 +303,7 @@ export default function DashboardLanding() {
 
    const checkValidProfile = () => {
     isDependentValid(true)
-    if (firstNameDependent && lastNameDependent && genderDependent) {
+    if (firstNameDependent && lastNameDependent && genderDependent && dependentDobValid) {
       isDependentValid(false)
     }
   }
@@ -449,6 +452,7 @@ export default function DashboardLanding() {
   const handleDeleteProfileValid = (event) => {
     setDelete(false);
     setValidProfileText(event.target.value)
+    console.log(event.target.value, activeuserInfo.profile)
     if (event.target.value === (activeuserInfo.profile.firstName + ' ' + activeuserInfo.profile.lastName)) {
       setDelete(true);
     }
@@ -470,6 +474,7 @@ export default function DashboardLanding() {
           setActiveuser(user.id);
           user.key = new Date().getMilliseconds()
           setUser({ ...user });
+          openProfile();
         }
       }
     )

@@ -74,7 +74,7 @@ firstNameDependent, lastNameDependent, dobDependent, genderDependent, emailDepen
             <input
             type="text"
             className="w-343 input-primary pl-2 py-16-px focus:outline-none ph-text-sm"
-            placeholder="11/12/1980"
+            placeholder="MM/DD/YYYY"
             onChange={inputDobDependent}
             value={dobDependent}
             tabIndex="3"
