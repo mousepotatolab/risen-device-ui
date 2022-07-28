@@ -50,9 +50,12 @@ firstNameDependent, lastNameDependent, dobDependent, genderDependent, emailDepen
             </div>
             </div>
             <form>
-          <div className="flex">
+          <div className="flex flex-col">
 
-          <div className="flex mr-8 flex-col">
+          <div className="flex">
+          <div className="flex flex-col mr-8">
+
+         
           <label
             className="block text-gray-primary text-xs font-normal my-3"
             >
@@ -66,34 +69,10 @@ firstNameDependent, lastNameDependent, dobDependent, genderDependent, emailDepen
             value={firstNameDependent}
             tabIndex="1"
             />
-          <label
-            className="block text-gray-primary text-xs font-normal my-3"
-            >
-            Date Of Birth
-            </label>
-            <input
-            type="text"
-            className="w-343 input-primary pl-2 py-16-px focus:outline-none ph-text-sm"
-            placeholder="11/12/1980"
-            onChange={inputDobDependent}
-            value={dobDependent}
-            tabIndex="3"
-            />
-          <label
-            className="block text-gray-primary text-xs font-normal my-3"
-            >
-            Email Address
-            </label>
-            <input
-            type="text"
-            className="w-343 input-primary pl-2 py-16-px focus:outline-none ph-text-sm"
-            placeholder="e.g. dwight@dundermifflin.com"
-            onChange={handleEmailDependent}
-            value={emailDependent}
-            tabIndex="5"
-            />
-            </div>
-            <div className="flex flex-col">
+             </div>
+             <div className="flex flex-col">
+
+           
           <label
             className="block text-gray-primary text-xs font-normal my-3"
             >
@@ -107,6 +86,29 @@ firstNameDependent, lastNameDependent, dobDependent, genderDependent, emailDepen
             value={lastNameDependent}
             tabIndex="2"
             />
+            </div>
+            </div>
+            <div className="flex">
+            <div className="flex flex-col mr-8">
+
+           
+            <label
+            className="block text-gray-primary text-xs font-normal my-3"
+            >
+            Date Of Birth
+           </label>
+            <input
+            type="text"
+            className="w-343 input-primary pl-2 py-16-px focus:outline-none ph-text-sm"
+            placeholder="11/12/1980"
+            onChange={inputDobDependent}
+            value={dobDependent}
+            tabIndex="3"
+            />
+            </div>
+            <div className="flex flex-col w-full">
+
+          
           <label
             className="block text-gray-primary text-xs font-normal my-3"
             >
@@ -125,10 +127,35 @@ firstNameDependent, lastNameDependent, dobDependent, genderDependent, emailDepen
               <option value="Non-binary">Non-binary</option>
               <option value="N/A">N/A</option>
             </select>
-          <label
+           
+            </div>
+            </div>
+            <div className="flex">
+              <div className="flex flex-col mr-8">
+
+              
+            <label
+            className="block text-gray-primary text-xs font-normal my-3"
+            >
+            Email Address
+            </label>
+            <input
+            type="text"
+            className="w-343 input-primary pl-2 py-16-px focus:outline-none ph-text-sm"
+            placeholder="e.g. dwight@dundermifflin.com"
+            onChange={handleEmailDependent}
+            value={emailDependent}
+            tabIndex="5"
+            />
+            </div>
+            <div className="flex flex-col">
+
+   
+             <label
             className="block text-gray-primary text-xs font-normal my-3"
             >
             Phone Number
+
             </label>
             <input
             type="text"
@@ -138,6 +165,7 @@ firstNameDependent, lastNameDependent, dobDependent, genderDependent, emailDepen
             value={phoneDependent}
             tabIndex="6"
             />
+                     </div>
             </div>
             </div>
             {hasDevice && (
@@ -184,7 +212,7 @@ firstNameDependent, lastNameDependent, dobDependent, genderDependent, emailDepen
             )}
             
             <button 
-            className="py-4  w-343 text-md font-bold mt-10 bg-primary disabled:bg-inactive relative center" 
+            className="py-4  w-343 text-md font-bold mt-10 bg-primary shadow-button border-r-4 disabled:bg-inactive relative center" 
             onClick={createDependent}
             disabled={dependentProfileValid}
             >Create Profile</button>
