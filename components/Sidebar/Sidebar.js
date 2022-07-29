@@ -34,9 +34,9 @@ function Sidebar({openSettings, user, activeuser, setActiveuser, loadInfoByUser,
                             <h5 className="h5 text-xs text-gray-primary">Primary Account</h5>
                         </div>
                     </div>
-                    <div className="flex justify-between mb-6">
+                    <div className="flex justify-between items-center mb-6">
                       <p className="p text-xs font-normal">Medical Profiles</p>
-                      <i onClick={newProfile} className="icon-Plus2x icon-sm text-green-primary"></i>
+                      <i onClick={newProfile} className="icon-Plus2x text-2xl text-green-primary cursor-pointer"></i>
                     </div>
                     <div className="wrapper profile-tab"
                     onClick={()=> handleActiveUser(user.id)}

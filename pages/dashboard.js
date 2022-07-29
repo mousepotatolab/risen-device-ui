@@ -398,7 +398,7 @@ export default function DashboardLanding() {
   const saved = () =>
     toast.success("Information auto saved", {
       position: "top-center",
-      autoClose: 5000,
+      autoClose: false,
       hideProgressBar: true,
       closeOnClick: true,
       pauseOnHover: true,
@@ -793,6 +793,7 @@ export default function DashboardLanding() {
   const [contactHover, setHoverContact] = useState(false);
   const [insuranceHover, setHoverInsurance] = useState(false);
   const [caregiverHover, setHoverCaregiver] = useState(false);
+  const [documentHover, setHoverDocument] = useState(false);
   // const [medicationHover, setHoverMedication] = useState(false);
   const [documentEditItem, setDocumentEditItem] = useState(null);
 
@@ -805,6 +806,12 @@ export default function DashboardLanding() {
   }
   const handleMouseCondition = () => {
     setHoverCondition(true)
+  }
+  const handleMouseOutDocument = () => {
+    setHoverDocument(false)
+  }
+  const handleMouseDocument = () => {
+    setHoverDocument(true)
   }
 
   const handleMouseOutCondition = () => {
@@ -1103,7 +1110,7 @@ export default function DashboardLanding() {
                 </div>
                 {activeuserInfo && activeuserInfo.devices.length == 0 && (
                   <button
-                    className="connect-device-button text-white flex items-center font-medium"
+                    className="connect-device-button shadow-button-connect text-white flex items-center font-medium"
                     onClick={openConnectModal}
                   >
                     Connect A Device
@@ -1381,7 +1388,7 @@ export default function DashboardLanding() {
                         )}
                         {activeuserInfo.documents && activeuserInfo.documents.length > 0 && (
                           <div className="flex mx-auto mt-10 h-full pb-100-vh">
-                          <div className="card-wrapper fb-487">
+                          <div className="card-wrapper cursor-pointer fb-487" onMouseEnter={handleMouseDocument} onMouseLeave={handleMouseOutDocument}>
                           <div className="title-wrapper flex justify-between items-center">
                             <div className="flex items-center">
                               <img
@@ -1415,11 +1422,15 @@ export default function DashboardLanding() {
                                 <button
                                 onClick={() => setDocumentEdit(p)}
                                 className="edit-card">
-                                  <i className="icon-edit text-green-secondary text-md mr-1"></i>
+                                {documentHover && (
+                                  <i className="icon-edit fade-in-icons text-green-secondary text-md mr-1"></i>
+                                )}
                                 </button>
                                 <button className="delete-card"
                                 onClick={() => openDocumentDeleteModal(p)}>
-                                  <i className="icon-delete text-red-secondary text-md"></i>
+                                {documentHover && (
+                                  <i className="icon-delete fade-in-icons text-red-secondary text-md"></i>
+                                )}
                                 </button>
                               </div>
                             </div></>))}

@@ -4352,6 +4352,9 @@ CUSTOM CLASSES DASHBOARD
 .shadow-button {
   box-shadow: 0px 15px 30px -12px rgba(26, 26, 68, 0.35);
 }
+.shadow-button-connect {
+  box-shadow: 0px 15px 30px -12px rgba(12, 140, 135, 0.51);
+}
 
 .border-r-4 {
   border-radius: 4px;
@@ -4532,6 +4535,9 @@ CUSTOM CLASSES DASHBOARD
 .border-r-8 {
   border-radius: 8px;
 }
+.border-r-4 {
+  border-radius: 4px;
+}
 
 .t-8 {
   top: -8px;
@@ -4674,6 +4680,9 @@ CUSTOM CLASSES DASHBOARD
   border-radius: 8px;
 }
 
+.Toastify__toast-container {
+  width: auto !important;
+}
 .Toastify__toast-theme--colored.Toastify__toast--success {
   background-color: rgb(12, 140, 135) !important;
   color: #fff;
@@ -4687,7 +4696,7 @@ CUSTOM CLASSES DASHBOARD
 .Toastify__toast {
   background-color: rgb(12, 140, 135);
   color: #fff;
-  border-radius: 20px !important;
+  border-radius: 25px !important;
   height: 50px !important;
   min-height: 50px !important;
   box-shadow: 0px 150x 30px -12px rgba(26, 26, 68, 0.35);
@@ -4719,6 +4728,7 @@ CUSTOM CLASSES DASHBOARD
 .Toastify__toast-body {
   background-color: transparent;
   color: #fff;
+  padding-right: 80px !important;
   padding-left: 40px !important;
 }
 
