@@ -398,7 +398,7 @@ export default function DashboardLanding() {
   const saved = () =>
     toast.success("Information auto saved", {
       position: "top-center",
-      autoClose: true,
+      autoClose: 5000,
       hideProgressBar: true,
       closeOnClick: true,
       pauseOnHover: true,
@@ -689,9 +689,18 @@ export default function DashboardLanding() {
               error("Invalid Phone Number")
               return false;
             }
-
+            const ischild = user.id != activeuser;
+            const found = user.child.find(p => p.id == activeuser);
+            const index = user.child.indexOf(found);
+            console.log(ischild)
             for (const cardItem of activeCardInput.items) {
               activeuserInfo.profile[cardItem.field] = cardItem.value;
+              if (ischild && cardItem.field == "firstName") {
+                user.child[index].firstName = cardItem.value;
+              }
+              if (ischild && cardItem.field == "lastName") {
+                user.child[index].lastName = cardItem.value;
+              }
             }
             setActiveuserInfo({...activeuserInfo});
             user.key = new Date().valueOf();
