@@ -398,7 +398,7 @@ export default function DashboardLanding() {
   const saved = () =>
     toast.success("Information auto saved", {
       position: "top-center",
-      autoClose: false,
+      autoClose: true,
       hideProgressBar: true,
       closeOnClick: true,
       pauseOnHover: true,
@@ -690,6 +690,12 @@ export default function DashboardLanding() {
               return false;
             }
 
+            for (const cardItem of activeCardInput.items) {
+              activeuserInfo.profile[cardItem.field] = cardItem.value;
+            }
+            setActiveuserInfo({...activeuserInfo});
+            user.key = new Date().valueOf();
+            setUser({...user});
 
             updateProfileInfo({items: activeCardInput.items, userid: activeuser}).then(
               (result) => {
