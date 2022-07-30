@@ -691,7 +691,7 @@ export default function DashboardLanding() {
             }
 
 
-            updateProfileInfo({items: activeCardInput.items, userid: activeuserInfo.id}).then(
+            updateProfileInfo({items: activeCardInput.items, userid: activeuser}).then(
               (result) => {
                 if ("success" in result) {
                   saved();

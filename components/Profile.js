@@ -37,6 +37,7 @@ function Profile({ activeuserInfo, user, handleOutsideClick, handleFormInput, di
     const [zoom, setZoom] = useState(1);
     const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
     const [imgData, setImgData] = useState(null);
+    const [uploading, setUploading] = useState(false);
     const onUploadImage = (e) => {
        if (e.target.files.length == 1) {
         setImgData(e.target.files[0])
@@ -52,6 +53,7 @@ function Profile({ activeuserInfo, user, handleOutsideClick, handleFormInput, di
     }
 
     const updateImage = async () => {
+        setUploading(true);
         let blob = await fetch(croppedImage).then(r => r.blob());
         let metadata = {
             type: 'image/jpeg'
@@ -62,6 +64,7 @@ function Profile({ activeuserInfo, user, handleOutsideClick, handleFormInput, di
         formdata.append("userid", activeuser);
         updateProfileImage(formdata).then(
             result => {
+                setUploading(false);
                 if ("filename" in result.data && result.data.filename) {
                     setCropModal(false);
                     if (user.id != activeuserInfo.id) {
@@ -78,7 +81,9 @@ function Profile({ activeuserInfo, user, handleOutsideClick, handleFormInput, di
                     setCroppedImage(null);
                 }
             }
-        )
+        ).catch(err => {
+            setUploading(false);
+        })
     }
 
     const closeDeleteModal = () => {
@@ -257,6 +262,7 @@ function Profile({ activeuserInfo, user, handleOutsideClick, handleFormInput, di
                                 croppedImage={croppedImage}
                                 setCroppedImage={setCroppedImage}
                                 updateImage={updateImage}
+                                uploading={uploading}
                             />}
                         </div>
                     </Modal>
